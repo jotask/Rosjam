@@ -10,6 +10,8 @@ import com.github.jotask.rosjam.engine.GameStateManager;
  */
 public class Ref {
 
+    public static final boolean DEBUG = false;
+
     public static final GameStateManager.STATE INITIAL_STATE = GameStateManager.STATE.GAME;
 
 }

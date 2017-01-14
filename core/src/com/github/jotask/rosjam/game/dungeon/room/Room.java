@@ -106,7 +106,7 @@ public class Room extends Entity {
 
     @Override
     public void debug(ShapeRenderer sr) {
-        sr.set(ShapeRenderer.ShapeType.Filled);
+        sr.set(ShapeRenderer.ShapeType.Line);
         for(int i = 0; i < layout.length; i++){
             for(int j = 0; j < layout[0].length; j++) {
                 sr.setColor(layout[i][j].color);

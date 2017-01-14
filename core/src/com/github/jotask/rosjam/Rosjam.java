@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.jotask.rosjam.engine.GameStateManager;
+import com.github.jotask.rosjam.util.Ref;
 
 public class Rosjam extends ApplicationAdapter {
 
@@ -43,7 +44,8 @@ public class Rosjam extends ApplicationAdapter {
 		gsm.update();
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);      //clears the buffer
 		gsm.render(sb);
-		gsm.debug(sr);
+		if(Ref.DEBUG)
+			gsm.debug(sr);
 	}
 	
 	@Override

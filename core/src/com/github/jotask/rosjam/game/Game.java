@@ -7,6 +7,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.github.jotask.rosjam.engine.Camera;
 import com.github.jotask.rosjam.engine.GameManager;
 import com.github.jotask.rosjam.engine.states.State;
+import com.github.jotask.rosjam.game.controller.AndroidController;
+import com.github.jotask.rosjam.game.controller.Controller;
+import com.github.jotask.rosjam.game.hud.Hud;
 
 /**
  * Game
@@ -17,6 +20,8 @@ import com.github.jotask.rosjam.engine.states.State;
 public class Game extends State {
 
     private GameManager gameManager;
+    private Controller controller;
+    private Hud hud;
 
     @Override
     public void init() {
@@ -25,7 +30,13 @@ public class Game extends State {
         float h = 11f;
         this.camera.viewport = new FitViewport(w, h, camera);
         this.camera.viewport.apply();
-        this.gameManager = new GameManager(this);
+
+        this.hud = new Hud(this);
+        this.controller = new AndroidController(this.hud);
+        this.gameManager = new GameManager(this, this.controller);
+
+        Gdx.input.setInputProcessor(this.hud.getStage());
+
     }
 
     @Override
@@ -38,7 +49,10 @@ public class Game extends State {
     public void preRender(SpriteBatch sb) { this.gameManager.preRender(sb); }
 
     @Override
-    public void postRender(SpriteBatch sb) { this.gameManager.postRender(sb); }
+    public void postRender(SpriteBatch sb) {
+        this.gameManager.postRender(sb);
+        this.hud.render(sb);
+    }
 
     @Override
     public void preDebug(ShapeRenderer sr) { this.gameManager.preDebug(sr); }
@@ -49,6 +63,7 @@ public class Game extends State {
     @Override
     public void update() {
         this.gameManager.update();
+        this.hud.update();
     }
 
     @Override
@@ -64,6 +79,13 @@ public class Game extends State {
     @Override
     public void dispose() {
         this.gameManager.dispose();
+        this.hud.dispose();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+        this.hud.resize(width, height);
     }
 
 }

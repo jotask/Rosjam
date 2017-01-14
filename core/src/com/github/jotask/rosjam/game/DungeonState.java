@@ -3,6 +3,7 @@ package com.github.jotask.rosjam.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.github.jotask.rosjam.game.controller.Controller;
 import com.github.jotask.rosjam.game.dungeon.Dungeon;
 import com.github.jotask.rosjam.game.entity.Player;
 
@@ -16,10 +17,12 @@ public class DungeonState extends GameState {
 
     private WorldManager worldManager;
 
+    private Controller controller;
+
     private Dungeon dungeon;
     private Player player;
 
-    public DungeonState(final Game game) {
+    public DungeonState(final Game game, final Controller controller) {
         super(game);
 
         this.worldManager = new WorldManager(game);
@@ -37,7 +40,7 @@ public class DungeonState extends GameState {
             dungeon = Factory.generateDungeon(this.worldManager);
         }
         worldManager.update();
-        System.out.println("B: " + worldManager.getWorld().getBodyCount());
+//        System.out.println("B: " + worldManager.getWorld().getBodyCount());
     }
 
     @Override

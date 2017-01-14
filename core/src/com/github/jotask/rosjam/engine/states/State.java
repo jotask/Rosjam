@@ -14,9 +14,6 @@ public abstract class State {
 
     protected Camera camera;
 
-    public State() {
-    }
-
     public abstract void init();
 
     public void preUpdate(){}

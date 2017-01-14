@@ -6,6 +6,7 @@ import com.github.jotask.rosjam.engine.states.State;
 import com.github.jotask.rosjam.game.DungeonState;
 import com.github.jotask.rosjam.game.Game;
 import com.github.jotask.rosjam.game.GameState;
+import com.github.jotask.rosjam.game.controller.Controller;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
@@ -22,8 +23,11 @@ public class GameManager extends State{
 
     private GameState currentState;
 
-    public GameManager(final Game game) {
+    private Controller controller;
+
+    public GameManager(final Game game, final Controller controller) {
         this.game = game;
+        this.controller = controller;
         this.changeState(STATE.DUNGEON);
     }
 
@@ -71,7 +75,7 @@ public class GameManager extends State{
         GameState s = null;
         switch (state){
             case DUNGEON:
-                s = new DungeonState(this.game);
+                s = new DungeonState(this.game, this.controller);
                 break;
             default:
                 throw new NotImplementedException();

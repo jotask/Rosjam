@@ -18,7 +18,8 @@ public class Camera extends OrthographicCamera {
     }
 
     public void resize(int width, int height){
-        // TODO resize camera and viewport
+//        viewport.update(width, height);
+//        viewport.apply();
     }
 
 }
