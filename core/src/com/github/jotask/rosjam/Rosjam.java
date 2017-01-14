@@ -46,4 +46,6 @@ public class Rosjam extends ApplicationAdapter {
 		instance = null;
 	}
 
+	public final GameStateManager getGsm(){ return this.gsm; }
+
 }
