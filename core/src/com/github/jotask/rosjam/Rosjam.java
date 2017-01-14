@@ -36,6 +36,9 @@ public class Rosjam extends ApplicationAdapter {
 	}
 
 	@Override
+	public void resize(int width, int height) { this.gsm.resize(width, height); }
+
+	@Override
 	public void render () {
 		gsm.update();
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);      //clears the buffer
@@ -50,5 +53,7 @@ public class Rosjam extends ApplicationAdapter {
 	}
 
 	public final GameStateManager getGsm(){ return this.gsm; }
+
+	public final SpriteBatch getSb() { return sb; }
 
 }

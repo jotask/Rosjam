@@ -1,8 +1,8 @@
 package com.github.jotask.rosjam.engine.states;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.github.jotask.rosjam.engine.Camera;
 
 /**
  * State
@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
  */
 public abstract class State {
 
-    protected OrthographicCamera camera;
+    protected Camera camera;
 
     public State() {
     }
@@ -33,6 +33,8 @@ public abstract class State {
 
     public abstract void dispose();
 
-    public OrthographicCamera getCamera(){ return this.camera; }
+    public Camera getCamera(){ return this.camera; }
+
+    public void resize(int width, int height) { this.camera.resize(width, height);}
 
 }

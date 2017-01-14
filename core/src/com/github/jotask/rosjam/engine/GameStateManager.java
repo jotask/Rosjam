@@ -89,5 +89,9 @@ public class GameStateManager extends State{
 
     }
 
+    @Override
+    public void resize(int width, int height) {
+        this.currentState.resize(width, height);
+    }
 }
 
