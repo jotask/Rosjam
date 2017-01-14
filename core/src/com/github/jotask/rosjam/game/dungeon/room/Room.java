@@ -106,20 +106,20 @@ public class Room extends Entity {
 
     @Override
     public void debug(ShapeRenderer sr) {
-//        sr.set(ShapeRenderer.ShapeType.Filled);
-//        for(int i = 0; i < layout.length; i++){
-//            for(int j = 0; j < layout[0].length; j++) {
-//                sr.setColor(layout[i][j].color);
-//                sr.rect(position.x + (i * CELL_SIZE), position.y + (j * CELL_SIZE), CELL_SIZE, CELL_SIZE);
-//            }
-//        }
-//        sr.set(ShapeRenderer.ShapeType.Line);
-//        for(int i = 0; i < layout.length; i++){
-//            for(int j = 0; j < layout[0].length; j++) {
-//                sr.setColor(Color.BLACK);
-//                sr.rect(position.x + (i * CELL_SIZE), position.y + (j * CELL_SIZE), CELL_SIZE, CELL_SIZE);
-//            }
-//        }
+        sr.set(ShapeRenderer.ShapeType.Filled);
+        for(int i = 0; i < layout.length; i++){
+            for(int j = 0; j < layout[0].length; j++) {
+                sr.setColor(layout[i][j].color);
+                sr.rect(position.x + (i * CELL_SIZE), position.y + (j * CELL_SIZE), CELL_SIZE, CELL_SIZE);
+            }
+        }
+        sr.set(ShapeRenderer.ShapeType.Line);
+        for(int i = 0; i < layout.length; i++){
+            for(int j = 0; j < layout[0].length; j++) {
+                sr.setColor(Color.BLACK);
+                sr.rect(position.x + (i * CELL_SIZE), position.y + (j * CELL_SIZE), CELL_SIZE, CELL_SIZE);
+            }
+        }
 
         sr.setColor(Color.RED);
         sr.rect(bounds.x, bounds.y, bounds.width, bounds.height);

@@ -27,8 +27,6 @@ public final class Factory {
 
     public static Dungeon generateDungeon(){
 
-        System.out.println("----------------------------------------------------------------");
-
         LinkedList<Room> rooms = new LinkedList<Room>();
         Room initialRoom = generateRoom(0, 0);
         rooms.add(initialRoom);
@@ -80,7 +78,6 @@ public final class Factory {
                 Vector2 nextRoom = getNextRoom(room, door);
                 // Check if in that position exist a room
                 if(isOccupied(rooms, nextRoom)){
-                    System.out.println("that room is occupied");
                     continue generator;
                 }
 
