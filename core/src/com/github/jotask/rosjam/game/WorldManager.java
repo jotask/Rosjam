@@ -3,8 +3,10 @@ package com.github.jotask.rosjam.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 
 /**
  * WorldManager
@@ -45,4 +47,15 @@ public class WorldManager extends GameState{
     }
 
     public World getWorld() { return world; }
+
+    public void deleteAllBodies(){
+        Array<Body> bodies = new Array<Body>();
+        world.getBodies(bodies);
+        for(int i = 0; i < bodies.size; i++)
+        {
+            if(!world.isLocked())
+                world.destroyBody(bodies.get(i));
+        }
+    }
+
 }

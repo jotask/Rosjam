@@ -24,9 +24,7 @@ public class DungeonState extends GameState {
 
         this.worldManager = new WorldManager(game);
 
-        dungeon = Factory.generateDungeon();
-
-        player = Factory.generatePlayer(this.worldManager, dungeon.initialRoom);
+        dungeon = Factory.generateDungeon(this.worldManager);
 
         this.camera.position.set(dungeon.initialRoom.getCenter(), 10f);
         this.camera.update();
@@ -36,16 +34,19 @@ public class DungeonState extends GameState {
     @Override
     public void update() {
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) | Gdx.input.justTouched()){
-            dungeon = Factory.generateDungeon();
+            dungeon = Factory.generateDungeon(this.worldManager);
         }
         worldManager.update();
-        player.update();
+        System.out.println("B: " + worldManager.getWorld().getBodyCount());
     }
 
     @Override
     public void debug(ShapeRenderer sr) {
         dungeon.debug(sr);
-        worldManager.debug(sr);
     }
 
+    @Override
+    public void postDebug(ShapeRenderer sr) {
+        worldManager.debug(sr);
+    }
 }

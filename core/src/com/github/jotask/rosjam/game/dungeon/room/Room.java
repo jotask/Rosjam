@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.github.jotask.rosjam.game.entity.Entity;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
+import com.github.jotask.rosjam.game.entity.Entity;
 
 import java.util.LinkedList;
 
@@ -18,7 +18,7 @@ import java.util.LinkedList;
  */
 public class Room extends Entity {
 
-    enum CELL_TYPE {
+    public enum CELL_TYPE {
         WALL (Color.RED),
         FLOOR(Color.WHITE);
 
@@ -34,7 +34,7 @@ public class Room extends Entity {
 
     public static final float CELL_SIZE = 1f;
 
-    private CELL_TYPE[][] layout;
+    public CELL_TYPE[][] layout;
 
     private Vector2 position;
 
@@ -113,16 +113,16 @@ public class Room extends Entity {
                 sr.rect(position.x + (i * CELL_SIZE), position.y + (j * CELL_SIZE), CELL_SIZE, CELL_SIZE);
             }
         }
-        sr.set(ShapeRenderer.ShapeType.Line);
-        for(int i = 0; i < layout.length; i++){
-            for(int j = 0; j < layout[0].length; j++) {
-                sr.setColor(Color.BLACK);
-                sr.rect(position.x + (i * CELL_SIZE), position.y + (j * CELL_SIZE), CELL_SIZE, CELL_SIZE);
-            }
-        }
+//        sr.set(ShapeRenderer.ShapeType.Line);
+//        for(int i = 0; i < layout.length; i++){
+//            for(int j = 0; j < layout[0].length; j++) {
+//                sr.setColor(Color.BLACK);
+//                sr.rect(position.x + (i * CELL_SIZE), position.y + (j * CELL_SIZE), CELL_SIZE, CELL_SIZE);
+//            }
+//        }
 
-        sr.setColor(Color.RED);
-        sr.rect(bounds.x, bounds.y, bounds.width, bounds.height);
+//        sr.setColor(Color.RED);
+//        sr.rect(bounds.x, bounds.y, bounds.width, bounds.height);
 
     }
 

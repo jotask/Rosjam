@@ -18,19 +18,59 @@ import java.util.LinkedList;
  */
 public final class Factory {
 
-    private static final int MAX_ROOMS = 7;
+    private static final int MAX_ROOMS = 1;
 
-    public static Room generateRoom(float x, float y){ return generateRoom(new Vector2(x, y)); }
-
-    public static Room generateRoom(final Vector2 position) {
+    public static Room generateRoom(final Vector2 position, final WorldManager worldManager) {
         Room room = new Room(position);
+
+        LinkedList<Body> bodies = new LinkedList<Body>();
+        final Room.CELL_TYPE[][] layout = room.layout;
+        for(int i = 0; i < layout.length; i++){
+            for(int j = 0; j < layout[0].length; j++){
+                if(layout[i][j] == Room.CELL_TYPE.WALL){
+                    bodies.add(createBodyForRoom(worldManager.getWorld(), room, i, j));
+                }
+            }
+        }
+
         return room;
     }
 
-    public static Dungeon generateDungeon(){
+    private static Body createBodyForRoom(final World world, final Room room, int i, int j){
+
+        final float SIZE = Room.CELL_SIZE / 2f;
+
+        float x = room.getPosition().x + SIZE;
+        float y = room.getPosition().y + SIZE;
+
+        x += i;
+        y += j;
+
+        BodyDef bd = new BodyDef();
+        bd.type = BodyDef.BodyType.StaticBody;
+        bd.position.set(x, y);
+
+        Body body = world.createBody(bd);
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(SIZE, SIZE);
+
+        body.createFixture(shape, 1f);
+
+        shape.dispose();
+
+        return body;
+    }
+
+    public static Dungeon generateDungeon(final WorldManager worldManager){
+
+        worldManager.deleteAllBodies();
+
+        // FIXME the dungeon generator always generate rooms bottom and right. The problem starts when I added the code
+        // to check if was a room occupied before spawn the next rooms. Maybe the error comes from there
 
         LinkedList<Room> rooms = new LinkedList<Room>();
-        Room initialRoom = generateRoom(0, 0);
+        Room initialRoom = generateRoom(new Vector2(0,0), worldManager);
         rooms.add(initialRoom);
 
         generator: while(rooms.size() < MAX_ROOMS){
@@ -83,7 +123,7 @@ public final class Factory {
                     continue generator;
                 }
 
-                Room newRoom = generateRoom(nextRoom);
+                Room newRoom = generateRoom(nextRoom, worldManager);
 
                 // Connect doors
                 {

@@ -22,7 +22,6 @@ public class Game extends State {
 
     @Override
     public void init() {
-        float scale = 21f;
         this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         float w = 21f;
         float h = 11f;
