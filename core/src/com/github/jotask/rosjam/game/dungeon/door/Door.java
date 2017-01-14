@@ -1,8 +1,9 @@
-package com.github.jotask.rosjam.game.dungeon;
+package com.github.jotask.rosjam.game.dungeon.door;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.jotask.rosjam.game.Entity;
+import com.github.jotask.rosjam.game.dungeon.room.Room;
 
 /**
  * Door
@@ -21,7 +22,7 @@ public class Door extends Entity {
     private Room self;
     private Room connected;
 
-    public Door(Room self, SIDE side) {
+    public Door(final Room self, final SIDE side) {
         this.self = self;
         this.side = side;
         open = false;

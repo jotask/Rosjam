@@ -3,6 +3,7 @@ package com.github.jotask.rosjam.game.dungeon;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.jotask.rosjam.game.Entity;
+import com.github.jotask.rosjam.game.dungeon.room.Room;
 
 import java.util.LinkedList;
 
@@ -40,5 +41,4 @@ public class Dungeon extends Entity {
             r.debug(sr);
         }
     }
-
 }

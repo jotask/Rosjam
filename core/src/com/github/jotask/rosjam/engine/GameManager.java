@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.jotask.rosjam.engine.states.State;
 import com.github.jotask.rosjam.game.DungeonState;
+import com.github.jotask.rosjam.game.Game;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
@@ -14,11 +15,14 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
  */
 public class GameManager extends State{
 
+    private final Game game;
+
     public enum STATE { DUNGEON }
 
     private State currentState;
 
-    public GameManager() {
+    public GameManager(final Game game) {
+        this.game = game;
         this.changeState(STATE.DUNGEON);
     }
 
@@ -66,7 +70,7 @@ public class GameManager extends State{
         State s = null;
         switch (state){
             case DUNGEON:
-                s = new DungeonState();
+                s = new DungeonState(this.game);
                 break;
             default:
                 throw new NotImplementedException();

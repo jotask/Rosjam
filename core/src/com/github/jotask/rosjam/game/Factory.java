@@ -2,7 +2,7 @@ package com.github.jotask.rosjam.game;
 
 import com.badlogic.gdx.math.Vector2;
 import com.github.jotask.rosjam.game.dungeon.Dungeon;
-import com.github.jotask.rosjam.game.dungeon.Room;
+import com.github.jotask.rosjam.game.dungeon.room.Room;
 
 import java.util.LinkedList;
 

@@ -20,7 +20,7 @@ public class Game extends State {
     @Override
     public void init() {
         this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        this.gameManager = new GameManager();
+        this.gameManager = new GameManager(this);
     }
 
     @Override

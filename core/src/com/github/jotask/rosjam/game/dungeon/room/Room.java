@@ -1,10 +1,11 @@
-package com.github.jotask.rosjam.game.dungeon;
+package com.github.jotask.rosjam.game.dungeon.room;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.github.jotask.rosjam.game.Entity;
+import com.github.jotask.rosjam.game.dungeon.door.Door;
 
 import java.util.LinkedList;
 
@@ -18,8 +19,7 @@ public class Room extends Entity {
 
     enum CELL_TYPE {
         WALL (Color.RED),
-        FLOOR(Color.WHITE),
-        DOOR(Color.GOLD);
+        FLOOR(Color.WHITE);
 
         Color color;
 
@@ -67,20 +67,20 @@ public class Room extends Entity {
             this.doors = new LinkedList<Door>();
 
             // Horizontal
-            layout[WIDTH - WALL_SIZE][HEIGHT / 2] = CELL_TYPE.DOOR;
+//            layout[WIDTH - WALL_SIZE][HEIGHT / 2] = CELL_TYPE.DOOR;
             Door right = new Door(this, Door.SIDE.RIGHT);
             doors.add(right);
 
-            layout[WALL_SIZE - 1]    [HEIGHT / 2] = CELL_TYPE.DOOR;
+//            layout[WALL_SIZE - 1]    [HEIGHT / 2] = CELL_TYPE.DOOR;
             Door left = new Door(this, Door.SIDE.LEFT);
             doors.add(left);
 
             // Vertical
-            layout[WIDTH / 2][ WALL_SIZE - 1]     = CELL_TYPE.DOOR;
+//            layout[WIDTH / 2][ WALL_SIZE - 1]     = CELL_TYPE.DOOR;
             Door down = new Door(this, Door.SIDE.DOWN);
             doors.add(down);
 
-            layout[WIDTH / 2][HEIGHT - WALL_SIZE] = CELL_TYPE.DOOR;
+//            layout[WIDTH / 2][HEIGHT - WALL_SIZE] = CELL_TYPE.DOOR;
             Door up = new Door(this, Door.SIDE.UP);
             doors.add(up);
 
