@@ -12,9 +12,12 @@ import com.github.jotask.rosjam.game.dungeon.Dungeon;
  */
 public class DungeonState extends AbstractState {
 
+    private final Game game;
+
     private Dungeon dungeon;
 
-    public DungeonState() {
+    public DungeonState(final Game game) {
+        this.game = game;
         dungeon = Factory.generateDungeon();
     }
 
@@ -22,4 +25,5 @@ public class DungeonState extends AbstractState {
     public void debug(ShapeRenderer sr) {
         dungeon.debug(sr);
     }
+
 }
