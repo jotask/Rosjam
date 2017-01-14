@@ -27,18 +27,18 @@ public final class Factory {
 
     public static Dungeon generateDungeon(){
 
-        LinkedList<Room> rooms = new LinkedList<Room>();
-        {
-            Room initial = generateRoom(0, 0);
-            rooms.add(initial);
-        }
+        System.out.println("----------------------------------------------------------------");
 
-        while(rooms.size() < MAX_ROOMS){
+        LinkedList<Room> rooms = new LinkedList<Room>();
+        Room initialRoom = generateRoom(0, 0);
+        rooms.add(initialRoom);
+
+        generator: while(rooms.size() < MAX_ROOMS){
 
             // Choose a random room
             Room room;
             {
-                boolean isValid = false;
+                boolean isValid;
                 do {
                     int index = MathUtils.random(rooms.size() - 1);
                     room = rooms.get(index);
@@ -51,26 +51,76 @@ public final class Factory {
             Door door;
             {
                 boolean isValid = false;
+
+                // Check if all doors are connected
+                boolean areConnected = true;
+                for(Door door1: doors){
+                    if(door1.connected == null){
+                        areConnected = false;
+                        break;
+                    }
+                }
+                if(areConnected){
+                    continue generator;
+                }
+
                 do{
                     int index = MathUtils.random(doors.size() - 1);
                     door = doors.get(index);
 
-                    if(door.connected == null)
+                    if(door.connected == null) {
                         isValid = true;
+                    }
 
                 }while(!isValid);
             }
 
             // Spawn a room
-            Room newRoom = generateRoom(getNextRoom(room, door));
-            rooms.add(newRoom);
+            {
+                Vector2 nextRoom = getNextRoom(room, door);
+                // Check if in that position exist a room
+                if(isOccupied(rooms, nextRoom)){
+                    System.out.println("that room is occupied");
+                    continue generator;
+                }
+
+                Room newRoom = generateRoom(nextRoom);
+
+                // Connect doors
+                {
+                    Door a = door;
+                    Door b = null;
+                    Door.SIDE opposite = Door.getOpposite(a.side);
+                    for(Door ddd: newRoom.doors){
+                        if(ddd.side == opposite){
+                            b = ddd;
+                            break;
+                        }
+                    }
+
+                    a.connected = b.self;
+                    b.connected = a.self;
+
+                }
+
+                rooms.add(newRoom);
+            }
 
         }
 
-        System.out.println("Rooms: " + rooms.size());
-
         Dungeon dungeon = new Dungeon(rooms);
+        dungeon.initialRoom = initialRoom;
         return dungeon;
+
+    }
+
+    private static boolean isOccupied(final LinkedList<Room> rooms, final Vector2 nextRoom){
+        for(Room r: rooms){
+            if(r.bounds.contains(nextRoom)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static Vector2 getNextRoom(final Room room, final Door door){

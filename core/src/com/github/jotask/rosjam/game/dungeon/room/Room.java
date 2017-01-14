@@ -3,6 +3,7 @@ package com.github.jotask.rosjam.game.dungeon.room;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.github.jotask.rosjam.game.Entity;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
@@ -39,9 +40,15 @@ public class Room extends Entity {
 
     public LinkedList<Door> doors;
 
+    public Rectangle bounds;
+
     public Room(final Vector2 position) {
 
         this.position = position;
+
+        this.bounds = new Rectangle();
+        this.bounds.setPosition(this.position);
+        this.bounds.setSize(WIDTH * CELL_SIZE, HEIGHT * CELL_SIZE);
 
         layout = new CELL_TYPE[WIDTH][HEIGHT];
 
@@ -99,20 +106,24 @@ public class Room extends Entity {
 
     @Override
     public void debug(ShapeRenderer sr) {
-        sr.set(ShapeRenderer.ShapeType.Filled);
-        for(int i = 0; i < layout.length; i++){
-            for(int j = 0; j < layout[0].length; j++) {
-                sr.setColor(layout[i][j].color);
-                sr.rect(position.x + (i * CELL_SIZE), position.y + (j * CELL_SIZE), CELL_SIZE, CELL_SIZE);
-            }
-        }
-        sr.set(ShapeRenderer.ShapeType.Line);
-        for(int i = 0; i < layout.length; i++){
-            for(int j = 0; j < layout[0].length; j++) {
-                sr.setColor(Color.BLACK);
-                sr.rect(position.x + (i * CELL_SIZE), position.y + (j * CELL_SIZE), CELL_SIZE, CELL_SIZE);
-            }
-        }
+//        sr.set(ShapeRenderer.ShapeType.Filled);
+//        for(int i = 0; i < layout.length; i++){
+//            for(int j = 0; j < layout[0].length; j++) {
+//                sr.setColor(layout[i][j].color);
+//                sr.rect(position.x + (i * CELL_SIZE), position.y + (j * CELL_SIZE), CELL_SIZE, CELL_SIZE);
+//            }
+//        }
+//        sr.set(ShapeRenderer.ShapeType.Line);
+//        for(int i = 0; i < layout.length; i++){
+//            for(int j = 0; j < layout[0].length; j++) {
+//                sr.setColor(Color.BLACK);
+//                sr.rect(position.x + (i * CELL_SIZE), position.y + (j * CELL_SIZE), CELL_SIZE, CELL_SIZE);
+//            }
+//        }
+
+        sr.setColor(Color.RED);
+        sr.rect(bounds.x, bounds.y, bounds.width, bounds.height);
+
     }
 
     public Vector2 getPosition() { return position; }

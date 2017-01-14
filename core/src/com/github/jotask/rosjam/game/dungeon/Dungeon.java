@@ -17,6 +17,8 @@ public class Dungeon extends Entity {
 
     private LinkedList<Room> rooms;
 
+    public Room initialRoom;
+
     public Dungeon(LinkedList<Room> rooms) {
         this.rooms = rooms;
     }
