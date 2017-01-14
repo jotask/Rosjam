@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.jotask.rosjam.engine.states.State;
 import com.github.jotask.rosjam.game.DungeonState;
 import com.github.jotask.rosjam.game.Game;
+import com.github.jotask.rosjam.game.GameState;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
@@ -19,7 +20,7 @@ public class GameManager extends State{
 
     public enum STATE { DUNGEON }
 
-    private State currentState;
+    private GameState currentState;
 
     public GameManager(final Game game) {
         this.game = game;
@@ -67,7 +68,7 @@ public class GameManager extends State{
 
         // TODO implement loading screen
 
-        State s = null;
+        GameState s = null;
         switch (state){
             case DUNGEON:
                 s = new DungeonState(this.game);

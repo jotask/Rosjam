@@ -1,17 +1,19 @@
 package com.github.jotask.rosjam;
 
-import org.robovm.apple.foundation.NSAutoreleasePool;
-import org.robovm.apple.uikit.UIApplication;
-
 import com.badlogic.gdx.backends.iosrobovm.IOSApplication;
 import com.badlogic.gdx.backends.iosrobovm.IOSApplicationConfiguration;
-import com.github.jotask.rosjam.Rosjam;
+import org.robovm.apple.foundation.NSAutoreleasePool;
+import org.robovm.apple.uikit.UIApplication;
 
 public class IOSLauncher extends IOSApplication.Delegate {
     @Override
     protected IOSApplication createApplication() {
-        IOSApplicationConfiguration config = new IOSApplicationConfiguration();
-        return new IOSApplication(new Rosjam(), config);
+        IOSApplicationConfiguration cfg = new IOSApplicationConfiguration();
+
+        cfg.useAccelerometer = false;
+        cfg.useCompass = false;
+
+        return new IOSApplication(new Rosjam(), cfg);
     }
 
     public static void main(String[] argv) {
