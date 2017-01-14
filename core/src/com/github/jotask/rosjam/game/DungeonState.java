@@ -1,5 +1,7 @@
 package com.github.jotask.rosjam.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.jotask.rosjam.engine.states.AbstractState;
 import com.github.jotask.rosjam.game.dungeon.Dungeon;
@@ -19,6 +21,13 @@ public class DungeonState extends AbstractState {
     public DungeonState(final Game game) {
         this.game = game;
         dungeon = Factory.generateDungeon();
+    }
+
+    @Override
+    public void update() {
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+            dungeon = Factory.generateDungeon();
+        }
     }
 
     @Override

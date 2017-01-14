@@ -28,16 +28,16 @@ public class Room extends Entity {
         }
     }
 
-    private int WIDTH = 21;
-    private int HEIGHT = 11;
+    public static final int WIDTH = 21;
+    public static final int HEIGHT = 11;
 
-    private final float CELL_SIZE = 3f;
+    public static final float CELL_SIZE = 3f;
 
     private CELL_TYPE[][] layout;
 
     private Vector2 position;
 
-    private LinkedList<Door> doors;
+    public LinkedList<Door> doors;
 
     public Room(final Vector2 position) {
 
@@ -115,4 +115,5 @@ public class Room extends Entity {
         }
     }
 
+    public Vector2 getPosition() { return position; }
 }

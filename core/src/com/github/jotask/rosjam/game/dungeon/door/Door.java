@@ -15,12 +15,12 @@ public class Door extends Entity {
 
     public enum SIDE {LEFT, UP, RIGHT, DOWN }
 
-    private boolean open;
+    public boolean open;
 
-    private SIDE side;
+    public SIDE side;
 
-    private Room self;
-    private Room connected;
+    public Room self;
+    public Room connected;
 
     public Door(final Room self, final SIDE side) {
         this.self = self;
