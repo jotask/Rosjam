@@ -14,6 +14,7 @@ public class GameState extends AbstractState {
 
     public GameState(Game game) {
         this.game = game;
+        this.camera = game.getCamera();
     }
 
 }

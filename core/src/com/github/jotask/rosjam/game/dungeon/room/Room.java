@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.github.jotask.rosjam.game.Entity;
+import com.github.jotask.rosjam.game.entity.Entity;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
 
 import java.util.LinkedList;
@@ -32,7 +32,7 @@ public class Room extends Entity {
     public static final int WIDTH = 21;
     public static final int HEIGHT = 11;
 
-    public static final float CELL_SIZE = 3f;
+    public static final float CELL_SIZE = 1f;
 
     private CELL_TYPE[][] layout;
 
@@ -127,4 +127,11 @@ public class Room extends Entity {
     }
 
     public Vector2 getPosition() { return position; }
+
+    public Vector2 getCenter(){
+        float x = position.x + (WIDTH  * CELL_SIZE) / 2f;
+        float y = position.y + (HEIGHT * CELL_SIZE) / 2f;
+        return new Vector2(x, y);
+    }
+
 }

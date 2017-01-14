@@ -2,9 +2,11 @@ package com.github.jotask.rosjam.game;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
 import com.github.jotask.rosjam.game.dungeon.Dungeon;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
+import com.github.jotask.rosjam.game.entity.Player;
 
 import java.util.LinkedList;
 
@@ -144,4 +146,28 @@ public final class Factory {
 
     }
 
+    public static Player generatePlayer(final WorldManager worldManager, final Room room) {
+
+        final Vector2 center = room.getCenter();
+
+        BodyDef bd = new BodyDef();
+        bd.type = BodyDef.BodyType.StaticBody;
+        bd.position.set(center.x, center.y);
+
+        Body body = worldManager.getWorld().createBody(bd);
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(.5f, .5f);
+
+        FixtureDef fd = new FixtureDef();
+        fd.shape = shape;
+        fd.density = 1f;
+
+        Fixture fixture = body.createFixture(fd);
+
+        shape.dispose();
+
+        Player player = new Player(body);
+        return player;
+    }
 }
