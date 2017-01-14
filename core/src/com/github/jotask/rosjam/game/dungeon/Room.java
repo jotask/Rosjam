@@ -81,7 +81,7 @@ public class Room extends Entity {
         for(int i = 0; i < layout.length; i++){
             for(int j = 0; j < layout[0].length; j++) {
                 sr.setColor(layout[i][j].color);
-                sr.rect(i * CELL_SIZE, j * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                sr.rect(position.x + (i * CELL_SIZE), position.y + (j * CELL_SIZE), CELL_SIZE, CELL_SIZE);
             }
         }
     }
