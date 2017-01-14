@@ -7,6 +7,14 @@ import com.github.jotask.rosjam.engine.GameStateManager;
 
 public class Rosjam extends ApplicationAdapter {
 
+	private static Rosjam instance;
+
+	public static final Rosjam get(){
+		if(instance == null)
+			throw new RuntimeException();
+		return instance;
+	}
+
 	private SpriteBatch sb;
 	private ShapeRenderer sr;
 
@@ -14,6 +22,7 @@ public class Rosjam extends ApplicationAdapter {
 
 	@Override
 	public void create () {
+		instance = this;
 
 		sb = new SpriteBatch();
 
@@ -34,6 +43,7 @@ public class Rosjam extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		gsm.dispose();
+		instance = null;
 	}
 
 }
