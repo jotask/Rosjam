@@ -2,6 +2,7 @@ package com.github.jotask.rosjam.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.jotask.rosjam.game.controller.Controller;
 import com.github.jotask.rosjam.game.dungeon.Dungeon;
@@ -41,6 +42,11 @@ public class DungeonState extends GameState {
         }
         worldManager.update();
 //        System.out.println("B: " + worldManager.getWorld().getBodyCount());
+    }
+
+    @Override
+    public void render(SpriteBatch sb) {
+        dungeon.render(sb);
     }
 
     @Override

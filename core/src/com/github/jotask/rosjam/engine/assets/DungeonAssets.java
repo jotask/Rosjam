@@ -40,7 +40,7 @@ public class DungeonAssets {
 
         TextureRegion region = new TextureRegion();
         region.setTexture(texture);
-        region.setRegion(0,0,16,16);
+        region.setRegion(0,0,SIZE,SIZE);
         this.map.put(TILES.FLOOR, region);
 
     }

@@ -2,10 +2,14 @@ package com.github.jotask.rosjam.game.dungeon.room;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.github.jotask.rosjam.Rosjam;
+import com.github.jotask.rosjam.engine.assets.DungeonAssets;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
+import com.github.jotask.rosjam.game.dungeon.room.cell.Cell;
 import com.github.jotask.rosjam.game.entity.Entity;
 
 import java.util.LinkedList;
@@ -35,6 +39,8 @@ public class Room extends Entity {
     public static final float CELL_SIZE = 1f;
 
     public CELL_TYPE[][] layout;
+
+    public Cell[][] cells;
 
     private Vector2 position;
 
@@ -92,6 +98,18 @@ public class Room extends Entity {
 
         }
 
+        {
+            cells = new Cell[WIDTH][HEIGHT];
+
+            final DungeonAssets assets = Rosjam.get().getAssets().getDungeonAssets();
+            for(int i = 0; i < layout.length; i++) {
+                for (int j = 0; j < layout[0].length; j++) {
+                    TextureRegion region = assets.getRegion(DungeonAssets.TILES.FLOOR);
+                    cells[i][j] = new Cell(i * CELL_SIZE, j * CELL_SIZE, region);
+                }
+            }
+        }
+
     }
 
     @Override
@@ -101,17 +119,29 @@ public class Room extends Entity {
 
     @Override
     public void render(SpriteBatch sb) {
+        for(int i = 0; i < layout.length; i++) {
+            for (int j = 0; j < layout[0].length; j++) {
+                cells[i][j].render(sb);
+            }
+        }
     }
 
     @Override
     public void debug(ShapeRenderer sr) {
-        sr.set(ShapeRenderer.ShapeType.Line);
-        for(int i = 0; i < layout.length; i++){
-            for(int j = 0; j < layout[0].length; j++) {
-                sr.setColor(layout[i][j].color);
-                sr.rect(position.x + (i * CELL_SIZE), position.y + (j * CELL_SIZE), CELL_SIZE, CELL_SIZE);
+
+        for(int i = 0; i < layout.length; i++) {
+            for (int j = 0; j < layout[0].length; j++) {
+                cells[i][j].debug(sr);
             }
         }
+
+//        sr.set(ShapeRenderer.ShapeType.Line);
+//        for(int i = 0; i < layout.length; i++){
+//            for(int j = 0; j < layout[0].length; j++) {
+//                sr.setColor(layout[i][j].color);
+//                sr.rect(position.x + (i * CELL_SIZE), position.y + (j * CELL_SIZE), CELL_SIZE, CELL_SIZE);
+//            }
+//        }
 //        sr.set(ShapeRenderer.ShapeType.Line);
 //        for(int i = 0; i < layout.length; i++){
 //            for(int j = 0; j < layout[0].length; j++) {
