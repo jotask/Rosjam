@@ -3,7 +3,6 @@ package com.github.jotask.rosjam.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.github.jotask.rosjam.engine.Camera;
 import com.github.jotask.rosjam.engine.GameManager;
 import com.github.jotask.rosjam.engine.states.State;
@@ -26,10 +25,10 @@ public class Game extends State {
     @Override
     public void init() {
         this.camera = new Camera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        float w = 21f;
-        float h = 11f;
-        this.camera.viewport = new FitViewport(w, h, camera);
-        this.camera.viewport.apply();
+//        float w = 21f;
+//        float h = 11f;
+//        this.camera.viewport = new FitViewport(w, h, camera);
+//        this.camera.viewport.apply();
 
         this.hud = new Hud(this);
         this.controller = new AndroidController(this.hud);

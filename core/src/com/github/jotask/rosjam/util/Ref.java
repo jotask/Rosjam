@@ -12,6 +12,6 @@ public class Ref {
 
     public static final boolean DEBUG = true;
 
-    public static final GameStateManager.STATE INITIAL_STATE = GameStateManager.STATE.GAME;
+    public static final GameStateManager.STATE INITIAL_STATE = GameStateManager.STATE.TEST;
 
 }

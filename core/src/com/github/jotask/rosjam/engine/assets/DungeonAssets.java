@@ -18,10 +18,22 @@ public class DungeonAssets {
 
     private final int SIZE = 16;
 
+    private Texture texture;
     private final Assets assets;
 
     public enum TILES{
-        FLOOR ()
+        FLOOR (6, 2),
+        WALL_LEFT(5, 2),
+        WALL_RIGHT(7, 2),
+        WALL_TOP(6, 1),
+        WALL_BOTTOM(6, 3);
+
+        int x, y;
+
+        TILES(int x, int y){
+            this.x = x;
+            this.y = y;
+        }
     }
 
     // TODO implement m owm map to choose random regions with the same key
@@ -36,13 +48,23 @@ public class DungeonAssets {
     }
 
     public void prepare(){
-        Texture texture = (Texture) this.assets.getAssetManager().get(this.filename, this.type);
+        texture = (Texture) this.assets.getAssetManager().get(this.filename, this.type);
 
+        for(TILES t: TILES.values()){
+            addTile(t);
+        }
+
+    }
+
+    private void addTile(final TILES tile){
+        this.map.put(tile, generateRegion(tile));
+    }
+
+    private TextureRegion generateRegion(final TILES tile){
         TextureRegion region = new TextureRegion();
-        region.setTexture(texture);
-        region.setRegion(0,0,SIZE,SIZE);
-        this.map.put(TILES.FLOOR, region);
-
+        region.setTexture(this.texture);
+        region.setRegion(tile.x * SIZE,tile.y * SIZE,SIZE,SIZE);
+        return region;
     }
 
     public TextureRegion getRegion(final TILES key){

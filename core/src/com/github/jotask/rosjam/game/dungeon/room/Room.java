@@ -104,7 +104,14 @@ public class Room extends Entity {
             final DungeonAssets assets = Rosjam.get().getAssets().getDungeonAssets();
             for(int i = 0; i < layout.length; i++) {
                 for (int j = 0; j < layout[0].length; j++) {
-                    TextureRegion region = assets.getRegion(DungeonAssets.TILES.FLOOR);
+                    TextureRegion region;
+
+                    region = assets.getRegion(DungeonAssets.TILES.FLOOR);
+
+//                    if(true){
+//                        region = assets.getRegion(DungeonAssets.TILES.WALL_BOTTOM);
+//                    }
+
                     cells[i][j] = new Cell(i * CELL_SIZE, j * CELL_SIZE, region);
                 }
             }

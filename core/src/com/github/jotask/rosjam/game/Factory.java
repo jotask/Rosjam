@@ -1,12 +1,17 @@
 package com.github.jotask.rosjam.game;
 
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.github.jotask.rosjam.game.dungeon.Dungeon;
+import com.github.jotask.rosjam.game.dungeon.DungeonTest;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
+import com.github.jotask.rosjam.game.dungeon.room.TestRoom;
 import com.github.jotask.rosjam.game.entity.Player;
+import com.github.jotask.rosjam.test.TestState;
 
 import java.util.LinkedList;
 
@@ -19,6 +24,20 @@ import java.util.LinkedList;
 public final class Factory {
 
     private static final int MAX_ROOMS = 1;
+
+    public static DungeonTest generateTestDungeon(final TestState state){
+
+        LinkedList<TestRoom> rooms = new LinkedList<TestRoom>();
+
+        TiledMap map = new TmxMapLoader().load("test.tmx");
+
+        TestRoom room = new TestRoom(state, new Vector2(0,0), map);
+
+        DungeonTest dungeon = new DungeonTest(rooms);
+        dungeon.initialRoom = room;
+        return dungeon;
+
+    }
 
     public static Room generateRoom(final Vector2 position, final WorldManager worldManager) {
         Room room = new Room(position);
@@ -210,4 +229,5 @@ public final class Factory {
         Player player = new Player(body);
         return player;
     }
+
 }
