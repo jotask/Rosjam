@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="21" height="11" tilewidth="16" tileheight="16" nextobjectid="5">
+ <tileset firstgid="1" name="dungeon_sheet" tilewidth="16" tileheight="16" tilecount="240">
+  <image source="dungeon_sheet.png" trans="ff00ff" width="384" height="160"/>
+ </tileset>
+ <layer name="floor" width="21" height="11">
+  <data encoding="base64" compression="zlib">
+   eJwzZ2BgMB/Fo3gUDzoMAPyjMaI=
+  </data>
+ </layer>
+ <layer name="walls" width="21" height="11">
+  <data encoding="base64" compression="zlib">
+   eJyTYmBgYANidipgDiCWgmI5IJYH4lVAvBrKBuGVSGx0cRB/DZIYSK8CkplmDNQBFqNmjngz/YDYnwo4AMlMamMAVhUUNw==
+  </data>
+ </layer>
+ <objectgroup name="walls">
+  <object id="1" x="0" y="0" width="336" height="32"/>
+  <object id="2" x="0" y="144" width="336" height="32"/>
+  <object id="3" x="304" y="32" width="32" height="112"/>
+  <object id="4" x="0" y="32" width="32" height="112"/>
+ </objectgroup>
+</map>
