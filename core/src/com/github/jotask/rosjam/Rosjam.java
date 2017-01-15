@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.github.jotask.rosjam.engine.assets.Assets;
 import com.github.jotask.rosjam.engine.GameStateManager;
 import com.github.jotask.rosjam.util.Ref;
 
@@ -23,9 +24,14 @@ public class Rosjam extends ApplicationAdapter {
 
 	private GameStateManager gsm;
 
+	private Assets assets;
+
 	@Override
 	public void create () {
 		instance = this;
+
+		this.assets = new Assets();
+		this.assets.loadEverything();
 
 		sb = new SpriteBatch();
 
@@ -57,5 +63,7 @@ public class Rosjam extends ApplicationAdapter {
 	public final GameStateManager getGsm(){ return this.gsm; }
 
 	public final SpriteBatch getSb() { return sb; }
+
+	public Assets getAssets() { return assets; }
 
 }
