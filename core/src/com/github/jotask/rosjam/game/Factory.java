@@ -1,10 +1,16 @@
 package com.github.jotask.rosjam.game;
 
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.objects.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.github.jotask.rosjam.engine.map.MapTiled;
 import com.github.jotask.rosjam.game.dungeon.Dungeon;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
@@ -20,15 +26,97 @@ import java.util.LinkedList;
  */
 public final class Factory {
 
-    private static final int MAX_ROOMS = 7;
+    private static final int MAX_ROOMS = 3;
+
+    private static Rectangle calculateBounds(final MapTiled map){
+
+        Rectangle bounds = new Rectangle();
+        bounds.setPosition(map.getPosition());
+
+        MapProperties prop = map.getMap().getProperties();
+
+        int mapWidth = prop.get("width", Integer.class);
+        int mapHeight = prop.get("height", Integer.class);
+        int tilePixelWidth = prop.get("tilewidth", Integer.class);
+        int tilePixelHeight = prop.get("tileheight", Integer.class);
+
+        float x  = ((mapWidth  * tilePixelWidth )) * MapTiled.SCALE;
+        float y  = ((mapHeight * tilePixelHeight)) * MapTiled.SCALE;
+
+        bounds.setSize(x, y);
+
+        return bounds;
+    }
 
     public static Room generateRoom(final Vector2 position, final WorldManager worldManager) {
-
-        TiledMap map = new TmxMapLoader().load("test.tmx");
-
-        Room room = new Room(worldManager.getCamera(), position, map);
-
+        TiledMap tiledMap = new TmxMapLoader().load("test.tmx");
+        MapTiled map = new MapTiled(position, tiledMap);
+        Room room = new Room(worldManager.getCamera(), position, map, calculateBounds(map));
+        createBodies(map, worldManager);
         return room;
+    }
+
+    private static void createBodies(final MapTiled map, final WorldManager worldManager){
+
+        MapObjects collisionLayer = map.getMap().getLayers().get("wall").getObjects();
+
+        for(MapObject obj: collisionLayer){
+
+            if (obj instanceof TextureMapObject) {
+                continue;
+            }
+
+            Shape shape = null;
+
+            if (obj instanceof RectangleMapObject) {
+                shape = getRectangle((RectangleMapObject)obj);
+            }
+            else if (obj instanceof PolygonMapObject) {
+                System.out.println("PolygonMapObject");
+            }
+            else if (obj instanceof PolylineMapObject) {
+                System.out.println("PolyLineMap");
+            }
+            else if (obj instanceof CircleMapObject) {
+                System.out.println("CircleMap");
+            }
+            else {
+                continue;
+            }
+
+            if(shape == null){
+                System.out.println("Shape Is Null");
+                continue;
+            }
+
+            BodyDef bd = new BodyDef();
+            bd.type = BodyDef.BodyType.StaticBody;
+            bd.position.set(map.getPosition());
+            Body body = worldManager.getWorld().createBody(bd);
+            body.createFixture(shape, 1);
+
+            shape.dispose();
+
+        }
+
+    }
+
+    private static Shape getRectangle(RectangleMapObject obj){
+
+        // TODO Calculate this ppt
+        float ppt = 15.375f;
+
+        Rectangle rectangle = obj.getRectangle();
+        PolygonShape polygon = new PolygonShape();
+        Vector2 size = new Vector2((rectangle.x + rectangle.width * 0.5f) / ppt,
+                (rectangle.y + rectangle.height * 0.5f ) / ppt);
+        polygon.setAsBox(rectangle.width * 0.5f / ppt,
+                rectangle.height * 0.5f / ppt,
+                size,
+                0.0f);
+
+        return polygon;
+
     }
 
     private static Body createBodyForRoom(final World world, final Room room, int i, int j){

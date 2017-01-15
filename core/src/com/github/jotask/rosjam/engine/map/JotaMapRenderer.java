@@ -21,11 +21,9 @@ public class JotaMapRenderer extends OrthogonalTiledMapRenderer {
     private final MapTiled mapTiled;
 
     public JotaMapRenderer(MapTiled map) {
-        super(map.getMap(), 0.065f, Rosjam.get().getSb());
+        super(map.getMap(), MapTiled.SCALE, Rosjam.get().getSb());
         this.mapTiled = map;
     }
-
-
 
     /**
      * Original code below to the super class

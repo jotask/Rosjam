@@ -10,7 +10,9 @@ import com.github.jotask.rosjam.engine.Camera;
  * @author Jose Vives Iznardo
  * @since 15/01/2017
  */
-public class MapTiled extends TiledMap {
+public class MapTiled {
+
+    public static final float SCALE = 0.065f;
 
     private Vector2 position;
     private TiledMap map;
@@ -34,4 +36,5 @@ public class MapTiled extends TiledMap {
         renderer.render();
         renderer.getBatch().begin();
     }
+
 }

@@ -3,7 +3,6 @@ package com.github.jotask.rosjam.game.dungeon.room;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapProperties;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.github.jotask.rosjam.engine.Camera;
@@ -21,8 +20,6 @@ import java.util.LinkedList;
  */
 public class Room extends Entity {
 
-    private final float SCALE = .065f;
-
     public static final int WIDTH = 21;
     public static final int HEIGHT = 11;
 
@@ -36,25 +33,11 @@ public class Room extends Entity {
 
     public final LinkedList<Door> doors;
 
-    public Room(final Camera camera, final Vector2 position, final TiledMap map) {
+    public Room(final Camera camera, final Vector2 position, final MapTiled map, final Rectangle bounds) {
         this.camera = camera;
         this.position = position;
-        this.map = new MapTiled(position, map);
-
-        this.bounds = new Rectangle();
-        this.bounds.setPosition(position);
-
-        MapProperties prop = this.map.getMap().getProperties();
-
-        int mapWidth = prop.get("width", Integer.class);
-        int mapHeight = prop.get("height", Integer.class);
-        int tilePixelWidth = prop.get("tilewidth", Integer.class);
-        int tilePixelHeight = prop.get("tileheight", Integer.class);
-
-        float x  = ((mapWidth  * tilePixelWidth )) * SCALE;
-        float y  = ((mapHeight * tilePixelHeight)) * SCALE;
-
-        this.bounds.setSize(x, y);
+        this.map = map;
+        this.bounds = bounds;
 
         {
 
@@ -106,8 +89,8 @@ public class Room extends Entity {
         int tilePixelWidth = prop.get("tilewidth", Integer.class);
         int tilePixelHeight = prop.get("tileheight", Integer.class);
 
-        float x  = ((mapWidth  * tilePixelWidth ) / 2f) * SCALE;
-        float y  = ((mapHeight * tilePixelHeight) / 2f) * SCALE;
+        float x  = ((mapWidth  * tilePixelWidth ) / 2f) * MapTiled.SCALE;
+        float y  = ((mapHeight * tilePixelHeight) / 2f) * MapTiled.SCALE;
 
         x += position.x;
         y += position.y;

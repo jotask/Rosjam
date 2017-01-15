@@ -28,8 +28,8 @@ public class Game extends State {
         this.camera = new Camera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 //        float w = 21f;
 //        float h = 11f;
-        float w = Gdx.graphics.getWidth() / 2f;
-        float h = Gdx.graphics.getHeight() / 2f;
+        float w = Gdx.graphics.getWidth() / 10f;
+        float h = Gdx.graphics.getHeight() / 10f;
         this.camera.viewport = new FitViewport(w, h, camera);
         this.camera.viewport.apply();
 

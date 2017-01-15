@@ -1,5 +1,7 @@
 package com.github.jotask.rosjam.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.jotask.rosjam.game.controller.Controller;
@@ -35,9 +37,9 @@ public class DungeonState extends GameState {
 
     @Override
     public void update() {
-//        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) | Gdx.input.justTouched()){
-//            dungeon = Factory.generateDungeon(this.worldManager);
-//        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) | Gdx.input.justTouched()){
+            dungeon = Factory.generateDungeon(this.worldManager);
+        }
         worldManager.update();
         dungeon.update();
 //        System.out.println("B: " + worldManager.getWorld().getBodyCount());
@@ -51,6 +53,7 @@ public class DungeonState extends GameState {
     @Override
     public void debug(ShapeRenderer sr) {
         dungeon.debug(sr);
+        this.worldManager.debug(sr);
     }
 
     @Override

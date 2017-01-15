@@ -24,15 +24,14 @@ public class WorldManager extends GameState{
 
     public WorldManager(Game game) {
         super(game);
-
         this.world = new World(new Vector2(0,0), true);
         this.renderer = new Box2DDebugRenderer();
-
     }
 
     @Override
     public void update() {
         world.step(Gdx.graphics.getDeltaTime(), velocityIteration, positionsIterations);
+//        System.out.println("B: " + world.getBodyCount());
     }
 
     @Override

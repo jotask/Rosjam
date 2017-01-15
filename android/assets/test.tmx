@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="21" height="11" tilewidth="16" tileheight="16" nextobjectid="5">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="21" height="11" tilewidth="16" tileheight="16" nextobjectid="31">
  <tileset firstgid="1" name="dungeon_sheet" tilewidth="16" tileheight="16" tilecount="240">
   <image source="dungeon_sheet.png" trans="ff00ff" width="384" height="160"/>
  </tileset>
- <layer name="floor" width="21" height="11">
+ <layer name="floor" width="21" height="11" visible="0">
   <data encoding="base64" compression="zlib">
    eJwzZ2BgMB/Fo3gUDzoMAPyjMaI=
   </data>
  </layer>
  <layer name="walls" width="21" height="11">
   <data encoding="base64" compression="zlib">
-   eJyTYmBgYANidipgDiCWgmI5IJYH4lVAvBrKBuGVSGx0cRB/DZIYSK8CkplmDNQBFqNmjngz/YDYnwo4AMlMamMAVhUUNw==
+   eJyTYmBgYANidjzYigECLAmo4wBiKSiWA2J5IF4FxKuhbBBeCaWDoGYGIomD1K1BUgvSq4BkphkDdYAF1Dxkv1EKYGGD7DdKASxsaAH8gZiLSmZxQs0DhakSlcxUZKBdvIOwHwPEzbgwLGw4CagLQDKTEIaFjSKR6gFHUhLK
   </data>
  </layer>
- <objectgroup name="walls">
-  <object id="1" x="0" y="0" width="336" height="32"/>
-  <object id="2" x="0" y="144" width="336" height="32"/>
-  <object id="3" x="304" y="32" width="32" height="112"/>
-  <object id="4" x="0" y="32" width="32" height="112"/>
+ <objectgroup name="wall">
+  <object id="23" x="182.666" y="0.83335" width="153.333" height="28.6667"/>
+  <object id="24" x="-0.333667" y="-0.16665" width="155.667" height="29"/>
+  <object id="25" x="-0.667" y="28.8333" width="27.3333" height="48.6667"/>
+  <object id="26" x="-0.333667" y="101.5" width="26.3333" height="74"/>
+  <object id="27" x="180.333" y="148.5" width="155.667" height="27.3333"/>
+  <object id="28" x="310.666" y="100.833" width="25" height="50.3333"/>
+  <object id="29" x="310.666" y="26.8333" width="25" height="50"/>
+  <object id="30" x="22.333" y="149.833" width="130" height="26.3333"/>
  </objectgroup>
 </map>
