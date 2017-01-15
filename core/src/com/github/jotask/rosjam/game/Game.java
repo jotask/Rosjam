@@ -35,8 +35,6 @@ public class Game extends State {
         this.controller = new AndroidController(this.hud);
         this.gameManager = new GameManager(this, this.controller);
 
-        Gdx.input.setInputProcessor(this.hud.getStage());
-
     }
 
     @Override
@@ -63,7 +61,7 @@ public class Game extends State {
     @Override
     public void update() {
         this.gameManager.update();
-        this.hud.update();
+        this.hud.update(Gdx.graphics.getDeltaTime());
     }
 
     @Override

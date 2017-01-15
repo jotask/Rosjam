@@ -49,7 +49,7 @@ public class DirectionController {
         touchpad.setBounds(15, 15, 200, 200);
 
         //Create a Stage and add TouchPad
-        hud.addActor(touchpad);
+        hud.addControl(touchpad);
 
         this.percentage = new Vector2();
 

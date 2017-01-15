@@ -68,7 +68,6 @@ public class Room extends Entity {
             }
         }
 
-
         {
 
             this.doors = new LinkedList<Door>();
