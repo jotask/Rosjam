@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.jotask.rosjam.engine.states.State;
 import com.github.jotask.rosjam.game.Game;
+import com.github.jotask.rosjam.test.TestState;
 import com.github.jotask.rosjam.util.Ref;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -16,7 +17,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
  */
 public class GameStateManager extends State{
 
-    public enum STATE { SPLASH, MENU, GAME };
+    public enum STATE { SPLASH, MENU, GAME, TEST };
 
     private State currentState;
 
@@ -80,6 +81,9 @@ public class GameStateManager extends State{
             case GAME:
                 s = new Game();
                 break;
+            case TEST:
+                s = new TestState();
+                break;
             default:
                 throw new NotImplementedException();
         }
@@ -91,6 +95,8 @@ public class GameStateManager extends State{
 
     @Override
     public void resize(int width, int height) { this.currentState.resize(width, height); }
+
+    public State getState() { return this.currentState;  }
 
 }
 
