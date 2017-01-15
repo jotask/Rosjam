@@ -1,15 +1,14 @@
 package com.github.jotask.rosjam.game.dungeon.room;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.github.jotask.rosjam.Rosjam;
-import com.github.jotask.rosjam.engine.assets.DungeonAssets;
+import com.github.jotask.rosjam.engine.Camera;
+import com.github.jotask.rosjam.engine.map.MapTiled;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
-import com.github.jotask.rosjam.game.dungeon.room.cell.Cell;
 import com.github.jotask.rosjam.game.entity.Entity;
 
 import java.util.LinkedList;
@@ -22,57 +21,40 @@ import java.util.LinkedList;
  */
 public class Room extends Entity {
 
-    public enum CELL_TYPE {
-        WALL (Color.RED),
-        FLOOR(Color.WHITE);
-
-        Color color;
-
-        CELL_TYPE(Color color) {
-            this.color = color;
-        }
-    }
+    private final float SCALE = .065f;
 
     public static final int WIDTH = 21;
     public static final int HEIGHT = 11;
 
     public static final float CELL_SIZE = 1f;
 
-    public CELL_TYPE[][] layout;
-
-    public Cell[][] cells;
-
+    private Camera camera;
     private Vector2 position;
+    private MapTiled map;
 
-    public LinkedList<Door> doors;
+    public final Rectangle bounds;
 
-    public Rectangle bounds;
+    public final LinkedList<Door> doors;
 
-    public Room(final Vector2 position) {
-
+    public Room(final Camera camera, final Vector2 position, final TiledMap map) {
+        this.camera = camera;
         this.position = position;
+        this.map = new MapTiled(position, map);
 
         this.bounds = new Rectangle();
-        this.bounds.setPosition(this.position);
-        this.bounds.setSize(WIDTH * CELL_SIZE, HEIGHT * CELL_SIZE);
+        this.bounds.setPosition(position);
 
-        layout = new CELL_TYPE[WIDTH][HEIGHT];
+        MapProperties prop = this.map.getMap().getProperties();
 
-        final int WALL_SIZE = 2;
+        int mapWidth = prop.get("width", Integer.class);
+        int mapHeight = prop.get("height", Integer.class);
+        int tilePixelWidth = prop.get("tilewidth", Integer.class);
+        int tilePixelHeight = prop.get("tileheight", Integer.class);
 
-        for(int i = 0; i < layout.length; i++){
-            for(int j = 0; j < layout[0].length; j++){
+        float x  = ((mapWidth  * tilePixelWidth )) * SCALE;
+        float y  = ((mapHeight * tilePixelHeight)) * SCALE;
 
-                layout[i][j] = CELL_TYPE.FLOOR;
-
-                if(i < WALL_SIZE | j < WALL_SIZE |
-                        i >  WIDTH - 1 - WALL_SIZE |
-                        j > HEIGHT - 1 - WALL_SIZE){
-                    layout[i][j] = CELL_TYPE.WALL;
-                }
-
-            }
-        }
+        this.bounds.setSize(x, y);
 
         {
 
@@ -98,25 +80,6 @@ public class Room extends Entity {
 
         }
 
-        {
-            cells = new Cell[WIDTH][HEIGHT];
-
-            final DungeonAssets assets = Rosjam.get().getAssets().getDungeonAssets();
-            for(int i = 0; i < layout.length; i++) {
-                for (int j = 0; j < layout[0].length; j++) {
-                    TextureRegion region;
-
-                    region = assets.getRegion(DungeonAssets.TILES.FLOOR);
-
-//                    if(true){
-//                        region = assets.getRegion(DungeonAssets.TILES.WALL_BOTTOM);
-//                    }
-
-                    cells[i][j] = new Cell(i * CELL_SIZE, j * CELL_SIZE, region);
-                }
-            }
-        }
-
     }
 
     @Override
@@ -126,48 +89,32 @@ public class Room extends Entity {
 
     @Override
     public void render(SpriteBatch sb) {
-        for(int i = 0; i < layout.length; i++) {
-            for (int j = 0; j < layout[0].length; j++) {
-                cells[i][j].render(sb);
-            }
-        }
+        this.map.render(camera);
     }
 
     @Override
     public void debug(ShapeRenderer sr) {
 
-        for(int i = 0; i < layout.length; i++) {
-            for (int j = 0; j < layout[0].length; j++) {
-                cells[i][j].debug(sr);
-            }
-        }
+    }
 
-//        sr.set(ShapeRenderer.ShapeType.Line);
-//        for(int i = 0; i < layout.length; i++){
-//            for(int j = 0; j < layout[0].length; j++) {
-//                sr.setColor(layout[i][j].color);
-//                sr.rect(position.x + (i * CELL_SIZE), position.y + (j * CELL_SIZE), CELL_SIZE, CELL_SIZE);
-//            }
-//        }
-//        sr.set(ShapeRenderer.ShapeType.Line);
-//        for(int i = 0; i < layout.length; i++){
-//            for(int j = 0; j < layout[0].length; j++) {
-//                sr.setColor(Color.BLACK);
-//                sr.rect(position.x + (i * CELL_SIZE), position.y + (j * CELL_SIZE), CELL_SIZE, CELL_SIZE);
-//            }
-//        }
+    public Vector2 getCenter() {
 
-//        sr.setColor(Color.RED);
-//        sr.rect(bounds.x, bounds.y, bounds.width, bounds.height);
+        MapProperties prop = map.getMap().getProperties();
+
+        int mapWidth = prop.get("width", Integer.class);
+        int mapHeight = prop.get("height", Integer.class);
+        int tilePixelWidth = prop.get("tilewidth", Integer.class);
+        int tilePixelHeight = prop.get("tileheight", Integer.class);
+
+        float x  = ((mapWidth  * tilePixelWidth ) / 2f) * SCALE;
+        float y  = ((mapHeight * tilePixelHeight) / 2f) * SCALE;
+
+        x += position.x;
+        y += position.y;
+
+        return new Vector2(x, y);
 
     }
 
     public Vector2 getPosition() { return position; }
-
-    public Vector2 getCenter(){
-        float x = position.x + (WIDTH  * CELL_SIZE) / 2f;
-        float y = position.y + (HEIGHT * CELL_SIZE) / 2f;
-        return new Vector2(x, y);
-    }
-
 }

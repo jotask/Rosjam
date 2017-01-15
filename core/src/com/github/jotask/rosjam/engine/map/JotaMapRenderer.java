@@ -25,6 +25,8 @@ public class JotaMapRenderer extends OrthogonalTiledMapRenderer {
         this.mapTiled = map;
     }
 
+
+
     /**
      * Original code below to the super class
      * This code has been modified to gice the posibility to a map have a position
@@ -178,4 +180,5 @@ public class JotaMapRenderer extends OrthogonalTiledMapRenderer {
         }
 
     }
+
 }

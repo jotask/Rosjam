@@ -28,7 +28,7 @@ public class DungeonState extends GameState {
 
         dungeon = Factory.generateDungeon(this.worldManager);
 
-        this.camera.position.set(dungeon.initialRoom.getPosition(), 10f);
+        this.camera.position.set(dungeon.initialRoom.getCenter(), 10f);
         this.camera.update();
 
     }

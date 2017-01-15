@@ -6,12 +6,9 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.github.jotask.rosjam.game.dungeon.Dungeon;
-import com.github.jotask.rosjam.game.dungeon.DungeonTest;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
-import com.github.jotask.rosjam.game.dungeon.room.TestRoom;
 import com.github.jotask.rosjam.game.entity.Player;
-import com.github.jotask.rosjam.test.TestState;
 
 import java.util.LinkedList;
 
@@ -23,34 +20,13 @@ import java.util.LinkedList;
  */
 public final class Factory {
 
-    private static final int MAX_ROOMS = 1;
+    private static final int MAX_ROOMS = 7;
 
-    public static DungeonTest generateTestDungeon(final TestState state){
-
-        LinkedList<TestRoom> rooms = new LinkedList<TestRoom>();
+    public static Room generateRoom(final Vector2 position, final WorldManager worldManager) {
 
         TiledMap map = new TmxMapLoader().load("test.tmx");
 
-        TestRoom room = new TestRoom(state, new Vector2(0,0), map);
-
-        DungeonTest dungeon = new DungeonTest(rooms);
-        dungeon.initialRoom = room;
-        return dungeon;
-
-    }
-
-    public static Room generateRoom(final Vector2 position, final WorldManager worldManager) {
-        Room room = new Room(position);
-
-        LinkedList<Body> bodies = new LinkedList<Body>();
-        final Room.CELL_TYPE[][] layout = room.layout;
-        for(int i = 0; i < layout.length; i++){
-            for(int j = 0; j < layout[0].length; j++){
-                if(layout[i][j] == Room.CELL_TYPE.WALL){
-                    bodies.add(createBodyForRoom(worldManager.getWorld(), room, i, j));
-                }
-            }
-        }
+        Room room = new Room(worldManager.getCamera(), position, map);
 
         return room;
     }

@@ -65,8 +65,8 @@ public class Hud{
     }
 
     public void render(SpriteBatch sb) {
-        this.stage.draw();
-        this.controls.render();
+//        this.stage.draw();
+//        this.controls.render();
     }
 
     public void dispose() {

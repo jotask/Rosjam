@@ -29,7 +29,9 @@ public class MapTiled extends TiledMap {
     public Vector2 getPosition() { return position; }
 
     public void render(Camera camera) {
+        renderer.getBatch().end();
         renderer.setView(camera);
         renderer.render();
+        renderer.getBatch().begin();
     }
 }
