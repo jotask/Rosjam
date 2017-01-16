@@ -1,4 +1,4 @@
-package com.github.jotask.rosjam.game.controller;
+package com.github.jotask.rosjam.engine.input;
 
 import com.badlogic.gdx.math.Vector2;
 

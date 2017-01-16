@@ -2,7 +2,8 @@ package com.github.jotask.rosjam.test;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.github.jotask.rosjam.engine.states.State;
+import com.github.jotask.rosjam.engine.camera.Camera;
+import com.github.jotask.rosjam.engine.states.CameraState;
 
 /**
  * TestState
@@ -10,7 +11,11 @@ import com.github.jotask.rosjam.engine.states.State;
  * @author Jose Vives Iznardo
  * @since 15/01/2017
  */
-public class TestState extends State {
+public class TestState extends CameraState {
+
+    public TestState(Camera camera) {
+        super(camera);
+    }
 
     @Override
     public void init() {
@@ -36,4 +41,5 @@ public class TestState extends State {
     public void dispose() {
 
     }
+
 }

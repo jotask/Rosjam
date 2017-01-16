@@ -2,11 +2,11 @@ package com.github.jotask.rosjam.engine;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.github.jotask.rosjam.engine.states.State;
+import com.github.jotask.rosjam.engine.input.Controller;
+import com.github.jotask.rosjam.engine.states.GameState;
+import com.github.jotask.rosjam.engine.states.IState;
 import com.github.jotask.rosjam.game.DungeonState;
 import com.github.jotask.rosjam.game.Game;
-import com.github.jotask.rosjam.game.GameState;
-import com.github.jotask.rosjam.game.controller.Controller;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
@@ -15,24 +15,19 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
  * @author Jose Vives Iznardo
  * @since 13/01/2017
  */
-public class GameManager extends State{
-
-    private final Game game;
+public class GameManager extends GameState {
 
     public enum STATE { DUNGEON }
 
-    private GameState currentState;
+    private IState currentState;
 
     private Controller controller;
 
     public GameManager(final Game game, final Controller controller) {
-        this.game = game;
+        super(game);
         this.controller = controller;
         this.changeState(STATE.DUNGEON);
     }
-
-    @Override
-    public void init() { }
 
     @Override
     public void preUpdate() { currentState.preUpdate(); }
@@ -75,11 +70,13 @@ public class GameManager extends State{
         GameState s = null;
         switch (state){
             case DUNGEON:
-                s = new DungeonState(this.game, this.controller);
+                s = new DungeonState(this.game);
                 break;
             default:
                 throw new NotImplementedException();
         }
+
+        this.setPlayer(s.getPlayer());
 
         currentState = s;
         currentState.init();

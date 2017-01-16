@@ -1,4 +1,4 @@
-package com.github.jotask.rosjam.game.controller.android;
+package com.github.jotask.rosjam.engine.input.android;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;

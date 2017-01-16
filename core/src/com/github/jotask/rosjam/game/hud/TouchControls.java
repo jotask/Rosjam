@@ -38,7 +38,7 @@ public class TouchControls {
         // FIXME
 
         //need to be improved
-        //stage.draw();
+        stage.draw();
     }
 
     public void dispose(){

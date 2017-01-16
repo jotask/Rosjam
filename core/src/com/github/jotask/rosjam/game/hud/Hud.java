@@ -1,5 +1,6 @@
 package com.github.jotask.rosjam.game.hud;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -26,6 +27,8 @@ public class Hud{
     private Table table;
 
     private final float scale = 1f;
+
+    private final Application.ApplicationType type;
 
     public Hud(final Game game) {
         this.game = game;
@@ -55,22 +58,30 @@ public class Hud{
 //        table.setDebug(true);
 //        stage.addActor(table);
 
-        this.controls = new TouchControls(this.stage, this.camera);
+        this.type = Gdx.app.getType();
+
+        //Only if is in android
+        if(type == Application.ApplicationType.Android) {
+            this.controls = new TouchControls(this.stage, this.camera);
+        }
 
     }
 
     public void update(final float delta) {
         this.stage.act(delta);
-        this.controls.update(delta);
+        if(type == Application.ApplicationType.Android)
+            this.controls.update(delta);
     }
 
     public void render(SpriteBatch sb) {
-//        this.stage.draw();
-//        this.controls.render();
+        this.stage.draw();
+        if(type == Application.ApplicationType.Android)
+        this.controls.render();
     }
 
     public void dispose() {
          this.stage.dispose();
+        if(type == Application.ApplicationType.Android)
          this.controls.dispose();
     }
 
@@ -78,7 +89,8 @@ public class Hud{
         int w = Gdx.graphics.getWidth();
         int h = Gdx.graphics.getHeight();
         this.stage.getViewport().update(w, h, true);
-        this.controls.resize(w, h);
+
+        if(type == Application.ApplicationType.Android)this.controls.resize(w, h);
     }
 
     public void addControl(final Actor actor){ this.controls.addActor(actor); }

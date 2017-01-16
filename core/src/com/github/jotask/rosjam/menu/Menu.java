@@ -2,7 +2,7 @@ package com.github.jotask.rosjam.menu;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.github.jotask.rosjam.engine.states.State;
+import com.github.jotask.rosjam.engine.states.AbstractState;
 
 /**
  * Menu
@@ -10,7 +10,7 @@ import com.github.jotask.rosjam.engine.states.State;
  * @author Jose Vives Iznardo
  * @since 13/01/2017
  */
-public class Menu extends State {
+public class Menu extends AbstractState {
 
     @Override
     public void init() {

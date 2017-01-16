@@ -3,12 +3,11 @@ package com.github.jotask.rosjam.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.github.jotask.rosjam.engine.Camera;
 import com.github.jotask.rosjam.engine.GameManager;
-import com.github.jotask.rosjam.engine.states.State;
-import com.github.jotask.rosjam.game.controller.AndroidController;
-import com.github.jotask.rosjam.game.controller.Controller;
+import com.github.jotask.rosjam.engine.camera.Camera;
+import com.github.jotask.rosjam.engine.input.Controller;
+import com.github.jotask.rosjam.engine.input.InputController;
+import com.github.jotask.rosjam.engine.states.CameraState;
 import com.github.jotask.rosjam.game.hud.Hud;
 
 /**
@@ -17,33 +16,34 @@ import com.github.jotask.rosjam.game.hud.Hud;
  * @author Jose Vives Iznardo
  * @since 13/01/2017
  */
-public class Game extends State {
+public class Game extends CameraState {
 
     private GameManager gameManager;
-    private Controller controller;
+    private InputController controller;
     private Hud hud;
+
+    public Game(Camera camera) {
+        super(camera);
+    }
 
     @Override
     public void init() {
-        this.camera = new Camera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//        float w = 21f;
-//        float h = 11f;
-        float w = Gdx.graphics.getWidth() / 10f;
-        float h = Gdx.graphics.getHeight() / 10f;
-        this.camera.viewport = new FitViewport(w, h, camera);
-        this.camera.viewport.apply();
 
         this.hud = new Hud(this);
-        this.controller = new AndroidController(this.hud);
-        this.gameManager = new GameManager(this, this.controller);
+        this.controller = new InputController(this);
+        this.gameManager = new GameManager(this, this.getController());
 
     }
+
 
     @Override
     public void preUpdate() { this.gameManager.preUpdate(); }
 
     @Override
-    public void postUpdate() { this.gameManager.postUpdate(); }
+    public void postUpdate() {
+        this.gameManager.postUpdate();
+        this.getCamera()._update();
+    }
 
     @Override
     public void preRender(SpriteBatch sb) { this.gameManager.preRender(sb); }
@@ -87,5 +87,11 @@ public class Game extends State {
         super.resize(width, height);
         this.hud.resize(width, height);
     }
+
+    public Controller getController() { return controller.getController(); }
+
+    public Hud getHud() { return hud; }
+
+    public GameManager getGameManager() { return gameManager; }
 
 }

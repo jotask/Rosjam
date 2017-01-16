@@ -2,7 +2,7 @@ package com.github.jotask.rosjam.splash;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.github.jotask.rosjam.engine.states.State;
+import com.github.jotask.rosjam.engine.states.AbstractState;
 
 /**
  * Splash
@@ -10,7 +10,7 @@ import com.github.jotask.rosjam.engine.states.State;
  * @author Jose Vives Iznardo
  * @since 13/01/2017
  */
-public class Splash extends State {
+public class Splash extends AbstractState {
 
     @Override
     public void init() {

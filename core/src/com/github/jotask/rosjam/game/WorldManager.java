@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.github.jotask.rosjam.game.entity.Player;
 
 /**
  * WorldManager
@@ -14,7 +15,7 @@ import com.badlogic.gdx.utils.Array;
  * @author Jose Vives Iznardo
  * @since 14/01/2017
  */
-public class WorldManager extends GameState{
+public class WorldManager extends com.github.jotask.rosjam.engine.states.GameState{
 
     private final int velocityIteration = 6;
     private final int positionsIterations = 2;
@@ -22,8 +23,9 @@ public class WorldManager extends GameState{
     private World world;
     private Box2DDebugRenderer renderer;
 
-    public WorldManager(Game game) {
+    public WorldManager(final Game game) {
         super(game);
+
         this.world = new World(new Vector2(0,0), true);
         this.renderer = new Box2DDebugRenderer();
     }
@@ -31,7 +33,6 @@ public class WorldManager extends GameState{
     @Override
     public void update() {
         world.step(Gdx.graphics.getDeltaTime(), velocityIteration, positionsIterations);
-//        System.out.println("B: " + world.getBodyCount());
     }
 
     @Override
@@ -57,4 +58,18 @@ public class WorldManager extends GameState{
         }
     }
 
+    public void deleteDungeon() {
+        Array<Body> bodies = new Array<Body>();
+        world.getBodies(bodies);
+        for(int i = 0; i < bodies.size; i++) {
+
+            Body b = bodies.get(i);
+
+            if(b.getUserData() instanceof Player)
+                continue;
+
+            if(!world.isLocked())
+                world.destroyBody(b);
+        }
+    }
 }

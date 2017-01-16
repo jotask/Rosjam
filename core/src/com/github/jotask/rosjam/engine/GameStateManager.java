@@ -3,11 +3,11 @@ package com.github.jotask.rosjam.engine;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.github.jotask.rosjam.engine.states.State;
-import com.github.jotask.rosjam.game.Game;
-import com.github.jotask.rosjam.test.TestState;
+import com.badlogic.gdx.utils.Disposable;
+import com.github.jotask.rosjam.engine.states.AbstractState;
+import com.github.jotask.rosjam.engine.states.CameraState;
+import com.github.jotask.rosjam.game.Factory;
 import com.github.jotask.rosjam.util.Ref;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * GameStateManager
@@ -15,18 +15,15 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
  * @author Jose Vives Iznardo
  * @since 13/01/2017
  */
-public class GameStateManager extends State{
+public class GameStateManager extends AbstractState implements Disposable{
 
-    public enum STATE { SPLASH, MENU, GAME, TEST };
+    public enum STATE { SPLASH, MENU, GAME, TEST }
 
-    private State currentState;
+    private CameraState currentState;
 
     public GameStateManager() {
         this.changeState(Ref.INITIAL_STATE);
     }
-
-    @Override
-    public void init() { }
 
     @Override
     public void update() {
@@ -76,27 +73,13 @@ public class GameStateManager extends State{
 
         // TODO implement loading screen
 
-        State s = null;
-        switch (state){
-            case GAME:
-                s = new Game();
-                break;
-            case TEST:
-                s = new TestState();
-                break;
-            default:
-                throw new NotImplementedException();
-        }
-
-        currentState = s;
-        currentState.init();
+        currentState = Factory.States.getState(state);
 
     }
 
-    @Override
     public void resize(int width, int height) { this.currentState.resize(width, height); }
 
-    public State getState() { return this.currentState;  }
+    public CameraState getState() { return this.currentState;  }
 
 }
 

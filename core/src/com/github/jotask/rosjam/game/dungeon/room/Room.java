@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.github.jotask.rosjam.engine.Camera;
 import com.github.jotask.rosjam.engine.map.MapTiled;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.entity.Entity;
@@ -25,7 +24,6 @@ public class Room extends Entity {
 
     public static final float CELL_SIZE = 1f;
 
-    private Camera camera;
     private Vector2 position;
     private MapTiled map;
 
@@ -33,8 +31,7 @@ public class Room extends Entity {
 
     public final LinkedList<Door> doors;
 
-    public Room(final Camera camera, final Vector2 position, final MapTiled map, final Rectangle bounds) {
-        this.camera = camera;
+    public Room(final Vector2 position, final MapTiled map, final Rectangle bounds) {
         this.position = position;
         this.map = map;
         this.bounds = bounds;
@@ -72,7 +69,7 @@ public class Room extends Entity {
 
     @Override
     public void render(SpriteBatch sb) {
-        this.map.render(camera);
+        this.map.render();
     }
 
     @Override

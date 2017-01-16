@@ -1,7 +1,7 @@
-package com.github.jotask.rosjam.game.controller;
+package com.github.jotask.rosjam.engine.input;
 
 import com.badlogic.gdx.math.Vector2;
-import com.github.jotask.rosjam.game.controller.android.DirectionController;
+import com.github.jotask.rosjam.engine.input.android.DirectionController;
 import com.github.jotask.rosjam.game.hud.Hud;
 
 /**

@@ -1,8 +1,8 @@
 package com.github.jotask.rosjam.engine.map;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
-import com.github.jotask.rosjam.engine.Camera;
 
 /**
  * MapTiled
@@ -16,12 +16,14 @@ public class MapTiled {
 
     private Vector2 position;
     private TiledMap map;
+    private OrthographicCamera camera;
 
     private JotaMapRenderer renderer;
 
-    public MapTiled(Vector2 position, final TiledMap map) {
+    public MapTiled(Vector2 position, final TiledMap map, final OrthographicCamera camera) {
         this.position = position;
         this.map = map;
+        this.camera = camera;
 
         renderer = new JotaMapRenderer(this);
     }
@@ -30,7 +32,7 @@ public class MapTiled {
 
     public Vector2 getPosition() { return position; }
 
-    public void render(Camera camera) {
+    public void render() {
         renderer.getBatch().end();
         renderer.setView(camera);
         renderer.render();

@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.github.jotask.rosjam.game.controller.Controller;
 import com.github.jotask.rosjam.game.dungeon.Dungeon;
+import com.github.jotask.rosjam.game.dungeon.level.LevelManager;
 import com.github.jotask.rosjam.game.entity.Player;
 
 /**
@@ -14,40 +14,55 @@ import com.github.jotask.rosjam.game.entity.Player;
  * @author Jose Vives Iznardo
  * @since 14/01/2017
  */
-public class DungeonState extends GameState {
+public class DungeonState extends com.github.jotask.rosjam.engine.states.GameState {
 
     private WorldManager worldManager;
 
-    private Controller controller;
-
     private Dungeon dungeon;
+
     private Player player;
 
-    public DungeonState(final Game game, final Controller controller) {
+    private LevelManager level;
+
+    public DungeonState(final Game game) {
         super(game);
 
         this.worldManager = new WorldManager(game);
 
-        dungeon = Factory.generateDungeon(this.worldManager);
+        this.level = new LevelManager(this.worldManager);
 
-        this.camera.position.set(dungeon.initialRoom.getCenter(), 10f);
-        this.camera.update();
+        dungeon = Factory.generateDungeon(level.getDungoen());
+        this.player = Factory.generatePlayer(worldManager, dungeon.initialRoom);
+        this.setPlayer(this.player);
+
+    }
+
+    private void reset(){
+        // FIXME improve when the world is going to be deleted
+        this.dungeon = Factory.generateDungeon(level.getDungoen());
+        this.player.reset(this.dungeon.initialRoom);
 
     }
 
     @Override
     public void update() {
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) | Gdx.input.justTouched()){
-            dungeon = Factory.generateDungeon(this.worldManager);
+            reset();
         }
         worldManager.update();
         dungeon.update();
-//        System.out.println("B: " + worldManager.getWorld().getBodyCount());
+        this.player.update();
+    }
+
+    @Override
+    public void postUpdate() {
+        this.level.update();
     }
 
     @Override
     public void render(SpriteBatch sb) {
         dungeon.render(sb);
+        player.render(sb);
     }
 
     @Override
@@ -60,4 +75,5 @@ public class DungeonState extends GameState {
     public void postDebug(ShapeRenderer sr) {
         worldManager.debug(sr);
     }
+
 }

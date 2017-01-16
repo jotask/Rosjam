@@ -12,10 +12,11 @@ import com.badlogic.gdx.physics.box2d.Body;
  */
 public abstract class BodyEntity extends Entity {
 
-    private final Body body;
+    protected final Body body;
 
     protected BodyEntity(final Body body) {
         this.body = body;
+        this.body.setUserData(this);
     }
 
     @Override
@@ -32,5 +33,7 @@ public abstract class BodyEntity extends Entity {
     public void debug(ShapeRenderer sr) {
 
     }
+
+    public Body getBody() { return body; }
 
 }

@@ -2,14 +2,24 @@ package com.github.jotask.rosjam.engine.states;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.github.jotask.rosjam.game.Game;
+import com.github.jotask.rosjam.game.entity.Player;
 
 /**
- * AbstractState
+ * GameState
  *
  * @author Jose Vives Iznardo
- * @since 14/01/2017
+ * @since 16/01/2017
  */
-public abstract class AbstractState implements IState {
+public class GameState extends State {
+
+    protected final Game game;
+
+    private Player player;
+
+    public GameState(final Game game) {
+        this.game = game;
+    }
 
     @Override
     public void init() {
@@ -22,12 +32,22 @@ public abstract class AbstractState implements IState {
     }
 
     @Override
+    public void update() {
+
+    }
+
+    @Override
     public void postUpdate() {
 
     }
 
     @Override
     public void preRender(SpriteBatch sb) {
+
+    }
+
+    @Override
+    public void render(SpriteBatch sb) {
 
     }
 
@@ -55,5 +75,11 @@ public abstract class AbstractState implements IState {
     public void dispose() {
 
     }
+
+    public Game getGame() { return game; }
+
+    protected void setPlayer(Player player) { this.player = player; }
+
+    public Player getPlayer() { return player; }
 
 }

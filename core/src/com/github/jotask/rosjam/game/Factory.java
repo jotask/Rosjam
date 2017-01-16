@@ -10,8 +10,14 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.github.jotask.rosjam.engine.GameStateManager;
+import com.github.jotask.rosjam.engine.camera.Camera;
+import com.github.jotask.rosjam.engine.camera.FollowCamera;
 import com.github.jotask.rosjam.engine.map.MapTiled;
+import com.github.jotask.rosjam.engine.states.CameraState;
 import com.github.jotask.rosjam.game.dungeon.Dungeon;
+import com.github.jotask.rosjam.game.dungeon.config.ConfigDungeon;
+import com.github.jotask.rosjam.game.dungeon.config.ConfigRoom;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
 import com.github.jotask.rosjam.game.entity.Player;
@@ -26,7 +32,29 @@ import java.util.LinkedList;
  */
 public final class Factory {
 
-    private static final int MAX_ROOMS = 3;
+    public static class States {
+
+        public static final CameraState getState(GameStateManager.STATE state){
+
+            switch (state){
+                case GAME:
+                    return getGameState();
+                default:
+                        throw new RuntimeException("State not implemeted");
+
+            }
+
+        }
+
+        private static final Game getGameState(){
+            FollowCamera camera = new FollowCamera();
+            Game gs = new Game(camera);
+            gs.init();
+            camera.setTarget(gs.getGameManager().getPlayer());
+            return gs;
+        }
+
+    }
 
     private static Rectangle calculateBounds(final MapTiled map){
 
@@ -48,11 +76,12 @@ public final class Factory {
         return bounds;
     }
 
-    public static Room generateRoom(final Vector2 position, final WorldManager worldManager) {
+    public static Room generateRoom(ConfigRoom cfg) {
         TiledMap tiledMap = new TmxMapLoader().load("test.tmx");
-        MapTiled map = new MapTiled(position, tiledMap);
-        Room room = new Room(worldManager.getCamera(), position, map, calculateBounds(map));
-        createBodies(map, worldManager);
+        Camera camera = cfg.worldManager.getGame().getCamera();
+        MapTiled map = new MapTiled(cfg.position, tiledMap, camera);
+        Room room = new Room(cfg.position, map, calculateBounds(map));
+        createBodies(map, cfg.worldManager);
         return room;
     }
 
@@ -119,44 +148,21 @@ public final class Factory {
 
     }
 
-    private static Body createBodyForRoom(final World world, final Room room, int i, int j){
+    public static Dungeon generateDungeon(final ConfigDungeon configDungeon){
 
-        final float SIZE = Room.CELL_SIZE / 2f;
-
-        float x = room.getPosition().x + SIZE;
-        float y = room.getPosition().y + SIZE;
-
-        x += i;
-        y += j;
-
-        BodyDef bd = new BodyDef();
-        bd.type = BodyDef.BodyType.StaticBody;
-        bd.position.set(x, y);
-
-        Body body = world.createBody(bd);
-
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(SIZE, SIZE);
-
-        body.createFixture(shape, 1f);
-
-        shape.dispose();
-
-        return body;
-    }
-
-    public static Dungeon generateDungeon(final WorldManager worldManager){
-
-        worldManager.deleteAllBodies();
+        configDungeon.worldManager.deleteDungeon();
 
         // FIXME the dungeon generator always generate rooms bottom and right. The problem starts when I added the code
         // to check if was a room occupied before spawn the next rooms. Maybe the error comes from there
 
         LinkedList<Room> rooms = new LinkedList<Room>();
-        Room initialRoom = generateRoom(new Vector2(0,0), worldManager);
+
+        ConfigRoom cfg = new ConfigRoom(configDungeon.worldManager);
+
+        Room initialRoom = generateRoom(cfg);
         rooms.add(initialRoom);
 
-        generator: while(rooms.size() < MAX_ROOMS){
+        generator: while(rooms.size() < configDungeon.maxRooms){
 
             // Choose a random room
             Room room;
@@ -206,7 +212,10 @@ public final class Factory {
                     continue generator;
                 }
 
-                Room newRoom = generateRoom(nextRoom, worldManager);
+                ConfigRoom configRoom = new ConfigRoom(configDungeon.worldManager);
+                configRoom.position = nextRoom;
+
+                Room newRoom = generateRoom(configRoom);
 
                 // Connect doors
                 {
@@ -274,7 +283,7 @@ public final class Factory {
         final Vector2 center = room.getCenter();
 
         BodyDef bd = new BodyDef();
-        bd.type = BodyDef.BodyType.StaticBody;
+        bd.type = BodyDef.BodyType.DynamicBody;
         bd.position.set(center.x, center.y);
 
         Body body = worldManager.getWorld().createBody(bd);
@@ -290,7 +299,7 @@ public final class Factory {
 
         shape.dispose();
 
-        Player player = new Player(body);
+        Player player = new Player(body, worldManager.getGame().getController());
         return player;
     }
 

@@ -2,14 +2,21 @@ package com.github.jotask.rosjam.engine.states;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.github.jotask.rosjam.engine.camera.Camera;
 
 /**
- * AbstractState
+ * CameraState
  *
  * @author Jose Vives Iznardo
- * @since 14/01/2017
+ * @since 16/01/2017
  */
-public abstract class AbstractState implements IState {
+public class CameraState extends State {
+
+    protected final Camera camera;
+
+    public CameraState(final Camera camera) {
+        this.camera = camera;
+    }
 
     @Override
     public void init() {
@@ -22,12 +29,22 @@ public abstract class AbstractState implements IState {
     }
 
     @Override
+    public void update() {
+
+    }
+
+    @Override
     public void postUpdate() {
 
     }
 
     @Override
     public void preRender(SpriteBatch sb) {
+
+    }
+
+    @Override
+    public void render(SpriteBatch sb) {
 
     }
 
@@ -55,5 +72,9 @@ public abstract class AbstractState implements IState {
     public void dispose() {
 
     }
+
+    public void resize(int width, int height){ this.getCamera().resize(width, height); }
+
+    public Camera getCamera() { return camera; }
 
 }
