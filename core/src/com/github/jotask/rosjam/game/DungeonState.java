@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.github.jotask.rosjam.factory.DungeonFactory;
+import com.github.jotask.rosjam.factory.EntityFactory;
 import com.github.jotask.rosjam.game.dungeon.Dungeon;
 import com.github.jotask.rosjam.game.dungeon.level.LevelManager;
 import com.github.jotask.rosjam.game.entity.Player;
@@ -31,15 +33,15 @@ public class DungeonState extends com.github.jotask.rosjam.engine.states.GameSta
 
         this.level = new LevelManager(this.worldManager);
 
-        dungeon = Factory.generateDungeon(level.getDungeon());
-        this.player = Factory.generatePlayer(worldManager, dungeon.initialRoom);
+        dungeon = DungeonFactory.generateDungeon(level.getDungeon());
+        this.player = EntityFactory.generatePlayer(worldManager, dungeon.initialRoom);
         this.setPlayer(this.player);
 
     }
 
     private void reset(){
         // FIXME improve when the world is going to be deleted
-        this.dungeon = Factory.generateDungeon(level.getDungeon());
+        this.dungeon = DungeonFactory.generateDungeon(level.getDungeon());
         this.player.reset(this.dungeon.initialRoom);
 
     }

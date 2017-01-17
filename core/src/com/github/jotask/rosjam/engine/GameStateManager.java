@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Disposable;
 import com.github.jotask.rosjam.engine.states.AbstractState;
 import com.github.jotask.rosjam.engine.states.CameraState;
-import com.github.jotask.rosjam.game.Factory;
+import com.github.jotask.rosjam.factory.Factory;
 import com.github.jotask.rosjam.util.Ref;
 
 /**
@@ -73,7 +73,7 @@ public class GameStateManager extends AbstractState implements Disposable{
 
         // TODO implement loading screen
 
-        currentState = Factory.States.getState(state);
+        currentState = Factory.getState(state);
 
     }
 
