@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.github.jotask.rosjam.Rosjam;
 
@@ -43,11 +44,26 @@ public class JotaMapRenderer extends OrthogonalTiledMapRenderer {
         final float layerTileWidth = layer.getTileWidth() * unitScale;
         final float layerTileHeight = layer.getTileHeight() * unitScale;
 
-        final int col1 = Math.max(0, (int)(viewBounds.x / layerTileWidth));
-        final int col2 = Math.min(layerWidth, (int)((viewBounds.x + viewBounds.width + layerTileWidth) / layerTileWidth));
+        Vector2 pos = mapTiled.getPosition();
+        Rectangle bounds = getViewBounds();
+        {
+            bounds = new Rectangle(bounds);
+            bounds.x -= pos.x;
+            bounds.y -= pos.y;
 
-        final int row1 = Math.max(0, (int)(viewBounds.y / layerTileHeight));
-        final int row2 = Math.min(layerHeight, (int)((viewBounds.y + viewBounds.height + layerTileHeight) / layerTileHeight));
+//            final float offset = 0f;
+//
+//            bounds.x += offset;
+//            bounds.y += offset;
+//            bounds.width -= offset * 2;
+//            bounds.height -= offset * 2;
+        }
+
+        final int col1 = Math.max(0, (int)(bounds.x / layerTileWidth));
+        final int col2 = Math.min(layerWidth, (int)((bounds.x + bounds.width + layerTileWidth) / layerTileWidth));
+
+        final int row1 = Math.max(0, (int)(bounds.y / layerTileHeight));
+        final int row2 = Math.min(layerHeight, (int)((bounds.y + bounds.height + layerTileHeight) / layerTileHeight));
 
         float y = row2 * layerTileHeight;
         float xStart = col1 * layerTileWidth;
@@ -70,10 +86,8 @@ public class JotaMapRenderer extends OrthogonalTiledMapRenderer {
 
                     TextureRegion region = tile.getTextureRegion();
 
-                    Vector2 p = mapTiled.getPosition();
-
-                    float x1 = p.x + x + tile.getOffsetX() * unitScale;
-                    float y1 = p.y + y + tile.getOffsetY() * unitScale;
+                    float x1 = pos.x + x + tile.getOffsetX() * unitScale;
+                    float y1 = pos.y + y + tile.getOffsetY() * unitScale;
                     float x2 = x1 + region.getRegionWidth() * unitScale;
                     float y2 = y1 + region.getRegionHeight() * unitScale;
 
