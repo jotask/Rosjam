@@ -21,12 +21,12 @@ public abstract class Camera extends OrthographicCamera {
         super(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         this.position.set(0, 0, Z);
         this.update();
-
 //
-//        float w = 21f;
-//        float h = 11f;
-        float w = Gdx.graphics.getWidth() / 10f;
-        float h = Gdx.graphics.getHeight() / 10f;
+        float w = 21f;
+        float h = 11f;
+//
+//        float w = Gdx.graphics.getWidth() / 10f;
+//        float h = Gdx.graphics.getHeight() / 10f;
 
         this.viewport = new FitViewport(w, h, this);
         this.viewport.apply();

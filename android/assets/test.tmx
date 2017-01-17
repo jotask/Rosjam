@@ -1,26 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="21" height="11" tilewidth="16" tileheight="16" nextobjectid="31">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="21" height="11" tilewidth="16" tileheight="16" nextobjectid="9">
  <tileset firstgid="1" name="dungeon_sheet" tilewidth="16" tileheight="16" tilecount="240">
   <image source="dungeon_sheet.png" trans="ff00ff" width="384" height="160"/>
  </tileset>
- <layer name="floor" width="21" height="11" visible="0">
+ <layer name="floor" width="21" height="11">
   <data encoding="base64" compression="zlib">
    eJwzZ2BgMB/Fo3gUDzoMAPyjMaI=
   </data>
  </layer>
+ <layer name="floorfx" width="21" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxtk9kNxCAMROm/IiBt4FSBU8MSyU96u9qPEebweHzQW2v3QT/Ig+tgHeyyn7p/7aj9rrOts3edB6PWqDdRfMQAoRhRftzt0pKKN7THXhVrlp3ao61LDzqsH0508I68U3xLHCn9XbGo3yUNv/mF/B/pI+YooA9uYk/xoHeUPxyht9aOhls+3ONLrx6tzMBQraPOLvWD2lA3/OlVqsejfc8NPUHLlr9nCqz2rdc2faHuzBs9IQ/qk6rHLH+45p/akjNn5IhNDHimeDwbzAH95s+99gepLL5C
+  </data>
+ </layer>
  <layer name="walls" width="21" height="11">
   <data encoding="base64" compression="zlib">
-   eJyTYmBgYANidjzYigECLAmo4wBiKSiWA2J5IF4FxKuhbBBeCaWDoGYGIomD1K1BUgvSq4BkphkDdYAF1Dxkv1EKYGGD7DdKASxsaAH8gZiLSmZxQs0DhakSlcxUZKBdvIOwHwPEzbgwLGw4CagLQDKTEIaFjSKR6gFHUhLK
+   eJyTYmBgYANidjwYGeBTxwHEUlAsB8TyeDAywKdOAclMMwbqAAsamjmSwVCJIxD2A2J/PBgZ4FMXgGQmIYwMiFEPAGJUDEk=
+  </data>
+ </layer>
+ <layer name="doors" width="21" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUDEYAAAOcAAE=
   </data>
  </layer>
  <objectgroup name="wall">
-  <object id="23" x="182.666" y="0.83335" width="153.333" height="28.6667"/>
-  <object id="24" x="-0.333667" y="-0.16665" width="155.667" height="29"/>
-  <object id="25" x="-0.667" y="28.8333" width="27.3333" height="48.6667"/>
-  <object id="26" x="-0.333667" y="101.5" width="26.3333" height="74"/>
-  <object id="27" x="180.333" y="148.5" width="155.667" height="27.3333"/>
-  <object id="28" x="310.666" y="100.833" width="25" height="50.3333"/>
-  <object id="29" x="310.666" y="26.8333" width="25" height="50"/>
-  <object id="30" x="22.333" y="149.833" width="130" height="26.3333"/>
+  <object id="5" x="-2.5" y="63">
+   <polyline points="0,0 27,0.5 27.5,-34 146,-34 146,-63 2,-63 1,0"/>
+  </object>
+  <object id="6" x="0" y="112">
+   <polyline points="0,0 25.5,0 25,37.5 143.5,37.5 143.5,63 -0.5,64 -0.5,-0.5"/>
+  </object>
+  <object id="7" x="192.5" y="175">
+   <polyline points="0,0 0,-25 120,-26 120,-63 143.5,-63 143.5,1"/>
+  </object>
+  <object id="8" x="192" y="29">
+   <polyline points="0,0 -0.5,-29.5 143.5,-29 143.5,35 118.5,35 119,-0.5 0,-0.5"/>
+  </object>
  </objectgroup>
 </map>

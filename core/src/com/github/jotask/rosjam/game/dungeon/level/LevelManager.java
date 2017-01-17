@@ -33,7 +33,9 @@ public class LevelManager extends Entity{
     @Override
     public void debug(ShapeRenderer sr) { }
 
-    public ConfigDungeon getDungoen() {
-        return new ConfigDungeon(this.worldManager);
+    public ConfigDungeon getDungeon() {
+        ConfigDungeon cd = new ConfigDungeon(this.worldManager);
+        cd.maxRooms = 2;
+        return cd;
     }
 }

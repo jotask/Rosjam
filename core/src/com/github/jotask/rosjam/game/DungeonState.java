@@ -31,7 +31,7 @@ public class DungeonState extends com.github.jotask.rosjam.engine.states.GameSta
 
         this.level = new LevelManager(this.worldManager);
 
-        dungeon = Factory.generateDungeon(level.getDungoen());
+        dungeon = Factory.generateDungeon(level.getDungeon());
         this.player = Factory.generatePlayer(worldManager, dungeon.initialRoom);
         this.setPlayer(this.player);
 
@@ -39,7 +39,7 @@ public class DungeonState extends com.github.jotask.rosjam.engine.states.GameSta
 
     private void reset(){
         // FIXME improve when the world is going to be deleted
-        this.dungeon = Factory.generateDungeon(level.getDungoen());
+        this.dungeon = Factory.generateDungeon(level.getDungeon());
         this.player.reset(this.dungeon.initialRoom);
 
     }

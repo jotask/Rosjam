@@ -87,6 +87,9 @@ public final class Factory {
 
     private static void createBodies(final MapTiled map, final WorldManager worldManager){
 
+        // TODO Calculate this ppt
+        final float ppt = 15.375f;
+
         MapObjects collisionLayer = map.getMap().getLayers().get("wall").getObjects();
 
         for(MapObject obj: collisionLayer){
@@ -98,13 +101,13 @@ public final class Factory {
             Shape shape = null;
 
             if (obj instanceof RectangleMapObject) {
-                shape = getRectangle((RectangleMapObject)obj);
+                shape = getRectangle((RectangleMapObject)obj, ppt);
             }
             else if (obj instanceof PolygonMapObject) {
                 System.out.println("PolygonMapObject");
             }
             else if (obj instanceof PolylineMapObject) {
-                System.out.println("PolyLineMap");
+                shape = getPolyMap((PolylineMapObject)obj, ppt);
             }
             else if (obj instanceof CircleMapObject) {
                 System.out.println("CircleMap");
@@ -130,10 +133,22 @@ public final class Factory {
 
     }
 
-    private static Shape getRectangle(RectangleMapObject obj){
+    private static Shape getPolyMap(PolylineMapObject obj, final float ppt) {
+        float[] vertices = obj.getPolyline().getTransformedVertices();
+        Vector2[] worldVertices = new Vector2[vertices.length / 2];
 
-        // TODO Calculate this ppt
-        float ppt = 15.375f;
+        for (int i = 0; i < vertices.length / 2; ++i) {
+            worldVertices[i] = new Vector2();
+            worldVertices[i].x = vertices[i * 2] / ppt;
+            worldVertices[i].y = vertices[i * 2 + 1] / ppt;
+        }
+
+        ChainShape chain = new ChainShape();
+        chain.createChain(worldVertices);
+        return chain;
+    }
+
+    private static Shape getRectangle(RectangleMapObject obj, final float ppt){
 
         Rectangle rectangle = obj.getRectangle();
         PolygonShape polygon = new PolygonShape();
