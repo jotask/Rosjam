@@ -1,7 +1,5 @@
 package com.github.jotask.rosjam.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.jotask.rosjam.factory.DungeonFactory;
@@ -48,11 +46,11 @@ public class DungeonState extends com.github.jotask.rosjam.engine.states.GameSta
 
     @Override
     public void update() {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) | Gdx.input.justTouched()){
+        if(this.player.getController().resetLevel()){
             reset();
         }
-        worldManager.update();
-        dungeon.update();
+        this.worldManager.update();
+        this.dungeon.update();
         this.player.update();
     }
 

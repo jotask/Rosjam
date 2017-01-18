@@ -6,64 +6,65 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.HashMap;
 
 /**
- * DungeonAssets
+ * PlayerAssets
  *
  * @author Jose Vives Iznardo
- * @since 15/01/2017
+ * @since 17/01/2017
  */
-public class DungeonAssets {
+public class PlayerAssets {
 
-    private final String filename = "dungeon_sheet.png";
+    private final String filename = "players.png";
     private final Class<?> type = Texture.class;
 
-    private final int SIZE = 16;
+    private final int WIDTH = 8;
+    private final int HEIGHT = 8;
 
     private Texture texture;
     private final Assets assets;
 
-    public enum TILES{
-        FLOOR (6, 2),
-        WALL_LEFT(5, 2),
-        WALL_RIGHT(7, 2),
-        WALL_TOP(6, 1),
-        WALL_BOTTOM(6, 3);
+    public enum SPRITE{
+        DEFAULT (0, 0);
 
         int x, y;
 
-        TILES(int x, int y){
+        SPRITE(int x, int y){
             this.x = x;
             this.y = y;
         }
     }
 
     // TODO implement m owm map to choose random regions with the same key
-    private HashMap<TILES, TextureRegion> map;
+    private HashMap<SPRITE, TextureRegion> map;
 
-    public DungeonAssets(final Assets assets) {
+    public PlayerAssets(final Assets assets) {
         this.assets = assets;
         this.assets.getAssetManager().load(filename, type);
 
-        this.map = new HashMap<TILES, TextureRegion>();
+        this.map = new HashMap<SPRITE, TextureRegion>();
 
     }
 
     public void prepare(){
         texture = (Texture) this.assets.getAssetManager().get(this.filename, this.type);
-        for(TILES t: TILES.values()){ addTile(t); }
+
+        for(SPRITE t: SPRITE.values()){
+            addTile(t);
+        }
+
     }
 
-    private void addTile(final TILES tile){
+    private void addTile(final SPRITE tile){
         this.map.put(tile, generateRegion(tile));
     }
 
-    private TextureRegion generateRegion(final TILES tile){
+    private TextureRegion generateRegion(final SPRITE tile){
         TextureRegion region = new TextureRegion();
         region.setTexture(this.texture);
-        region.setRegion(tile.x * SIZE,tile.y * SIZE,SIZE,SIZE);
+        region.setRegion(tile.x * WIDTH,tile.y * HEIGHT, WIDTH, HEIGHT);
         return region;
     }
 
-    public TextureRegion getRegion(final TILES key){
+    public TextureRegion getRegion(final SPRITE key){
         return this.map.get(key);
     }
 

@@ -1,10 +1,14 @@
 package com.github.jotask.rosjam.factory;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.github.jotask.rosjam.Rosjam;
+import com.github.jotask.rosjam.engine.assets.PlayerAssets;
 import com.github.jotask.rosjam.game.WorldManager;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
 import com.github.jotask.rosjam.game.entity.Player;
+import com.github.jotask.rosjam.util.Sprite;
 
 /**
  * EntityBuilder
@@ -14,7 +18,7 @@ import com.github.jotask.rosjam.game.entity.Player;
  */
 public class EntityFactory {
 
-    public EntityFactory() {
+    private EntityFactory() {
 
     }
 
@@ -39,7 +43,11 @@ public class EntityFactory {
 
         shape.dispose();
 
-        Player player = new Player(body, worldManager.getGame().getController());
+        TextureRegion region = Rosjam.get().getAssets().getPlayerAssets().getRegion(PlayerAssets.SPRITE.DEFAULT);
+
+        final Sprite sprite = new Sprite(region, body);
+
+        Player player = new Player(body, worldManager.getGame().getController(), sprite);
         return player;
     }
 

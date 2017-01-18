@@ -14,4 +14,6 @@ public interface Controller {
 
     boolean isShooting();
 
+    boolean resetLevel();
+
 }

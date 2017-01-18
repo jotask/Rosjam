@@ -35,7 +35,6 @@ public class LevelManager extends Entity{
 
     public ConfigDungeon getDungeon() {
         ConfigDungeon cd = new ConfigDungeon(this.worldManager);
-        cd.maxRooms = 2;
         return cd;
     }
 }

@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.github.jotask.rosjam.engine.input.Controller;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
+import com.github.jotask.rosjam.util.Sprite;
 
 /**
  * Player
@@ -19,9 +20,12 @@ public class Player extends BodyEntity {
 
     private final Controller controller;
 
-    public Player(Body body, Controller controller) {
+    private Sprite sprite;
+
+    public Player(Body body, Controller controller, final Sprite sprite) {
         super(body);
         this.controller = controller;
+        this.sprite = sprite;
     }
 
     @Override
@@ -41,13 +45,15 @@ public class Player extends BodyEntity {
 
     @Override
     public void render(SpriteBatch sb) {
-
+        sprite.render(sb);
     }
 
     @Override
     public void debug(ShapeRenderer sr) {
 
     }
+
+    public Controller getController() { return controller; }
 
     public void reset(final Room room){
         this.getBody().setTransform(room.getCenter(), this.getBody().getAngle());
