@@ -31,6 +31,10 @@ public class AndroidController implements Controller {
 
     @Override
     public boolean resetLevel() {
+
+        if(!Gdx.input.justTouched())
+            return false;
+
         int activeTouch = 0;
         for (int i = 0; i < 20; i++) {
             if (Gdx.input.isTouched(i)) activeTouch++;
