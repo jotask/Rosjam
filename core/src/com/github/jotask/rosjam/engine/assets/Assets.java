@@ -1,6 +1,7 @@
 package com.github.jotask.rosjam.engine.assets;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 /**
  * Assets
@@ -11,6 +12,8 @@ import com.badlogic.gdx.assets.AssetManager;
 public class Assets{
 
     private AssetManager assetManager;
+
+    private BitmapFont font;
 
     private DungeonAssets dungeonAssets;
     private PlayerAssets playerAssets;
@@ -24,10 +27,14 @@ public class Assets{
     public void loadEverything(){
         assetManager.finishLoading();
 
+        this.font = new BitmapFont();
+
         this.dungeonAssets.prepare();
         this.playerAssets.prepare();
 
     }
+
+    public BitmapFont getFont() { return font; }
 
     public DungeonAssets getDungeonAssets() { return dungeonAssets; }
 
