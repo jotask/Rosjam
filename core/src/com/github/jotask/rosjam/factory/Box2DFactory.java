@@ -7,7 +7,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.github.jotask.rosjam.engine.map.MapTiled;
-import com.github.jotask.rosjam.game.WorldManager;
+import com.github.jotask.rosjam.game.world.WorldManager;
+import com.github.jotask.rosjam.util.CollisionFilter;
 
 /**
  * Box2DFactory
@@ -23,6 +24,11 @@ class Box2DFactory {
         final float ppt = 15.375f;
 
         MapObjects collisionLayer = map.getMap().getLayers().get("wall").getObjects();
+
+        BodyDef bd = new BodyDef();
+        bd.type = BodyDef.BodyType.StaticBody;
+        bd.position.set(map.getPosition());
+        final Body body = worldManager.getWorld().createBody(bd);
 
         for(MapObject obj: collisionLayer){
 
@@ -53,11 +59,11 @@ class Box2DFactory {
                 continue;
             }
 
-            BodyDef bd = new BodyDef();
-            bd.type = BodyDef.BodyType.StaticBody;
-            bd.position.set(map.getPosition());
-            Body body = worldManager.getWorld().createBody(bd);
-            body.createFixture(shape, 1);
+            FixtureDef fd = new FixtureDef();
+            fd.shape = shape;
+            CollisionFilter.setMask(fd, CollisionFilter.EENTITY.WALLS);
+
+            body.createFixture(fd);
 
             shape.dispose();
 
