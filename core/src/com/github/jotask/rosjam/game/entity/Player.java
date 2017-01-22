@@ -5,7 +5,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.github.jotask.rosjam.engine.input.Controller;
+import com.github.jotask.rosjam.factory.EntityFactory;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
+import com.github.jotask.rosjam.game.item.Weapon;
 import com.github.jotask.rosjam.util.Sprite;
 
 /**
@@ -20,12 +22,17 @@ public class Player extends BodyEntity {
 
     private final Controller controller;
 
+    private Weapon weapon;
+
     private Sprite sprite;
 
     public Player(Body body, Controller controller, final Sprite sprite) {
         super(body);
         this.controller = controller;
         this.sprite = sprite;
+
+        this.weapon = EntityFactory.getWeapon(this);
+
     }
 
     @Override
@@ -40,6 +47,10 @@ public class Player extends BodyEntity {
 
 
         body.setLinearVelocity(dir);
+
+        if(controller.isShooting()){
+            weapon.shot(controller.getShootDirection());
+        }
 
     }
 

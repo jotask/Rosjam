@@ -17,4 +17,10 @@ public abstract class Entity {
 
     public abstract void debug(final ShapeRenderer sr);
 
+    public void die(){
+
+    }
+
+    public boolean needsToDie(){ return false; }
+
 }
