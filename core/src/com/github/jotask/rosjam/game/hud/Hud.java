@@ -46,7 +46,7 @@ public class Hud{
 
         this.stage.getViewport().setCamera(this.camera);
         this.stage.addActor(table);
-        this.stage.setDebugAll(true);
+        this.stage.setDebugAll(false);
 //        this.stage.getBatch().dispose();
 
 //        final SpriteBatch sb = Rosjam.get().getSb();
@@ -95,4 +95,7 @@ public class Hud{
 
     public void addControl(final Actor actor){ this.controls.addActor(actor); }
 
+    public Stage getStage() {
+        return stage;
+    }
 }
