@@ -18,7 +18,7 @@ import com.github.jotask.rosjam.util.Sprite;
  */
 public class Player extends BodyEntity {
 
-    private final float SPEED = 10f;
+    private final float SPEED = 7f;
 
     private final Controller controller;
 

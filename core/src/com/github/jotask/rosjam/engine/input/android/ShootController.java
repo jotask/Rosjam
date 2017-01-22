@@ -67,6 +67,6 @@ public class ShootController {
     }
 
     public boolean isShooting() {
-        return true;
+        return touchpad.isTouched();
     }
 }

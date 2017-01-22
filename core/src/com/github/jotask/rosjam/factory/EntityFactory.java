@@ -73,9 +73,10 @@ public class EntityFactory {
 
         if(entity instanceof Player){
             CollisionFilter.setMask(fd, CollisionFilter.EENTITY.BULLET);
-        }else if(entity instanceof Enemy){
-            CollisionFilter.setMask(fd, CollisionFilter.EENTITY.BULLET);
         }
+//        else if(entity instanceof Enemy){
+//            CollisionFilter.setMask(fd, CollisionFilter.EENTITY.BULLET);
+//        }
 
         fd.shape = shape;
 
