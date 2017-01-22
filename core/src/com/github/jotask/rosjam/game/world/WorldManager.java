@@ -1,4 +1,4 @@
-package com.github.jotask.rosjam.game;
+package com.github.jotask.rosjam.game.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -7,6 +7,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.github.jotask.rosjam.engine.states.GameState;
+import com.github.jotask.rosjam.game.Game;
 import com.github.jotask.rosjam.game.entity.Player;
 
 /**
@@ -15,7 +17,7 @@ import com.github.jotask.rosjam.game.entity.Player;
  * @author Jose Vives Iznardo
  * @since 14/01/2017
  */
-public class WorldManager extends com.github.jotask.rosjam.engine.states.GameState{
+public class WorldManager extends GameState {
 
     private final int velocityIteration = 6;
     private final int positionsIterations = 2;
@@ -27,6 +29,7 @@ public class WorldManager extends com.github.jotask.rosjam.engine.states.GameSta
         super(game);
 
         this.world = new World(new Vector2(0,0), true);
+        this.world.setContactListener(new WorldCollision());
         this.renderer = new Box2DDebugRenderer();
     }
 
@@ -72,4 +75,9 @@ public class WorldManager extends com.github.jotask.rosjam.engine.states.GameSta
                 world.destroyBody(b);
         }
     }
+
+    public void delete(Body body){
+        this.world.destroyBody(body);
+    }
+
 }
