@@ -78,10 +78,16 @@ public class DungeonFactory {
             // Spawn a room
             {
                 Vector2 nextRoom = getNextRoom(room, door);
+                nextRoom.x += 1f;
+                nextRoom.y += 1f;
+
                 // Check if in that position exist a room
                 if(isOccupied(rooms, nextRoom)){
                     continue generator;
                 }
+
+                nextRoom.x -= 1f;
+                nextRoom.y -= 1f;
 
                 ConfigRoom configRoom = new ConfigRoom(configDungeon.worldManager);
                 configRoom.position = nextRoom;
