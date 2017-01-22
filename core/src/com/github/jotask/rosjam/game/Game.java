@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.jotask.rosjam.engine.GameManager;
 import com.github.jotask.rosjam.engine.camera.Camera;
+import com.github.jotask.rosjam.engine.debug.Debug;
 import com.github.jotask.rosjam.engine.input.Controller;
 import com.github.jotask.rosjam.engine.input.InputController;
 import com.github.jotask.rosjam.engine.states.CameraState;
@@ -18,6 +19,8 @@ import com.github.jotask.rosjam.game.hud.Hud;
  */
 public class Game extends CameraState {
 
+    private Debug debug;
+
     private GameManager gameManager;
     private InputController controller;
     private Hud hud;
@@ -28,6 +31,8 @@ public class Game extends CameraState {
 
     @Override
     public void init() {
+
+        this.debug = new Debug();
 
         this.hud = new Hud(this);
         this.controller = new InputController(this);
@@ -52,6 +57,7 @@ public class Game extends CameraState {
     public void postRender(SpriteBatch sb) {
         this.gameManager.postRender(sb);
         this.hud.render(sb);
+        this.debug.render(sb);
     }
 
     @Override
@@ -64,6 +70,7 @@ public class Game extends CameraState {
     public void update() {
         this.gameManager.update();
         this.hud.update(Gdx.graphics.getDeltaTime());
+        this.debug.update();
     }
 
     @Override
