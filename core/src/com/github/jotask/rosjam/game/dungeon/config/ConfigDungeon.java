@@ -1,6 +1,6 @@
 package com.github.jotask.rosjam.game.dungeon.config;
 
-import com.github.jotask.rosjam.game.WorldManager;
+import com.github.jotask.rosjam.game.world.WorldManager;
 
 /**
  * ConfigDungeon

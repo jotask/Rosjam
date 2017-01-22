@@ -2,7 +2,7 @@ package com.github.jotask.rosjam.game.dungeon.level;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.github.jotask.rosjam.game.WorldManager;
+import com.github.jotask.rosjam.game.world.WorldManager;
 import com.github.jotask.rosjam.game.dungeon.config.ConfigDungeon;
 import com.github.jotask.rosjam.game.entity.Entity;
 
