@@ -14,6 +14,8 @@ public interface Controller {
 
     boolean isShooting();
 
+    Vector2 getShootDirection();
+
     boolean resetLevel();
 
 }

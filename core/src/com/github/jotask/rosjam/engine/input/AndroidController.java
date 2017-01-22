@@ -3,6 +3,7 @@ package com.github.jotask.rosjam.engine.input;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.github.jotask.rosjam.engine.input.android.DirectionController;
+import com.github.jotask.rosjam.engine.input.android.ShootController;
 import com.github.jotask.rosjam.game.hud.Hud;
 
 /**
@@ -16,9 +17,11 @@ public class AndroidController implements Controller {
     // TODO Create and improve skin
 
     private DirectionController direction;
+    private ShootController shoot;
 
     public AndroidController(final Hud stage) {
         this.direction = new DirectionController(stage);
+        this.shoot = new ShootController(stage);
     }
 
     @Override
@@ -26,7 +29,7 @@ public class AndroidController implements Controller {
 
     @Override
     public boolean isShooting() {
-        return false;
+        return shoot.isShooting();
     }
 
     @Override
@@ -39,7 +42,11 @@ public class AndroidController implements Controller {
         for (int i = 0; i < 20; i++) {
             if (Gdx.input.isTouched(i)) activeTouch++;
         }
-        return (activeTouch == 2);
+        return (activeTouch == 3);
     }
 
+    @Override
+    public Vector2 getShootDirection() {
+        return shoot.getDirection();
+    }
 }
