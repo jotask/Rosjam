@@ -19,7 +19,7 @@ android {
     }
     defaultConfig {
         applicationId "com.github.jotask.rosjam"
-        minSdkVersion 8
+        minSdkVersion 9
         targetSdkVersion 20
     }
 }
