@@ -18,7 +18,7 @@ import com.github.jotask.rosjam.util.CollisionFilter;
  */
 class Box2DFactory {
 
-    public static void createBodies(final MapTiled map, final WorldManager worldManager){
+    public static Body createBody(final MapTiled map, final WorldManager worldManager){
 
         // TODO Calculate this ppt
         final float ppt = 15.375f;
@@ -68,6 +68,8 @@ class Box2DFactory {
             shape.dispose();
 
         }
+
+        return body;
 
     }
 

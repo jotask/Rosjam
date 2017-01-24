@@ -11,8 +11,8 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 
 		cfg.title = "Rosjam";
-		cfg.width = 1280 / 3;
-		cfg.height = 720 / 3;
+		cfg.width = 1280 / 2;
+		cfg.height = 720 / 2;
 
 		cfg.addIcon("icon.png", Files.FileType.Internal);
 
