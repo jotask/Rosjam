@@ -5,8 +5,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.github.jotask.rosjam.engine.map.MapTiled;
+import com.github.jotask.rosjam.factory.EntityFactory;
+import com.github.jotask.rosjam.game.EntityManager;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
+import com.github.jotask.rosjam.game.entity.Enemy;
 import com.github.jotask.rosjam.game.entity.Entity;
 
 import java.util.LinkedList;
@@ -27,14 +31,20 @@ public class Room extends Entity {
     private Vector2 position;
     private MapTiled map;
 
+    private Body walls;
+
     public final Rectangle bounds;
 
     public final LinkedList<Door> doors;
+
+    public final LinkedList<Vector2> spawners;
 
     public Room(final Vector2 position, final MapTiled map, final Rectangle bounds) {
         this.position = position;
         this.map = map;
         this.bounds = bounds;
+
+        this.spawners = new LinkedList<Vector2>();
 
         {
 
@@ -73,9 +83,7 @@ public class Room extends Entity {
     }
 
     @Override
-    public void debug(ShapeRenderer sr) {
-
-    }
+    public void debug(ShapeRenderer sr) { }
 
     public Vector2 getCenter() {
 
@@ -97,4 +105,18 @@ public class Room extends Entity {
     }
 
     public Vector2 getPosition() { return position; }
+
+    public void setWalls(Body body){ this.walls = body; }
+
+    public Body getWalls() { return walls; }
+
+    public void enter(){
+
+        for(Vector2 p: spawners) {
+            Enemy enemy = EntityFactory.createEnemy(p);
+            EntityManager.add(enemy);
+        }
+
+    }
+
 }

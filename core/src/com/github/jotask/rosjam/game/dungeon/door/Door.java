@@ -58,4 +58,5 @@ public class Door extends Entity {
         }
     }
 
+    public SIDE getSide() { return side; }
 }
