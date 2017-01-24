@@ -51,16 +51,6 @@ public class WorldManager extends GameState {
 
     public World getWorld() { return world; }
 
-    public void deleteAllBodies(){
-        Array<Body> bodies = new Array<Body>();
-        world.getBodies(bodies);
-        for(int i = 0; i < bodies.size; i++)
-        {
-            if(!world.isLocked())
-                world.destroyBody(bodies.get(i));
-        }
-    }
-
     public void deleteDungeon() {
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);

@@ -42,15 +42,15 @@ public class DungeonState extends GameState {
             throw new RuntimeException("DungeonState isNot Null");
         DungeonState.instance = this;
 
+        this.manager = EntityManager.get();
         this.worldManager = new WorldManager(game);
+
 
         this.level = new LevelManager(this.worldManager);
 
         this.dungeon = DungeonFactory.generateDungeon(level.getDungeon());
-        this.player = EntityFactory.generatePlayer(worldManager, dungeon.initialRoom);
+        this.player = EntityFactory.generatePlayer(dungeon.initialRoom);
         this.setPlayer(this.player);
-
-        this.manager = EntityManager.get();
 
     }
 

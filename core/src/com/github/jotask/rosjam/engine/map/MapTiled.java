@@ -26,6 +26,7 @@ public class MapTiled {
         this.camera = camera;
 
         renderer = new JotaMapRenderer(this);
+
     }
 
     public TiledMap getMap() { return map; }

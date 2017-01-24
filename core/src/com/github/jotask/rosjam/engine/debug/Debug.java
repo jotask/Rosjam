@@ -6,10 +6,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.github.jotask.rosjam.Rosjam;
 import com.github.jotask.rosjam.game.DungeonState;
 import com.github.jotask.rosjam.game.EntityManager;
 import com.github.jotask.rosjam.game.entity.Entity;
+
+import java.text.DecimalFormat;
 
 /**
  * Debug
@@ -27,7 +30,8 @@ public class Debug extends Entity{
 
         FPS ("FPS: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f -13f * 0),
         ENTITY ("e: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 13f * 1),
-        BODY ("b: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 13f * 2);
+        BODY ("b: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 13f * 2),
+        PLAYER ("p: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 13f * 3);
 
         final String string;
         final float x, y;
@@ -63,6 +67,14 @@ public class Debug extends Entity{
 
         int body = DungeonState.get().getWorldManager().getWorld().getBodyCount();
         draw(sb, String.valueOf(body), DEBUG.BODY);
+
+
+        Vector2 p = DungeonState.get().getPlayer().getBody().getPosition();
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+        String x = df.format(p.x);
+        String y = df.format(p.y);
+        draw(sb, (x + " : " + y), DEBUG.PLAYER);
 
     }
 
