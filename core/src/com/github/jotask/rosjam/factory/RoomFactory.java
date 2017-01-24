@@ -37,6 +37,7 @@ class RoomFactory {
         Room room = new Room(cfg.position, map, calculateBounds(map));
         Body body = Box2DFactory.createBody(map, cfg.worldManager);
         room.setWalls(body);
+        body.setUserData(room);
 //        replaceDoors(room, cfg.worldManager);
 
          spawners(room, map);

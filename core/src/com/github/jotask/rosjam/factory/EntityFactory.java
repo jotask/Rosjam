@@ -134,6 +134,9 @@ public class EntityFactory {
         Enemy enemy = new Enemy(body, ai, sprite);
         enemy.getBody().setUserData(enemy);
 
+        ai.setEntity(enemy);
+        ai.setTarget(DungeonState.get().getPlayer());
+
         return enemy;
     }
 

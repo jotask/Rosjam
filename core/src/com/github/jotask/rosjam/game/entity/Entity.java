@@ -11,16 +11,16 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
  */
 public abstract class Entity {
 
+    protected boolean needsToDie = false;
+
     public abstract void update();
 
     public abstract void render(final SpriteBatch sb);
 
     public abstract void debug(final ShapeRenderer sr);
 
-    public void die(){
+    public void die(){ }
 
-    }
-
-    public boolean needsToDie(){ return false; }
+    public boolean needsToDie(){ return needsToDie; }
 
 }

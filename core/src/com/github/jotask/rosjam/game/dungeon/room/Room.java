@@ -33,6 +33,8 @@ public class Room extends Entity {
 
     private Body walls;
 
+//    private boolean[][] ai;
+
     public final Rectangle bounds;
 
     public final LinkedList<Door> doors;
@@ -70,6 +72,17 @@ public class Room extends Entity {
 
         }
 
+//        {
+//            ai = new boolean[WIDTH][HEIGHT];
+//            for(int i = 0; i < ai.length; i++){
+//                for(int j = 0; j < ai[0].length; j++){
+//                    ai[i][j] = false;
+//                }
+//            }
+//        }
+//
+//        ai[7][7] = true;
+
     }
 
     @Override
@@ -83,7 +96,34 @@ public class Room extends Entity {
     }
 
     @Override
-    public void debug(ShapeRenderer sr) { }
+    public void debug(ShapeRenderer sr) {
+
+//        sr.end();
+//        sr.begin();
+//        sr.set(ShapeRenderer.ShapeType.Filled);
+//        sr.setColor(Color.BLACK);
+//
+//        float s = 1.04f;
+//        for(int i = 0; i < ai.length; i++){
+//            for(int j = 0; j < ai[0].length; j++){
+//                sr.setColor(Color.BLACK);
+//                if(ai[i][j])
+//                    sr.setColor(Color.WHITE);
+//                float x = i * s;
+//                float y = j * s;
+//                sr.rect(x , y, s, s);
+//
+//                if(ai[i][j]) {
+//                    sr.setColor(Color.LIME);
+//                    float s2 = s / 2f;
+//                    float s22 = s2 / 2f;
+//                    sr.rect(x + s2 - (s22), y + s2 - s22, s22, s22);
+//                }
+//
+//            }
+//        }
+
+    }
 
     public Vector2 getCenter() {
 
