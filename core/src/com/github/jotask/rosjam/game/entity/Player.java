@@ -2,7 +2,6 @@ package com.github.jotask.rosjam.game.entity;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.github.jotask.rosjam.engine.input.Controller;
 import com.github.jotask.rosjam.factory.EntityFactory;
@@ -16,19 +15,14 @@ import com.github.jotask.rosjam.util.Sprite;
  * @author Jose Vives Iznardo
  * @since 14/01/2017
  */
-public class Player extends BodyEntity {
-
-    private final float SPEED = 7f;
-
-    private final Controller controller;
+public class Player extends ControlEntity {
 
     private Weapon weapon;
 
     private Sprite sprite;
 
     public Player(Body body, Controller controller, final Sprite sprite) {
-        super(body);
-        this.controller = controller;
+        super(body, controller);
         this.sprite = sprite;
 
         this.weapon = EntityFactory.getWeapon(this);
@@ -37,19 +31,10 @@ public class Player extends BodyEntity {
 
     @Override
     public void update() {
+        super.update();
 
-        // TODO take a look to the following ling to better movement
-        // http://www.box2d.org/forum/viewtopic.php?t=9756
-
-        final Vector2 dir = controller.getDirection();
-        dir.x *= SPEED;
-        dir.y *= SPEED;
-
-
-        body.setLinearVelocity(dir);
-
-        if(controller.isShooting()){
-            weapon.shot(controller.getShootDirection());
+        if(getController().isShooting()){
+            weapon.shot(getController().getShootDirection());
         }
 
     }
@@ -63,8 +48,6 @@ public class Player extends BodyEntity {
     public void debug(ShapeRenderer sr) {
 
     }
-
-    public Controller getController() { return controller; }
 
     public void reset(final Room room){
         this.getBody().setTransform(room.getCenter(), this.getBody().getAngle());

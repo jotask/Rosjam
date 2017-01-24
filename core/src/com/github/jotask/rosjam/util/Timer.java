@@ -8,7 +8,7 @@ package com.github.jotask.rosjam.util;
  */
 public class Timer {
 
-    private long time;
+    private final long time;
     private long next;
 
     public Timer(float seg){
@@ -19,14 +19,12 @@ public class Timer {
     }
 
     private long toSec(float seg){
-        Float f = new Float(seg);
-        long s = f.longValue();
 
-        s *= 1000;
-        s *= 1000;
-        s *= 1000;
+        Float f = seg;
 
-        return s;
+        f *= 1000000000;
+
+        return f.longValue();
 
     }
 
@@ -43,6 +41,7 @@ public class Timer {
             reset();
 
         return b;
+
     }
 
 }

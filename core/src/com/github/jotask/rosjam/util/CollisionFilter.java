@@ -10,24 +10,26 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
  */
 public class CollisionFilter {
 
-    public enum EENTITY { WALLS, PLAYER, ENEMY, BULLET, ITEM }
+    public enum EENTITY { WALLS, PLAYER, ENEMY, PLAYER_FRIEND, ENEMY_FRIEND, ITEM }
 
     public static class ENTITY {
 
         public static final short WALLS = 1;
         public static final short PLAYER = 2;
         public static final short ENEMY = 4;
-        public static final short BULLET = 8;
-        public static final short ITEM = 16;
+        public static final short PLAYER_FRIEND = 8;
+        public static final short ENEMY_FRIEND = 16;
+        public static final short ITEM = 32;
 
     }
 
     private static class MASK {
 
         public static final short WALLS = -1;
-        public static final short PLAYER = ENTITY.WALLS;
-        public static final short ENEMY = ENTITY.WALLS;
-        public static final short BULLET = ENTITY.WALLS;
+        public static final short PLAYER = ENTITY.WALLS | ENTITY.PLAYER | ENTITY.ENEMY | ENTITY.ENEMY_FRIEND;
+        public static final short ENEMY = ENTITY.WALLS | ENTITY.PLAYER | ENTITY.ENEMY | ENTITY.PLAYER_FRIEND;
+        public static final short PLAYER_FRIEND = ENTITY.WALLS | ENTITY.ENEMY;
+        public static final short ENEMY_FRIEND = ENTITY.WALLS | ENTITY.PLAYER;
         public static final short ITEM = ENTITY.WALLS  | ENTITY.PLAYER;
 
     }
@@ -44,8 +46,11 @@ public class CollisionFilter {
             case ENEMY:
                 set(fix, ENTITY.ENEMY, MASK.ENEMY);
                 break;
-            case BULLET:
-                set(fix, ENTITY.BULLET, MASK.BULLET);
+            case PLAYER_FRIEND:
+                set(fix, ENTITY.PLAYER_FRIEND, MASK.PLAYER_FRIEND);
+                break;
+            case ENEMY_FRIEND:
+                set(fix, ENTITY.ENEMY_FRIEND, MASK.ENEMY_FRIEND);
                 break;
             case ITEM:
                 set(fix, ENTITY.ITEM, MASK.ITEM);
