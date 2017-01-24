@@ -10,7 +10,7 @@ import com.github.jotask.rosjam.game.world.WorldManager;
  */
 public class ConfigDungeon {
 
-    public int maxRooms = 1;
+    public int maxRooms = 7;
 
     public long seed = 23;
 
@@ -19,4 +19,5 @@ public class ConfigDungeon {
     public ConfigDungeon(WorldManager worldManager) {
         this.worldManager = worldManager;
     }
+
 }

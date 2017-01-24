@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -16,9 +17,6 @@ import com.github.jotask.rosjam.engine.map.MapTiled;
 import com.github.jotask.rosjam.game.dungeon.config.ConfigRoom;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
-import com.github.jotask.rosjam.game.world.WorldManager;
-
-import java.util.LinkedList;
 
 import static com.github.jotask.rosjam.game.dungeon.door.Door.SIDE.*;
 
@@ -30,19 +28,37 @@ import static com.github.jotask.rosjam.game.dungeon.door.Door.SIDE.*;
  */
 class RoomFactory {
 
+    enum FILE{
+        TEST("test"),
+        ONE("one"),
+        TWO("two"),
+        THREE("three");
+
+        final String file;
+
+        FILE(String f){
+            file = f;
+        }
+    }
+
     public static Room generateRoom(ConfigRoom cfg) {
-        TiledMap tiledMap = new TmxMapLoader().load("test.tmx");
+
+        String filename = "test.tmx";
+
+        final FILE[] val = FILE.values();
+        int i = MathUtils.random(val.length - 1 );
+
+        TiledMap tiledMap = new TmxMapLoader().load(val[i].file + ".tmx ");
         Camera camera = cfg.worldManager.getGame().getCamera();
         MapTiled map = new MapTiled(cfg.position, tiledMap, camera);
         Room room = new Room(cfg.position, map, calculateBounds(map));
-        Body body = Box2DFactory.createBody(map, cfg.worldManager);
+        Body body = Box2DFactory.createBody(room, cfg.worldManager);
         room.setWalls(body);
         body.setUserData(room);
-//        replaceDoors(room, cfg.worldManager);
 
-         spawners(room, map);
+        spawners(room, map);
 
-         room.enter();
+        room.enter();
 
         return room;
 
@@ -64,19 +80,6 @@ class RoomFactory {
             s.y += (y / h);
             room.spawners.add(s);
 
-        }
-
-    }
-
-    private static void replaceDoors(final Room room, final WorldManager worldManager){
-
-        final LinkedList<Door> doors = room.doors;
-
-        for(int i = doors.size() - 1; i >= 0; i--){
-            Door d = doors.get(i);
-            if(d.connected == null) {
-                replaceWithWall(room, d);
-            }
         }
 
     }

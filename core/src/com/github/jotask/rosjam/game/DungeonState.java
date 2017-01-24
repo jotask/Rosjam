@@ -67,7 +67,9 @@ public class DungeonState extends GameState {
         if(this.player.getController().resetLevel()){
             reset();
         }
+
         this.worldManager.update();
+
         this.dungeon.update();
         this.player.update();
         this.manager.update();

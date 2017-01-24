@@ -23,7 +23,9 @@ public class PlayerAssets {
     private final Assets assets;
 
     public enum SPRITE{
-        DEFAULT (0, 0);
+        DEFAULT (0, 0),
+        BULLET (8, 0),
+        ENEMY (7, 0);
 
         int x, y;
 

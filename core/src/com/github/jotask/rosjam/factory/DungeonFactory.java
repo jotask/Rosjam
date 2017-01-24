@@ -2,11 +2,16 @@ package com.github.jotask.rosjam.factory;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.github.jotask.rosjam.game.dungeon.Dungeon;
 import com.github.jotask.rosjam.game.dungeon.config.ConfigDungeon;
 import com.github.jotask.rosjam.game.dungeon.config.ConfigRoom;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
+import com.github.jotask.rosjam.util.CollisionFilter;
 
 import java.util.LinkedList;
 
@@ -96,6 +101,7 @@ public class DungeonFactory {
 
                 // Connect doors
                 {
+
                     Door a = door;
                     Door b = null;
                     Door.SIDE opposite = Door.getOpposite(a.side);
@@ -106,8 +112,8 @@ public class DungeonFactory {
                         }
                     }
 
-                    a.connected = b.self;
-                    b.connected = a.self;
+                    a.connected = b;
+                    b.connected = a;
 
                 }
 
@@ -118,7 +124,8 @@ public class DungeonFactory {
 
         Dungeon dungeon = new Dungeon(rooms);
         dungeon.initialRoom = initialRoom;
-        return dungeon;
+
+        return DungeonFactory.cleanDungeon(dungeon);
 
     }
 
@@ -152,6 +159,75 @@ public class DungeonFactory {
         }
 
         return new Vector2(x, y);
+
+    }
+
+    private static Dungeon cleanDungeon(final Dungeon dungeon){
+
+        // For each Room
+        for(Room r: dungeon.getRooms()){
+            // Handle doors
+            doors(r);
+        }
+
+        return dungeon;
+
+    }
+
+    private static void doors(final Room room){
+        final LinkedList<Door> doors = room.doors;
+        for(int i = doors.size() - 1; i >= 0; i--){
+            Door d = doors.get(i);
+            if(d.connected != null){
+                door(room, d);
+            }else{
+                doors.remove(i);
+            }
+        }
+    }
+
+    private static void door(final Room room, final Door door){
+
+        Body body = room.getWalls();
+
+        final Vector2 position = new Vector2();
+        final Vector2 size = new Vector2(.5f, .5f);
+        float angle = 0;
+
+        switch (door.side){
+            case LEFT:
+                position.x += 2f * 1f;
+                position.y += 6f * 1f;
+                break;
+            case UP:
+                position.x += 11f * 1f;
+                position.y += 2f * 1f;
+                break;
+            case RIGHT:
+                position.x += 20f * 1f;
+                position.y += 6f * 1f;
+                break;
+            case DOWN:
+                position.x += 11f * 1f;
+                position.y += 10f * 1f;
+                position.y -= .25f;
+                break;
+        }
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(size.x, size.y, position, angle);
+
+        FixtureDef fd = new FixtureDef();
+        fd.shape = shape;
+        fd.isSensor = true;
+
+        CollisionFilter.setMask(fd, CollisionFilter.EENTITY.DOOR);
+
+        Fixture fix = body.createFixture(fd);
+
+        fix.setUserData(door);
+
+        shape.dispose();
 
     }
 

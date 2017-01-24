@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
  */
 public class CollisionFilter {
 
-    public enum EENTITY { WALLS, PLAYER, ENEMY, PLAYER_FRIEND, ENEMY_FRIEND, ITEM }
+    public enum EENTITY { WALLS, PLAYER, ENEMY, PLAYER_FRIEND, ENEMY_FRIEND, ITEM, DOOR }
 
     public static class ENTITY {
 
@@ -20,17 +20,19 @@ public class CollisionFilter {
         public static final short PLAYER_FRIEND = 8;
         public static final short ENEMY_FRIEND = 16;
         public static final short ITEM = 32;
+        public static final short DOOR = 64;
 
     }
 
     private static class MASK {
 
         public static final short WALLS = -1;
-        public static final short PLAYER = ENTITY.WALLS | ENTITY.PLAYER | ENTITY.ENEMY | ENTITY.ENEMY_FRIEND;
+        public static final short PLAYER = ENTITY.WALLS | ENTITY.PLAYER | ENTITY.ENEMY | ENTITY.ENEMY_FRIEND | ENTITY.DOOR;
         public static final short ENEMY = ENTITY.WALLS | ENTITY.PLAYER | ENTITY.ENEMY | ENTITY.PLAYER_FRIEND;
         public static final short PLAYER_FRIEND = ENTITY.WALLS | ENTITY.ENEMY;
         public static final short ENEMY_FRIEND = ENTITY.WALLS | ENTITY.PLAYER;
         public static final short ITEM = ENTITY.WALLS  | ENTITY.PLAYER;
+        public static final short DOOR = ENTITY.PLAYER;
 
     }
 
@@ -54,6 +56,9 @@ public class CollisionFilter {
                 break;
             case ITEM:
                 set(fix, ENTITY.ITEM, MASK.ITEM);
+                break;
+            case DOOR:
+                set(fix, ENTITY.DOOR, MASK.DOOR);
                 break;
         }
 

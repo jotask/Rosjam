@@ -90,7 +90,11 @@ public class EntityFactory {
 
         shape.dispose();
 
-        Bullet bullet = new Bullet(body);
+        TextureRegion region = Rosjam.get().getAssets().getPlayerAssets().getRegion(PlayerAssets.SPRITE.BULLET);
+
+        final Sprite sprite = new Sprite(region, body);
+
+        Bullet bullet = new Bullet(body, sprite);
         bullet.getBody().setUserData(bullet);
 
         EntityManager.add(bullet);
@@ -125,7 +129,7 @@ public class EntityFactory {
 
         shape.dispose();
 
-        TextureRegion region = Rosjam.get().getAssets().getPlayerAssets().getRegion(PlayerAssets.SPRITE.DEFAULT);
+        TextureRegion region = Rosjam.get().getAssets().getPlayerAssets().getRegion(PlayerAssets.SPRITE.ENEMY);
 
         final Sprite sprite = new Sprite(region, body);
 

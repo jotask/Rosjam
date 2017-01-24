@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="21" height="11" tilewidth="16" tileheight="16" nextobjectid="38">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="21" height="11" tilewidth="16" tileheight="16" nextobjectid="54">
  <tileset firstgid="1" name="dungeon_sheet" tilewidth="16" tileheight="16" tilecount="240">
   <image source="dungeon_sheet.png" trans="ff00ff" width="384" height="160"/>
  </tileset>
@@ -29,10 +29,5 @@
   <object id="36" x="304" y="32" width="32" height="112"/>
   <object id="37" x="0" y="32" width="32" height="112"/>
  </objectgroup>
- <objectgroup name="spawn">
-  <object id="10" x="48" y="48" width="16" height="16"/>
-  <object id="11" x="48" y="112" width="16" height="16"/>
-  <object id="12" x="272" y="112" width="16" height="16"/>
-  <object id="13" x="272" y="48" width="16" height="16"/>
- </objectgroup>
+ <objectgroup name="spawn"/>
 </map>

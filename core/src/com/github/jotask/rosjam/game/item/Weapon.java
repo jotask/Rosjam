@@ -20,7 +20,8 @@ public class Weapon extends Item{
     public Weapon(BodyEntity owner) {
         this.owner = owner;
 
-        this.timer = new Timer(.5f);
+        this.timer = new Timer(.1f);
+
     }
 
     private Bullet getBullet(){

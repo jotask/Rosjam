@@ -33,8 +33,6 @@ public class Room extends Entity {
 
     private Body walls;
 
-//    private boolean[][] ai;
-
     public final Rectangle bounds;
 
     public final LinkedList<Door> doors;
@@ -48,40 +46,20 @@ public class Room extends Entity {
 
         this.spawners = new LinkedList<Vector2>();
 
-        {
+        this.doors = new LinkedList<Door>();
+        // Horizontal
+        Door right = new Door(this, Door.SIDE.RIGHT);
+        doors.add(right);
 
-            this.doors = new LinkedList<Door>();
+        Door left = new Door(this, Door.SIDE.LEFT);
+        doors.add(left);
 
-            // Horizontal
-//            layout[WIDTH - WALL_SIZE][HEIGHT / 2] = CELL_TYPE.DOOR;
-            Door right = new Door(this, Door.SIDE.RIGHT);
-            doors.add(right);
+        // Vertical
+        Door down = new Door(this, Door.SIDE.DOWN);
+        doors.add(down);
 
-//            layout[WALL_SIZE - 1]    [HEIGHT / 2] = CELL_TYPE.DOOR;
-            Door left = new Door(this, Door.SIDE.LEFT);
-            doors.add(left);
-
-            // Vertical
-//            layout[WIDTH / 2][ WALL_SIZE - 1]     = CELL_TYPE.DOOR;
-            Door down = new Door(this, Door.SIDE.DOWN);
-            doors.add(down);
-
-//            layout[WIDTH / 2][HEIGHT - WALL_SIZE] = CELL_TYPE.DOOR;
-            Door up = new Door(this, Door.SIDE.UP);
-            doors.add(up);
-
-        }
-
-//        {
-//            ai = new boolean[WIDTH][HEIGHT];
-//            for(int i = 0; i < ai.length; i++){
-//                for(int j = 0; j < ai[0].length; j++){
-//                    ai[i][j] = false;
-//                }
-//            }
-//        }
-//
-//        ai[7][7] = true;
+        Door up = new Door(this, Door.SIDE.UP);
+        doors.add(up);
 
     }
 
@@ -97,31 +75,11 @@ public class Room extends Entity {
 
     @Override
     public void debug(ShapeRenderer sr) {
-
-//        sr.end();
-//        sr.begin();
-//        sr.set(ShapeRenderer.ShapeType.Filled);
-//        sr.setColor(Color.BLACK);
-//
-//        float s = 1.04f;
-//        for(int i = 0; i < ai.length; i++){
-//            for(int j = 0; j < ai[0].length; j++){
-//                sr.setColor(Color.BLACK);
-//                if(ai[i][j])
-//                    sr.setColor(Color.WHITE);
-//                float x = i * s;
-//                float y = j * s;
-//                sr.rect(x , y, s, s);
-//
-//                if(ai[i][j]) {
-//                    sr.setColor(Color.LIME);
-//                    float s2 = s / 2f;
-//                    float s22 = s2 / 2f;
-//                    sr.rect(x + s2 - (s22), y + s2 - s22, s22, s22);
-//                }
-//
-//            }
-//        }
+        for(Door d: doors){
+            d.debug(sr);
+        }
+//        Vector2 c = getCenter();
+//        sr.rect(c.x - .5f, c.y - .5f, 1f, 1f);
 
     }
 
@@ -150,6 +108,8 @@ public class Room extends Entity {
 
     public Body getWalls() { return walls; }
 
+    public MapTiled getMap() { return map; }
+
     public void enter(){
 
         for(Vector2 p: spawners) {
@@ -157,6 +117,18 @@ public class Room extends Entity {
             EntityManager.add(enemy);
         }
 
+    }
+
+    public void exit(){
+
+    }
+
+    public Door getDoor(Door.SIDE side){
+        for(Door d: doors){
+            if(d.side == side)
+                return d;
+        }
+        return null;
     }
 
 }

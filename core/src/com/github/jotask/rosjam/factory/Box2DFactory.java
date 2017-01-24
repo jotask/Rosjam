@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.github.jotask.rosjam.engine.map.MapTiled;
+import com.github.jotask.rosjam.game.dungeon.room.Room;
 import com.github.jotask.rosjam.game.world.WorldManager;
 import com.github.jotask.rosjam.util.CollisionFilter;
 
@@ -18,16 +19,20 @@ import com.github.jotask.rosjam.util.CollisionFilter;
  */
 class Box2DFactory {
 
-    public static Body createBody(final MapTiled map, final WorldManager worldManager){
+    public static Body createBody(final Room room, final WorldManager worldManager){
 
         // TODO Calculate this ppt
         final float ppt = 15.375f;
 
+        MapTiled map = room.getMap();
+
         MapObjects collisionLayer = map.getMap().getLayers().get("wall").getObjects();
+
+        // FIXME add body in the middle of the room
 
         BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.StaticBody;
-        bd.position.set(map.getPosition());
+        bd.position.set(room.getPosition());
         final Body body = worldManager.getWorld().createBody(bd);
 
         for(MapObject obj: collisionLayer){
@@ -63,6 +68,7 @@ class Box2DFactory {
             fd.shape = shape;
             CollisionFilter.setMask(fd, CollisionFilter.EENTITY.WALLS);
 
+            // FIXME
             body.createFixture(fd);
 
             shape.dispose();
@@ -92,11 +98,13 @@ class Box2DFactory {
 
         Rectangle rectangle = obj.getRectangle();
         PolygonShape polygon = new PolygonShape();
-        Vector2 size = new Vector2((rectangle.x + rectangle.width * 0.5f) / ppt,
+
+        Vector2 position = new Vector2((rectangle.x + rectangle.width * 0.5f) / ppt,
                 (rectangle.y + rectangle.height * 0.5f ) / ppt);
+
         polygon.setAsBox(rectangle.width * 0.5f / ppt,
                 rectangle.height * 0.5f / ppt,
-                size,
+                position,
                 0.0f);
 
         return polygon;

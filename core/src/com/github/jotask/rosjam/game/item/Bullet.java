@@ -1,8 +1,10 @@
 package com.github.jotask.rosjam.game.item;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.github.jotask.rosjam.game.entity.BodyEntity;
+import com.github.jotask.rosjam.util.Sprite;
 import com.github.jotask.rosjam.util.Timer;
 
 /**
@@ -13,14 +15,17 @@ import com.github.jotask.rosjam.util.Timer;
  */
 public class Bullet extends BodyEntity{
 
-    private final float damage = 10f;
+    private final float damage = 150f;
 
     private final float SPEED = 10f;
 
+    private Sprite sprite;
+
     private final Timer timer;
 
-    public Bullet(Body body) {
+    public Bullet(Body body, final Sprite sprite) {
         super(body);
+        this.sprite = sprite;
         timer = new Timer(1f);
     }
 
@@ -46,6 +51,11 @@ public class Bullet extends BodyEntity{
 
         this.getBody().setLinearVelocity(direction.scl(SPEED));
 
+    }
+
+    @Override
+    public void render(SpriteBatch sb) {
+        sprite.render(sb);
     }
 
     @Override
