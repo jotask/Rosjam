@@ -1,11 +1,14 @@
 package com.github.jotask.rosjam.game.dungeon.level;
 
-import com.github.jotask.rosjam.engine.camera.Camera;
+import com.github.jotask.rosjam.engine.camera.RoomCamera;
+import com.github.jotask.rosjam.factory.DungeonFactory;
+import com.github.jotask.rosjam.game.DungeonState;
+import com.github.jotask.rosjam.game.Game;
 import com.github.jotask.rosjam.game.dungeon.Dungeon;
+import com.github.jotask.rosjam.game.dungeon.config.ConfigDungeon;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
 import com.github.jotask.rosjam.game.entity.Player;
-import com.github.jotask.rosjam.game.world.WorldManager;
 
 /**
  * DungeonManager
@@ -15,32 +18,40 @@ import com.github.jotask.rosjam.game.world.WorldManager;
  */
 public class DungeonManager {
 
-    private WorldManager worldManager;
-    private Dungeon dungeon;
+    private RoomCamera camera;
+
     private Player player;
-    private Camera camera;
+    private Dungeon dungeon;
 
-    private Room actualRoom;
+    private Room currentRoom;
 
-    public DungeonManager(){
-        nextLevel();
+    public DungeonManager() {
+        player = DungeonState.get().getPlayer();
+        camera = (RoomCamera) Game.get().getCamera();
     }
 
     public void nextLevel(){
-        // Generate next level
-//        moveToRoom(dungeon.initialRoom);
+        dungeon = DungeonFactory.generateDungeon(new ConfigDungeon());
+        currentRoom = dungeon.initialRoom;
+        currentRoom.enter();
+        camera.moveTo(currentRoom);
     }
 
-    private void moveToRoom(final Door door){
-        // Set player position
-//        player.goTo(door);
-        // Move camera
+    public Dungeon getDungeon() { return dungeon; }
 
+    public void enterRoom(final Door door){
+
+        currentRoom.exit();
+
+        currentRoom = door.connected.self;
+
+        camera.moveTo(currentRoom);
+
+        player.goTo(door);
+
+        currentRoom.enter();
 
     }
 
-    public void generateDungeon(){
-
-    }
 
 }

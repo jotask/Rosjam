@@ -19,6 +19,11 @@ import com.github.jotask.rosjam.game.hud.Hud;
  */
 public class Game extends CameraState {
 
+    private static Game instance;
+    public static Game get(){
+        return instance;
+    }
+
     private Debug debug;
 
     private GameManager gameManager;
@@ -27,6 +32,7 @@ public class Game extends CameraState {
 
     public Game(Camera camera) {
         super(camera);
+        Game.instance = this;
     }
 
     @Override
@@ -87,6 +93,7 @@ public class Game extends CameraState {
     public void dispose() {
         this.gameManager.dispose();
         this.hud.dispose();
+        this.instance = null;
     }
 
     @Override
@@ -100,5 +107,7 @@ public class Game extends CameraState {
     public Hud getHud() { return hud; }
 
     public GameManager getGameManager() { return gameManager; }
+
+
 
 }

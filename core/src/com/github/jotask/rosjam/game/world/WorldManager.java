@@ -31,6 +31,7 @@ public class WorldManager extends GameState {
         this.world = new World(new Vector2(0,0), true);
         this.world.setContactListener(new WorldCollision());
         this.renderer = new Box2DDebugRenderer();
+
     }
 
     @Override

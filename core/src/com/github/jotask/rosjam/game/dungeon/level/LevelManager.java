@@ -2,10 +2,9 @@ package com.github.jotask.rosjam.game.dungeon.level;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.github.jotask.rosjam.factory.DungeonFactory;
+import com.github.jotask.rosjam.game.DungeonState;
 import com.github.jotask.rosjam.game.EntityManager;
-import com.github.jotask.rosjam.game.dungeon.Dungeon;
-import com.github.jotask.rosjam.game.dungeon.config.ConfigDungeon;
+import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.entity.Entity;
 import com.github.jotask.rosjam.game.entity.Player;
 import com.github.jotask.rosjam.game.world.WorldManager;
@@ -19,58 +18,58 @@ import com.github.jotask.rosjam.game.world.WorldManager;
 public class LevelManager extends Entity{
 
     private final WorldManager worldManager;
-    private final EntityManager entities;
-
-    private Player player;
+    private final EntityManager entityManager;
+    private final DungeonManager dungeonManager;
+    private final Player player;
 
     private int level = 0;
 
-    private Dungeon dungeon;
+    private Door nextRoom;
 
     public LevelManager(WorldManager worldManager) {
         this.worldManager = worldManager;
-        this.entities = EntityManager.get();
-        this.player = worldManager.getPlayer();
-
-        if(player == null) {
-            System.out.println("isNull");
-        }
-
-        this.nexLevel();
+        this.entityManager = EntityManager.get();
+        this.dungeonManager = new DungeonManager();
+        this.player = DungeonState.get().getPlayer();
     }
 
     @Override
     public void update() {
-        dungeon.update();
+        if(nextRoom != null){
+            nextRoom();
+        }
     }
 
     @Override
-    public void render(SpriteBatch sb) {
-        dungeon.render(sb);
-    }
+    public void render(SpriteBatch sb) { dungeonManager.getDungeon().render(sb); }
 
     @Override
-    public void debug(ShapeRenderer sr) {
-        dungeon.debug(sr);
+    public void debug(ShapeRenderer sr) { }
+
+    public void nextLevel(){
+        // Augment level
+        level++;
+
+        // Delete everything
+        entityManager.reset();
+        worldManager.deleteDungeon();
+
+        // Create Everything
+        dungeonManager.nextLevel();
+        player.goTo(dungeonManager.getDungeon().initialRoom);
+
     }
 
-    public ConfigDungeon getDungeonConfig() {
-        ConfigDungeon cd = new ConfigDungeon(this.worldManager);
-        return cd;
+    public void nextRoom(final Door door){
+        // TODO Check if is the door for next level
+        if(door.isOpen())
+            nextRoom = door;
     }
 
-    private Dungeon generateDungeon(){
-        Dungeon dungeon = DungeonFactory.generateDungeon(getDungeonConfig());
-        return dungeon;
+    private void nextRoom(){
+        // TODO Check if is the door for next level
+        dungeonManager.enterRoom(nextRoom);
+        nextRoom = null;
     }
-
-    public void nexLevel(){
-        this.worldManager.deleteDungeon();
-        this.entities.reset();
-        this.dungeon = generateDungeon();
-        this.player.reset(this.dungeon.initialRoom);
-    }
-
-    public Dungeon getDungeon() { return dungeon; }
 
 }

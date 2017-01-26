@@ -31,6 +31,12 @@ public class DungeonFactory {
             throw new RuntimeException("Room is not valid");
         }
 
+        final Room room = dungeon.initialRoom;
+
+        for(Door d: room.doors){
+            d.setOpen(true);
+        }
+
         return dungeon;
 
     }

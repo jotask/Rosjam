@@ -17,10 +17,12 @@ public abstract class Entity {
 
     public abstract void render(final SpriteBatch sb);
 
-    public abstract void debug(final ShapeRenderer sr);
+    public void debug(final ShapeRenderer sr){}
 
     public void die(){ }
 
     public boolean needsToDie(){ return needsToDie; }
+
+    public void kill(){ needsToDie = true; }
 
 }

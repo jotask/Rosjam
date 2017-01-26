@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.github.jotask.rosjam.engine.map.MapTiled;
 import com.github.jotask.rosjam.factory.EntityFactory;
-import com.github.jotask.rosjam.game.EntityManager;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.entity.Enemy;
 import com.github.jotask.rosjam.game.entity.Entity;
@@ -38,6 +37,9 @@ public class Room extends Entity {
     public final LinkedList<Door> doors;
 
     public final LinkedList<Vector2> spawners;
+    public final LinkedList<Enemy> enemies;
+
+    private boolean completed;
 
     public Room(final Vector2 position, final MapTiled map, final Rectangle bounds) {
         this.position = position;
@@ -45,6 +47,7 @@ public class Room extends Entity {
         this.bounds = bounds;
 
         this.spawners = new LinkedList<Vector2>();
+        this.enemies = new LinkedList<Enemy>();
 
         this.doors = new LinkedList<Door>();
         // Horizontal
@@ -64,9 +67,7 @@ public class Room extends Entity {
     }
 
     @Override
-    public void update() {
-
-    }
+    public void update() { }
 
     @Override
     public void render(SpriteBatch sb) {
@@ -74,11 +75,7 @@ public class Room extends Entity {
     }
 
     @Override
-    public void debug(ShapeRenderer sr) {
-        for(Door d: doors){
-            d.debug(sr);
-        }
-    }
+    public void debug(ShapeRenderer sr) { }
 
     public Vector2 getCenter() {
 
@@ -109,23 +106,34 @@ public class Room extends Entity {
 
     public void enter(){
 
-        for(Vector2 p: spawners) {
-            Enemy enemy = EntityFactory.createEnemy(p);
-            EntityManager.add(enemy);
+        if(!completed) {
+
+            for (Vector2 p : spawners) {
+                Enemy enemy = EntityFactory.createEnemy(p, this);
+                this.enemies.add(enemy);
+            }
+
+        }
+
+        for(Door d: doors){
+            d.setOpen(false);
         }
 
     }
 
     public void exit(){
-
+        for(Enemy e: enemies){
+            e.kill();
+        }
+        completed = false;
     }
 
-    public Door getDoor(Door.SIDE side){
-        for(Door d: doors){
-            if(d.side == side)
-                return d;
+    public void entityDied(Enemy enemy) {
+        this.enemies.remove(enemy);
+        if(enemies.isEmpty()){
+            completed = true;
+            System.out.println("room completed");
         }
-        return null;
     }
 
 }

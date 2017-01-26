@@ -4,10 +4,10 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.github.jotask.rosjam.game.DungeonState;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
 import com.github.jotask.rosjam.game.entity.HealthEntity;
-import com.github.jotask.rosjam.game.entity.Player;
 import com.github.jotask.rosjam.game.item.Bullet;
 
 /**
@@ -58,28 +58,38 @@ class WorldCollision implements ContactListener {
         Object y = contact.getFixtureB().getUserData();
 
         if(z instanceof Door || y instanceof Door){
+
             Door door = null;
-            Player player = null;
             if(z instanceof Door){
                 door = (Door)z;
-                player = (Player)contact.getFixtureB().getBody().getUserData();
             }else if(y instanceof Door){
                 door = (Door)y;
-                player = (Player)contact.getFixtureA().getBody().getUserData();
-            }
-            if(door == null){
-                throw new RuntimeException("door is null");
             }
 
-            System.out.println("Door: " + door.position.toString() + " to " + door.connected.position.toString());
+            DungeonState.get().getLevel().nextRoom(door);
 
-            player.goTo(door);
         }
 
     }
 
     @Override
     public void endContact(Contact contact) {
+
+        Object z = contact.getFixtureA().getUserData();
+        Object y = contact.getFixtureB().getUserData();
+
+        if(z instanceof Door || y instanceof Door){
+
+            Door door = null;
+            if(z instanceof Door){
+                door = (Door)z;
+            }else if(y instanceof Door){
+                door = (Door)y;
+            }
+
+            door.setOpen(true);
+
+        }
 
     }
 

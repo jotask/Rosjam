@@ -62,4 +62,6 @@ public class Door extends Entity {
 
     public boolean isOpen() { return open; }
 
+    public void setOpen(boolean open){ this.open = open; }
+
 }

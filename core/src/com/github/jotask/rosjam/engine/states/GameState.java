@@ -11,7 +11,7 @@ import com.github.jotask.rosjam.game.entity.Player;
  * @author Jose Vives Iznardo
  * @since 16/01/2017
  */
-public class GameState extends State {
+public abstract class GameState extends State {
 
     protected final Game game;
 

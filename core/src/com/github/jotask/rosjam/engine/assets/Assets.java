@@ -17,11 +17,13 @@ public class Assets{
 
     private DungeonAssets dungeonAssets;
     private PlayerAssets playerAssets;
+    private BulletAssets bulletAssets;
 
     public Assets() {
         this.assetManager = new AssetManager();
         this.dungeonAssets = new DungeonAssets(this);
         this.playerAssets = new PlayerAssets(this);
+        this.bulletAssets = new BulletAssets(this);
     }
 
     public void loadEverything(){
@@ -31,6 +33,7 @@ public class Assets{
 
         this.dungeonAssets.prepare();
         this.playerAssets.prepare();
+        this.bulletAssets.prepare();
 
     }
 
@@ -39,6 +42,8 @@ public class Assets{
     public DungeonAssets getDungeonAssets() { return dungeonAssets; }
 
     public PlayerAssets getPlayerAssets() { return playerAssets; }
+
+    public BulletAssets getBulletAssets() { return bulletAssets; }
 
     protected final AssetManager getAssetManager(){ return this.assetManager; }
 

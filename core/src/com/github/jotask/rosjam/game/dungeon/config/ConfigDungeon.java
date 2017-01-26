@@ -1,5 +1,6 @@
 package com.github.jotask.rosjam.game.dungeon.config;
 
+import com.github.jotask.rosjam.game.DungeonState;
 import com.github.jotask.rosjam.game.world.WorldManager;
 
 /**
@@ -15,6 +16,10 @@ public class ConfigDungeon {
     public long seed = 23;
 
     public final WorldManager worldManager;
+
+    public ConfigDungeon(){
+        this(DungeonState.get().getWorldManager());
+    }
 
     public ConfigDungeon(WorldManager worldManager) {
         this.worldManager = worldManager;

@@ -58,12 +58,10 @@ public class Player extends ControlEntity {
 
     }
 
-    public void reset(final Room room){
-        this.getBody().setTransform(room.getCenter(), this.getBody().getAngle());
-    }
+    public void goTo(Door door){ moveTo = door.connected.position; }
 
-    public void goTo(Door door){
-        moveTo = door.connected.position;
+    public void goTo(Room room){
+        moveTo = room.getCenter();
     }
 
 }

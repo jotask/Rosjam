@@ -30,11 +30,11 @@ public class EntityManager implements Disposable{
     }
 
     public void dispose() {
-        System.out.println("EntityManager.dispose();");
         instance = null;
     }
 
     public void update() {
+
         LinkedList<Entity> survive = new LinkedList<Entity>(entities);
         for(int i = 0; i < entities.size(); i++){
             Entity e = entities.get(i);
@@ -48,14 +48,7 @@ public class EntityManager implements Disposable{
     }
 
     public void reset(){
-
-//        for(int i = 0; i < entities.size(); i++) {
-//            Entity e = entities.get(i);
-//            e.die();
-//        }
-
         entities.clear();
-
     }
 
     public void render(SpriteBatch sb) {
@@ -66,6 +59,15 @@ public class EntityManager implements Disposable{
 
     public void debug(ShapeRenderer sr) {
 
+    }
+
+    public boolean exist(LinkedList<Entity> ent){
+        for(Entity e: ent){
+            if(entities.contains(e)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void add(Entity entity) {

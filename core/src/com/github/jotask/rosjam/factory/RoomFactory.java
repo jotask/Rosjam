@@ -46,7 +46,11 @@ class RoomFactory {
         final FILE[] val = FILE.values();
         int i = MathUtils.random(val.length - 1 );
 
-        TiledMap tiledMap = new TmxMapLoader().load(val[i].file + ".tmx ");
+//        TiledMap tiledMap = new TmxMapLoader().load(val[i].file + ".tmx ");
+
+        String file = val[i].file+".tmx";
+
+        TiledMap tiledMap = new TmxMapLoader().load(file);
         Camera camera = cfg.worldManager.getGame().getCamera();
         MapTiled map = new MapTiled(cfg.position, tiledMap, camera);
         Room room = new Room(cfg.position, map, calculateBounds(map));
@@ -55,8 +59,6 @@ class RoomFactory {
         body.setUserData(room);
 
         spawners(room, map);
-
-        room.enter();
 
         return room;
 

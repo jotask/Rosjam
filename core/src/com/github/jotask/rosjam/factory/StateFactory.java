@@ -1,7 +1,7 @@
 package com.github.jotask.rosjam.factory;
 
 import com.github.jotask.rosjam.engine.GameStateManager;
-import com.github.jotask.rosjam.engine.camera.FollowCamera;
+import com.github.jotask.rosjam.engine.camera.RoomCamera;
 import com.github.jotask.rosjam.engine.states.CameraState;
 import com.github.jotask.rosjam.game.Game;
 
@@ -26,10 +26,9 @@ public class StateFactory {
     }
 
     private static final Game getGameState(){
-        FollowCamera camera = new FollowCamera();
+        RoomCamera camera = new RoomCamera();
         Game gs = new Game(camera);
         gs.init();
-        camera.setTarget(gs.getGameManager().getPlayer());
         return gs;
     }
 

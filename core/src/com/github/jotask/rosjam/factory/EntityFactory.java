@@ -5,9 +5,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.github.jotask.rosjam.Rosjam;
 import com.github.jotask.rosjam.engine.ai.ArtificialIntelligence;
+import com.github.jotask.rosjam.engine.assets.BulletAssets;
 import com.github.jotask.rosjam.engine.assets.PlayerAssets;
 import com.github.jotask.rosjam.game.DungeonState;
 import com.github.jotask.rosjam.game.EntityManager;
+import com.github.jotask.rosjam.game.dungeon.room.Room;
 import com.github.jotask.rosjam.game.entity.BodyEntity;
 import com.github.jotask.rosjam.game.entity.Enemy;
 import com.github.jotask.rosjam.game.entity.Player;
@@ -89,7 +91,7 @@ public class EntityFactory {
 
         shape.dispose();
 
-        TextureRegion region = Rosjam.get().getAssets().getPlayerAssets().getRegion(PlayerAssets.SPRITE.BULLET);
+        TextureRegion region = Rosjam.get().getAssets().getBulletAssets().getRegion(BulletAssets.SPRITE.DEFAULT);
 
         final Sprite sprite = new Sprite(region, body);
 
@@ -102,7 +104,7 @@ public class EntityFactory {
 
     }
 
-    public static Enemy createEnemy(final Vector2 p){
+    public static Enemy createEnemy(final Vector2 p, final Room room){
 
         final WorldManager worldManager = DungeonState.get().getWorldManager();
 
@@ -134,13 +136,16 @@ public class EntityFactory {
 
         ArtificialIntelligence ai = new ArtificialIntelligence();
 
-        Enemy enemy = new Enemy(body, ai, sprite);
+        Enemy enemy = new Enemy(body, ai, sprite, room);
         enemy.getBody().setUserData(enemy);
 
         ai.setEntity(enemy);
         ai.setTarget(DungeonState.get().getPlayer());
 
+        EntityManager.add(enemy);
+
         return enemy;
+
     }
 
     public static Weapon getWeapon(BodyEntity owner) {
