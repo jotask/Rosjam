@@ -3,12 +3,11 @@ package com.github.jotask.rosjam.factory;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.github.jotask.rosjam.engine.ai.ArtificialIntelligence;
 import com.github.jotask.rosjam.Rosjam;
+import com.github.jotask.rosjam.engine.ai.ArtificialIntelligence;
 import com.github.jotask.rosjam.engine.assets.PlayerAssets;
 import com.github.jotask.rosjam.game.DungeonState;
 import com.github.jotask.rosjam.game.EntityManager;
-import com.github.jotask.rosjam.game.dungeon.room.Room;
 import com.github.jotask.rosjam.game.entity.BodyEntity;
 import com.github.jotask.rosjam.game.entity.Enemy;
 import com.github.jotask.rosjam.game.entity.Player;
@@ -28,11 +27,11 @@ public class EntityFactory {
 
     private EntityFactory() { }
 
-    public static Player generatePlayer(final Room room) {
+    public static Player generatePlayer() {
 
         final WorldManager worldManager = DungeonState.get().getWorldManager();
 
-        final Vector2 center = room.getCenter();
+        final Vector2 center = new Vector2();
 
         BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
