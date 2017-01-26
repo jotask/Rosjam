@@ -43,8 +43,6 @@ class RoomFactory {
 
     public static Room generateRoom(ConfigRoom cfg) {
 
-        String filename = "test.tmx";
-
         final FILE[] val = FILE.values();
         int i = MathUtils.random(val.length - 1 );
 
