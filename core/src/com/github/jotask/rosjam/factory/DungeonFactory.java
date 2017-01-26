@@ -23,8 +23,19 @@ import java.util.LinkedList;
  */
 public class DungeonFactory {
 
-
     public static Dungeon generateDungeon(final ConfigDungeon configDungeon){
+
+        Dungeon dungeon = generateDungeonValid(configDungeon);
+
+        if(!dungeonChecker(dungeon)){
+            throw new RuntimeException("Room is not valid");
+        }
+
+        return dungeon;
+
+    }
+
+    private static Dungeon generateDungeonValid(final ConfigDungeon configDungeon){
 
         configDungeon.worldManager.deleteDungeon();
 
@@ -224,11 +235,42 @@ public class DungeonFactory {
         CollisionFilter.setMask(fd, CollisionFilter.EENTITY.DOOR);
 
         Fixture fix = body.createFixture(fd);
-
         fix.setUserData(door);
+
+        door.position.add(position);
 
         shape.dispose();
 
+    }
+
+    private static boolean dungeonChecker(final Dungeon dungeon){
+        boolean isValid = true;
+        for(Room r: dungeon.getRooms()){
+            if(!roomChecker(r)){
+                return false;
+            }
+        }
+        return isValid;
+    }
+
+    private static boolean roomChecker(final Room room){
+        boolean isValid = true;
+        for(Door d: room.doors){
+            if(!doorChecker(d)){
+                return false;
+            }
+        }
+        return isValid;
+    }
+
+    private static boolean doorChecker(final Door door){
+        boolean isValid = true;
+        if(door.position == null){
+            return false;
+        }else if(door == null){
+            return false;
+        }
+        return isValid;
     }
 
 }
