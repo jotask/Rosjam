@@ -63,8 +63,7 @@ public class Player extends ControlEntity {
     }
 
     public void goTo(Door door){
-        // FIXME move the player to one position
-        moveTo = door.connected.self.getCenter();
+        moveTo = door.connected.position;
     }
 
 }
