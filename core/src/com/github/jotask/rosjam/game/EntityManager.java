@@ -49,10 +49,10 @@ public class EntityManager implements Disposable{
 
     public void reset(){
 
-        for(int i = 0; i < entities.size(); i++) {
-            Entity e = entities.get(i);
-            e.die();
-        }
+//        for(int i = 0; i < entities.size(); i++) {
+//            Entity e = entities.get(i);
+//            e.die();
+//        }
 
         entities.clear();
 

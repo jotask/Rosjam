@@ -64,9 +64,15 @@ class WorldCollision implements ContactListener {
                 door = (Door)z;
                 player = (Player)contact.getFixtureB().getBody().getUserData();
             }else if(y instanceof Door){
-                door = (Door)z;
+                door = (Door)y;
                 player = (Player)contact.getFixtureA().getBody().getUserData();
             }
+            if(door == null){
+                throw new RuntimeException("door is null");
+            }
+
+            System.out.println("Door: " + door.position.toString() + " to " + door.connected.position.toString());
+
             player.goTo(door);
         }
 
