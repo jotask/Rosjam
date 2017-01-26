@@ -78,7 +78,7 @@ public class GameState extends State {
 
     public Game getGame() { return game; }
 
-    protected void setPlayer(Player player) { this.player = player; }
+    public void setPlayer(Player player) { this.player = player; }
 
     public Player getPlayer() { return player; }
 
