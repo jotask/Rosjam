@@ -78,9 +78,6 @@ public class Room extends Entity {
         for(Door d: doors){
             d.debug(sr);
         }
-//        Vector2 c = getCenter();
-//        sr.rect(c.x - .5f, c.y - .5f, 1f, 1f);
-
     }
 
     public Vector2 getCenter() {
