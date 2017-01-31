@@ -1,0 +1,256 @@
+sprites.png
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+sprite1
+    rotate: false
+    xy: 0, 0
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite2
+    rotate: false
+    xy: 16, 0
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite3
+    rotate: false
+    xy: 32, 0
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite4
+    rotate: false
+    xy: 48, 0
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite5
+    rotate: false
+    xy: 64, 0
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite6
+    rotate: false
+    xy: 80, 0
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite7
+    rotate: false
+    xy: 96, 0
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite8
+    rotate: false
+    xy: 112, 0
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite9
+    rotate: false
+    xy: 128, 0
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite10
+    rotate: false
+    xy: 144, 0
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite11
+    rotate: false
+    xy: 160, 0
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite12
+    rotate: false
+    xy: 176, 0
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite13
+    rotate: false
+    xy: 192, 0
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite14
+    rotate: false
+    xy: 0, 16
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite15
+    rotate: false
+    xy: 16, 16
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite16
+    rotate: false
+    xy: 32, 16
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite17
+    rotate: false
+    xy: 48, 16
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite18
+    rotate: false
+    xy: 64, 16
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite19
+    rotate: false
+    xy: 80, 16
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite20
+    rotate: false
+    xy: 96, 16
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite21
+    rotate: false
+    xy: 112, 16
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite22
+    rotate: false
+    xy: 128, 16
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite23
+    rotate: false
+    xy: 144, 16
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite24
+    rotate: false
+    xy: 160, 16
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite25
+    rotate: false
+    xy: 176, 16
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite26
+    rotate: false
+    xy: 192, 16
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite27
+    rotate: false
+    xy: 64, 32
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite28
+    rotate: false
+    xy: 80, 32
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite29
+    rotate: false
+    xy: 176, 32
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite30
+    rotate: false
+    xy: 192, 32
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite31
+    rotate: false
+    xy: 64, 48
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite32
+    rotate: false
+    xy: 80, 48
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite33
+    rotate: false
+    xy: 176, 48
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite34
+    rotate: false
+    xy: 192, 48
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite35
+    rotate: false
+    xy: 176, 64
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
+sprite36
+    rotate: false
+    xy: 192, 64
+    size: 16, 16
+    orig: 16, 16
+    offset: 0, 0
+    index: -1
