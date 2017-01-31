@@ -31,7 +31,6 @@ public class Assets{
 
         this.font = new BitmapFont();
 
-        this.dungeonAssets.prepare();
         this.playerAssets.prepare();
         this.bulletAssets.prepare();
 
