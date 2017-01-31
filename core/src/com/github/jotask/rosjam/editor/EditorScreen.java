@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.github.jotask.rosjam.Rosjam;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
 
 import java.util.LinkedList;
@@ -26,7 +27,7 @@ public class EditorScreen extends Table{
 
     public EditorScreen(EditorState editorState) {
         this.editorState = editorState;
-        this.region = editorState.assets.getBackground();
+        this.region = Rosjam.get().getAssets().getDungeonAssets().getBackground();
         this.setPosition(MenuEditor.WIDTH, 0);
         this.setSize(Gdx.graphics.getWidth() - MenuEditor.WIDTH, Gdx.graphics.getHeight());
 
@@ -34,7 +35,7 @@ public class EditorScreen extends Table{
 
         this.tiles = new LinkedList<TileActor>();
 
-        for(int i = 0; i < Room.HEIGHT; i++){
+        for(int i = Room.HEIGHT - 1; i >= 0; i--){
             for(int j = 0; j < Room.WIDTH; j++){
                 TileActor t = TileActor.build(editorState, i , j);
                 tiles.add(t);

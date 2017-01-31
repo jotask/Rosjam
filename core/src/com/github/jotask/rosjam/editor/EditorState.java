@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Json;
 import com.github.jotask.rosjam.engine.camera.Camera;
 import com.github.jotask.rosjam.engine.states.CameraState;
-import com.github.jotask.rosjam.test.AssetTest;
 
 import java.math.BigInteger;
 import java.util.LinkedList;
@@ -42,8 +41,6 @@ public class EditorState extends CameraState {
 
     }
 
-    public AssetTest assets;
-
     private Skin skin;
     private Stage stage;
 
@@ -52,8 +49,6 @@ public class EditorState extends CameraState {
 
     public EditorState(Camera camera) {
         super(camera);
-
-        this.assets = new AssetTest();
 
         this.skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
