@@ -33,7 +33,8 @@ public class Enemy extends ControlEntity {
     public void damage(float dmg) {
         super.damage(dmg);
         if(needsToDie()){
-            room.entityDied(this);
+            // TODO
+//            room.entityDied(this);
         }
     }
 }

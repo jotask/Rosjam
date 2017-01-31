@@ -4,7 +4,6 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.github.jotask.rosjam.game.DungeonState;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
 import com.github.jotask.rosjam.game.entity.HealthEntity;
@@ -66,7 +65,9 @@ class WorldCollision implements ContactListener {
                 door = (Door)y;
             }
 
-            DungeonState.get().getLevel().nextRoom(door);
+            // TODO
+//            if(door.self.isCompleted())
+//                DungeonState.get().getLevel().nextRoom(door);
 
         }
 
@@ -87,7 +88,8 @@ class WorldCollision implements ContactListener {
                 door = (Door)y;
             }
 
-            door.setOpen(true);
+            // TODO
+//            door.setOpen(true);
 
         }
 

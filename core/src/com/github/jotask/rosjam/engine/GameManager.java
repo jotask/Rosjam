@@ -7,7 +7,6 @@ import com.github.jotask.rosjam.engine.states.GameState;
 import com.github.jotask.rosjam.engine.states.IState;
 import com.github.jotask.rosjam.game.DungeonState;
 import com.github.jotask.rosjam.game.Game;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * GameManager
@@ -73,7 +72,7 @@ public class GameManager extends GameState {
                 s = new DungeonState(this.game);
                 break;
             default:
-                throw new NotImplementedException();
+                throw new RuntimeException("State not implemented");
         }
 
         this.setPlayer(s.getPlayer());

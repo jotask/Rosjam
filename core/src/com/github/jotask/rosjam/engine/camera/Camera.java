@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * @author Jose Vives Iznardo
  * @since 14/01/2017
  */
-public abstract class Camera extends OrthographicCamera {
+public class Camera extends OrthographicCamera {
 
     protected final int Z = 10;
 
@@ -22,11 +22,11 @@ public abstract class Camera extends OrthographicCamera {
         this.position.set(0, 0, Z);
         this.update();
 
-        float w = 21f;
-        float h = 11f;
+//        float w = 21f;
+//        float h = 11f;
 
-//        float w = Gdx.graphics.getWidth() / 15f;
-//        float h = Gdx.graphics.getHeight() / 15f;
+        float w = Gdx.graphics.getWidth() / 10;
+        float h = Gdx.graphics.getHeight() / 10;
 
         this.viewport = new FitViewport(w, h, this);
         this.viewport.apply();
@@ -38,6 +38,6 @@ public abstract class Camera extends OrthographicCamera {
         viewport.apply();
     }
 
-    public abstract void _update();
+    public void _update(){};
 
 }

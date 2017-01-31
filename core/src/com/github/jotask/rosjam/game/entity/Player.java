@@ -58,7 +58,7 @@ public class Player extends ControlEntity {
 
     }
 
-    public void goTo(Door door){ moveTo = door.connected.position; }
+    public void goTo(Door door){ moveTo = door.connected.getPosition();}
 
     public void goTo(Room room){
         moveTo = room.getCenter();

@@ -18,28 +18,18 @@ public class TestState extends CameraState {
     }
 
     @Override
-    public void init() {
-
-    }
+    public void init() { }
 
     @Override
-    public void update() {
-
-    }
+    public void update() { }
 
     @Override
-    public void render(SpriteBatch sb) {
-
-    }
+    public void render(SpriteBatch sb) { }
 
     @Override
-    public void debug(ShapeRenderer sr) {
-
-    }
+    public void debug(ShapeRenderer sr) { }
 
     @Override
-    public void dispose() {
-
-    }
+    public void dispose() { }
 
 }

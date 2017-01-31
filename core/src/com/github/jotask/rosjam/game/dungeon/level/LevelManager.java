@@ -17,7 +17,7 @@ import com.github.jotask.rosjam.game.world.WorldManager;
  */
 public class LevelManager extends Entity{
 
-    private final WorldManager worldManager;
+    public final WorldManager worldManager;
     private final EntityManager entityManager;
     private final DungeonManager dungeonManager;
     private final Player player;
@@ -29,7 +29,7 @@ public class LevelManager extends Entity{
     public LevelManager(WorldManager worldManager) {
         this.worldManager = worldManager;
         this.entityManager = EntityManager.get();
-        this.dungeonManager = new DungeonManager();
+        this.dungeonManager = new DungeonManager(this);
         this.player = DungeonState.get().getPlayer();
     }
 
@@ -62,8 +62,8 @@ public class LevelManager extends Entity{
 
     public void nextRoom(final Door door){
         // TODO Check if is the door for next level
-        if(door.isOpen())
-            nextRoom = door;
+//        if(door.isOpen())
+//            nextRoom = door;
     }
 
     private void nextRoom(){
