@@ -1,15 +1,12 @@
 package com.github.jotask.rosjam.game.dungeon.room;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.github.jotask.rosjam.engine.map.MapTiled;
-import com.github.jotask.rosjam.factory.EntityFactory;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
-import com.github.jotask.rosjam.game.entity.Enemy;
 import com.github.jotask.rosjam.game.entity.Entity;
 
 import java.util.LinkedList;
@@ -25,45 +22,20 @@ public class Room extends Entity {
     public static final int WIDTH = 21;
     public static final int HEIGHT = 11;
 
-    public static final float CELL_SIZE = 1f;
-
-    private Vector2 position;
-    private MapTiled map;
-
-    private Body walls;
+    private Body body;
 
     public final Rectangle bounds;
 
-    public final LinkedList<Door> doors;
+    private TextureRegion background;
 
-    public final LinkedList<Vector2> spawners;
-    public final LinkedList<Enemy> enemies;
+    public LinkedList<Door> doors;
+    public LinkedList<Vector2> spawner;
 
-    private boolean completed;
-
-    public Room(final Vector2 position, final MapTiled map, final Rectangle bounds) {
-        this.position = position;
-        this.map = map;
-        this.bounds = bounds;
-
-        this.spawners = new LinkedList<Vector2>();
-        this.enemies = new LinkedList<Enemy>();
-
+    public Room(final Vector2 p, TextureRegion background) {
+        this.bounds = new Rectangle(p.x, p.y, WIDTH, HEIGHT);
+        this.background = background;
         this.doors = new LinkedList<Door>();
-        // Horizontal
-        Door right = new Door(this, Door.SIDE.RIGHT);
-        doors.add(right);
-
-        Door left = new Door(this, Door.SIDE.LEFT);
-        doors.add(left);
-
-        // Vertical
-        Door down = new Door(this, Door.SIDE.DOWN);
-        doors.add(down);
-
-        Door up = new Door(this, Door.SIDE.UP);
-        doors.add(up);
-
+        this.spawner = new LinkedList<Vector2>();
     }
 
     @Override
@@ -71,69 +43,48 @@ public class Room extends Entity {
 
     @Override
     public void render(SpriteBatch sb) {
-        this.map.render();
+        sb.draw(background, bounds.x, bounds.y, bounds.width, bounds.height);
+        for(Door d: doors){
+            d.render(sb);
+        }
     }
 
     @Override
-    public void debug(ShapeRenderer sr) { }
-
-    public Vector2 getCenter() {
-
-        MapProperties prop = map.getMap().getProperties();
-
-        int mapWidth = prop.get("width", Integer.class);
-        int mapHeight = prop.get("height", Integer.class);
-        int tilePixelWidth = prop.get("tilewidth", Integer.class);
-        int tilePixelHeight = prop.get("tileheight", Integer.class);
-
-        float x  = ((mapWidth  * tilePixelWidth ) / 2f) * MapTiled.SCALE;
-        float y  = ((mapHeight * tilePixelHeight) / 2f) * MapTiled.SCALE;
-
-        x += position.x;
-        y += position.y;
-
-        return new Vector2(x, y);
-
+    public void debug(ShapeRenderer sr){
+        sr.rect(bounds.x, bounds.y, bounds.width, bounds.height);
+        for(Door d: doors){
+            d.debug(sr);
+        }
+        for(Vector2 v: spawner){
+            sr.rect(v.x, v.y, 1f, 1f);
+        }
     }
 
-    public Vector2 getPosition() { return position; }
+    public Rectangle getBounds() { return bounds; }
 
-    public void setWalls(Body body){ this.walls = body; }
+    public final void setBody(Body body) {
+        if(this.body != null)
+            throw new RuntimeException("Body is not null in room");
+        this.body = body;
+    }
 
-    public Body getWalls() { return walls; }
+    public Vector2 getCenter(){
+        Vector2 center = new Vector2();
+        center.x = bounds.x + (bounds.width  / 2f);
+        center.y = bounds.y + (bounds.height / 2f);
+        return center;
+    }
 
-    public MapTiled getMap() { return map; }
+    public Body getBody() { return body; }
+
+    public Vector2 getPosition(){ return this.bounds.getPosition(new Vector2()); }
 
     public void enter(){
-
-        if(!completed) {
-
-            for (Vector2 p : spawners) {
-                Enemy enemy = EntityFactory.createEnemy(p, this);
-                this.enemies.add(enemy);
-            }
-
-        }
-
-        for(Door d: doors){
-            d.setOpen(false);
-        }
 
     }
 
     public void exit(){
-        for(Enemy e: enemies){
-            e.kill();
-        }
-        completed = false;
-    }
 
-    public void entityDied(Enemy enemy) {
-        this.enemies.remove(enemy);
-        if(enemies.isEmpty()){
-            completed = true;
-            System.out.println("room completed");
-        }
     }
 
 }

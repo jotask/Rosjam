@@ -2,6 +2,7 @@ package com.github.jotask.rosjam.game.dungeon;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.github.jotask.rosjam.game.entity.Entity;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
 
@@ -44,5 +45,11 @@ public class Dungeon extends Entity {
         }
     }
 
-    public LinkedList<Room> getRooms() { return rooms; }
+    public void exit(){
+        World world = rooms.getFirst().getBody().getWorld();
+        for(Room r: rooms){
+            world.destroyBody(r.getBody());
+        }
+    }
+
 }

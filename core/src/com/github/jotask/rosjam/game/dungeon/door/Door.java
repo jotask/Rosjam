@@ -1,10 +1,12 @@
 package com.github.jotask.rosjam.game.dungeon.door;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
-import com.github.jotask.rosjam.game.entity.Entity;
 
 /**
  * Door
@@ -12,56 +14,67 @@ import com.github.jotask.rosjam.game.entity.Entity;
  * @author Jose Vives Iznardo
  * @since 14/01/2017
  */
-public class Door extends Entity {
+public class Door {
 
-    public enum SIDE {LEFT, UP, RIGHT, DOWN }
+    public static final float ANIMATION_SPEED = 0.025f;
 
-    public boolean open;
+    public enum SIDE{ UP, RIGHT, DOWN, LEFT }
+
+    private Animation<TextureRegion> animation;
+    private Vector2 position;
+    public Door.SIDE side;
 
     public final Room self;
     public Door connected;
 
-    public final SIDE side;
+    private float state;
 
-    public final Vector2 position;
+    private boolean opened;
 
-    public Door(final Room self, final SIDE side) {
-        this.self = self;
+    public Door(Vector2 position, final Door.SIDE side, final Room room, Animation<TextureRegion> animation) {
+        this.position = position;
         this.side = side;
-        this.open = false;
-
-        this.position = new Vector2(self.getPosition());
-
+        this.self = room;
+        this.animation = animation;
+        this.animation.setFrameDuration(.25f);
+        this.animation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
     }
 
-    @Override
-    public void update() { }
+    public void render(SpriteBatch sb){
+        state += Gdx.graphics.getDeltaTime();
+        sb.draw(animation.getKeyFrame(state, true), position.x, position.y, 1f, 1f);
+    }
 
-    @Override
-    public void render(SpriteBatch sb) { }
+    public void debug(ShapeRenderer sr) {
+        sr.rect(position.x, position.y, 1, 1f);
+    }
 
-    @Override
-    public void debug(ShapeRenderer sr) { }
+    public void open(){
+        opened = true;
+    }
+    public void close(){
+        opened = false;
+    }
 
-    public static SIDE getOpposite(SIDE side){
+    public boolean isOpened() {
+        return opened;
+    }
+
+    public Door.SIDE getOpposite(){
+        Door.SIDE side = this.side;
         switch (side){
             case LEFT:
-                return SIDE.RIGHT;
+                return Door.SIDE.RIGHT;
             case RIGHT:
-                return SIDE.LEFT;
+                return Door.SIDE.LEFT;
             case UP:
-                return SIDE.DOWN;
+                return Door.SIDE.DOWN;
             case DOWN:
-                return SIDE.UP;
+                return Door.SIDE.UP;
             default:
                 throw new RuntimeException("Exception in opposites rooms");
         }
     }
 
-    public SIDE getSide() { return side; }
-
-    public boolean isOpen() { return open; }
-
-    public void setOpen(boolean open){ this.open = open; }
-
+    public Vector2 getPosition() { return position; }
 }
