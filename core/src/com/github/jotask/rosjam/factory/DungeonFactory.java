@@ -4,10 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Json;
 import com.github.jotask.rosjam.editor.TileData;
 import com.github.jotask.rosjam.engine.assets.DungeonAssets;
@@ -36,24 +38,21 @@ public class DungeonFactory {
         this.assets = assets;
     }
 
-    public final Dungeon generateDungeon(ConfigDungeon configDungeon){
-
-        // FIXME the dungeon generator always generate rooms bottom and right. The problem starts when I added the code
-        // to check if was a room occupied before spawn the next rooms. Maybe the error comes from there
+    public final Dungeon generateDungeon(ConfigDungeon cfg){
 
         LinkedList<Room> rooms = new LinkedList<Room>();
 
-        Room initialRoom = room(new Vector2());
+        Room initialRoom = room(null, new Vector2());
         rooms.add(initialRoom);
 
-        generator: while(rooms.size() < configDungeon.maxRooms){
+        generator: while(rooms.size() < cfg.maxRooms){
 
             // Choose a random room
             Room room;
             {
                 boolean isValid;
                 do {
-                    int index = MathUtils.random(rooms.size() - 1);
+                    int index = cfg.random.random(rooms.size());
                     room = rooms.get(index);
                     isValid = true;
                 } while (!isValid);
@@ -78,7 +77,7 @@ public class DungeonFactory {
                 }
 
                 do{
-                    int index = MathUtils.random(doors.size() - 1);
+                    int index = cfg.random.random(doors.size());
                     door = doors.get(index);
 
                     if(door.connected == null) {
@@ -102,7 +101,7 @@ public class DungeonFactory {
                 nextRoom.x -= 1f;
                 nextRoom.y -= 1f;
 
-                Room newRoom = room(nextRoom);
+                Room newRoom = room(cfg, nextRoom);
 
                 // Connect doors
                 {
@@ -130,26 +129,31 @@ public class DungeonFactory {
         Dungeon dungeon = new Dungeon(rooms);
         dungeon.initialRoom = initialRoom;
 
+        dungeon = new Cleaner().cleanDungeon(dungeon);
+
         return dungeon;
 
     }
 
-    private final Room room(Vector2 position){
+    private final Room room(final ConfigDungeon cfg, final Vector2 position){
 
         TextureRegion background = assets.getBackground();
 
         Room room = new Room(position, background);
-        createBodies(room);
+        BodyFactory.createRoom(room);
 
         room.doors.add(getDoor(room, Door.SIDE.UP));
         room.doors.add(getDoor(room, Door.SIDE.RIGHT));
         room.doors.add(getDoor(room, Door.SIDE.DOWN));
         room.doors.add(getDoor(room, Door.SIDE.LEFT));
 
+        if(cfg == null)
+            return room;
+
         FileHandle dir = Gdx.files.internal("rooms");
         if(dir.list().length > 0) {
 
-            int index = MathUtils.random(dir.list().length - 1);
+            int index = cfg.random.random(dir.list().length);
             FileHandle file = dir.list()[index];
 
             Json json = new Json();
@@ -199,7 +203,7 @@ public class DungeonFactory {
         float h = 4.28f;
 
         switch (side){
-            case UP:
+            case DOWN:
                 p.y += h - .4f;
                 p.x -= .5;
                 regions[0] = assets.get(Tiles.DOOR_TOP_01);
@@ -215,7 +219,7 @@ public class DungeonFactory {
                 regions[2] = assets.get(Tiles.DOOR_RIGHT_03);
                 regions[3] = assets.get(Tiles.DOOR_RIGHT_04);
                 break;
-            case DOWN:
+            case UP:
                 p.y -= h + .5f;
                 p.x -= .5;
                 regions[0] = assets.get(Tiles.DOOR_BOTTOM_01);
@@ -238,32 +242,8 @@ public class DungeonFactory {
         Animation<TextureRegion> animation = new Animation<TextureRegion>(Door.ANIMATION_SPEED, regions);
 
         Door door = new Door(p, side, room, animation);
+
         return door;
-
-    }
-
-    private final void createBodies(final Room roomTest){
-        BodyDef bd = new BodyDef();
-        bd.position.set(roomTest.getCenter());
-        bd.type = BodyDef.BodyType.StaticBody;
-        Body body = world.createBody(bd);
-
-        float w = Room.WIDTH / 2f;
-        float h = Room.HEIGHT / 2f;
-
-        final float offet = 1.4f;
-
-        Vector2 one = new Vector2(-w + offet, -h + offet);
-        Vector2 two = new Vector2(-w + offet, h - offet);
-        Vector2 three = new Vector2(w - offet, -h + offet);
-        Vector2 four = new Vector2(w - offet, h - offet);
-
-        createEdgeFixture(body, one, two);
-        createEdgeFixture(body, two, four);
-        createEdgeFixture(body, three, one);
-        createEdgeFixture(body, four, three);
-
-        roomTest.setBody(body);
 
     }
 
@@ -306,6 +286,40 @@ public class DungeonFactory {
         }
 
         return new Vector2(x, y);
+
+    }
+
+    private class Cleaner{
+
+        public Dungeon cleanDungeon(final Dungeon dungeon){
+            for(Room r: dungeon.getRooms()){
+                cleanRoom(r);
+            }
+
+            spawnEnemies(dungeon);
+
+            return dungeon;
+
+        }
+
+        private void spawnEnemies(Dungeon dungeon){
+            for(Room room: dungeon.getRooms()){
+                room.enter();
+            }
+        }
+
+        private void cleanRoom(final Room room){
+            final LinkedList<Door> doors = room.doors;
+            for(int i = doors.size() - 1; i >= 0; i--){
+                Door d = doors.get(i);
+                if(d.connected == null){
+                    doors.remove(i);
+                }else{
+                    BodyFactory.createDoor(d);
+                }
+            }
+
+        }
 
     }
 
