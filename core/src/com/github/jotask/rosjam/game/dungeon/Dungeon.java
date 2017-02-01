@@ -52,4 +52,5 @@ public class Dungeon extends Entity {
         }
     }
 
+    public LinkedList<Room> getRooms() { return rooms; }
 }

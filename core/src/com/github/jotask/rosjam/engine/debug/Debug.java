@@ -69,7 +69,7 @@ public class Debug extends Entity{
         draw(sb, String.valueOf(body), DEBUG.BODY);
 
 
-        Vector2 p = DungeonState.get().getPlayer().getBody().getPosition();
+        Vector2 p = EntityManager.get().getPlayer().getBody().getPosition();
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(2);
         String x = df.format(p.x);

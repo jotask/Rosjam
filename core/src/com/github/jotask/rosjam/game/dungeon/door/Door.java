@@ -38,6 +38,7 @@ public class Door {
         this.animation = animation;
         this.animation.setFrameDuration(.25f);
         this.animation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+        this.opened = true;
     }
 
     public void render(SpriteBatch sb){
@@ -46,7 +47,7 @@ public class Door {
     }
 
     public void debug(ShapeRenderer sr) {
-        sr.rect(position.x, position.y, 1, 1f);
+        sr.rect(position.x, position.y, 1f, 1f);
     }
 
     public void open(){
@@ -56,9 +57,10 @@ public class Door {
         opened = false;
     }
 
-    public boolean isOpened() {
+    public boolean isOpen() {
         return opened;
     }
+    public void setOpen(boolean opn){ this.opened = opn; }
 
     public Door.SIDE getOpposite(){
         Door.SIDE side = this.side;
@@ -77,4 +79,8 @@ public class Door {
     }
 
     public Vector2 getPosition() { return position; }
+
+
+
+
 }

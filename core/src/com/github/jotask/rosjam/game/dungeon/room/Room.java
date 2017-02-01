@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.github.jotask.rosjam.factory.EntityFactory;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
+import com.github.jotask.rosjam.game.entity.Enemy;
 import com.github.jotask.rosjam.game.entity.Entity;
 
 import java.util.LinkedList;
@@ -28,14 +30,19 @@ public class Room extends Entity {
 
     private TextureRegion background;
 
+    private boolean completed;
+
     public LinkedList<Door> doors;
     public LinkedList<Vector2> spawner;
+    public LinkedList<Enemy> enemies;
 
     public Room(final Vector2 p, TextureRegion background) {
         this.bounds = new Rectangle(p.x, p.y, WIDTH, HEIGHT);
         this.background = background;
         this.doors = new LinkedList<Door>();
         this.spawner = new LinkedList<Vector2>();
+        this.enemies = new LinkedList<Enemy>();
+        this.completed = true;
     }
 
     @Override
@@ -55,9 +62,9 @@ public class Room extends Entity {
         for(Door d: doors){
             d.debug(sr);
         }
-        for(Vector2 v: spawner){
-            sr.rect(v.x, v.y, 1f, 1f);
-        }
+//        for(Vector2 v: spawner){
+//            sr.rect(v.x, v.y, 1f, 1f);
+//        }
     }
 
     public Rectangle getBounds() { return bounds; }
@@ -77,14 +84,27 @@ public class Room extends Entity {
 
     public Body getBody() { return body; }
 
-    public Vector2 getPosition(){ return this.bounds.getPosition(new Vector2()); }
-
     public void enter(){
-
+        for(Vector2 v: spawner){
+            enemies.add(EntityFactory.createEnemy(v, this));
+        }
+        for(Door d: doors){
+            d.setOpen(false);
+        }
     }
 
     public void exit(){
-
+        for(Enemy e: enemies){
+            e.despawn();
+        }
     }
 
+    public void enemyDied(Enemy enemy){
+        this.enemies.remove(enemy);
+        if(enemies.isEmpty()){
+            System.out.println("rooms is completed");
+        }
+    }
+
+    public boolean isCompleted() { return completed; }
 }

@@ -3,7 +3,10 @@ package com.github.jotask.rosjam.game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Disposable;
+import com.github.jotask.rosjam.factory.EntityFactory;
+import com.github.jotask.rosjam.game.entity.Enemy;
 import com.github.jotask.rosjam.game.entity.Entity;
+import com.github.jotask.rosjam.game.entity.Player;
 
 import java.util.LinkedList;
 
@@ -17,15 +20,18 @@ public class EntityManager implements Disposable{
 
     private static EntityManager instance;
     public static final EntityManager get(){
-        if(instance == null){
-             instance = new EntityManager();
-        }
+        if(instance == null)
+             new EntityManager();
+
         return instance;
     }
 
+    private Player player;
     private LinkedList<Entity> entities;
 
     private EntityManager() {
+        EntityManager.instance = this;
+        player = EntityFactory.generatePlayer();
         entities = new LinkedList<Entity>();
     }
 
@@ -34,14 +40,21 @@ public class EntityManager implements Disposable{
     }
 
     public void update() {
-
+        player.update();
         LinkedList<Entity> survive = new LinkedList<Entity>(entities);
         for(int i = 0; i < entities.size(); i++){
             Entity e = entities.get(i);
             e.update();
             if(e.needsToDie()){
+
+                if(e instanceof Enemy){
+                    Enemy enemy = (Enemy) e;
+                    enemy.getRoom().enemyDied(enemy);
+                }
+
                 e.die();
                 survive.remove(e);
+
             }
         }
         entities = survive;
@@ -55,29 +68,28 @@ public class EntityManager implements Disposable{
         for(Entity e: entities){
             e.render(sb);
         }
+        player.render(sb);
     }
 
     public void debug(ShapeRenderer sr) {
-
-    }
-
-    public boolean exist(LinkedList<Entity> ent){
-        for(Entity e: ent){
-            if(entities.contains(e)){
-                return true;
-            }
+        for(Entity e: entities){
+            e.debug(sr);
         }
-        return false;
+        player.debug(sr);
     }
 
-    public static void add(Entity entity) {
-        instance.addd(entity);
+    public static void add(Entity entity){
+        instance.addLocal(entity);
     }
 
-    private void addd(Entity entity){
+    private void addLocal(Entity entity){
         entities.add(entity);
     }
 
     public int getSize(){ return this.entities.size(); }
+
+    public Player getPlayer() {
+        return player;
+    }
 
 }

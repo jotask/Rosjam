@@ -2,6 +2,7 @@ package com.github.jotask.rosjam.game.dungeon.config;
 
 import com.github.jotask.rosjam.game.DungeonState;
 import com.github.jotask.rosjam.game.world.WorldManager;
+import com.github.jotask.rosjam.util.JRandom;
 
 /**
  * ConfigDungeon
@@ -13,7 +14,7 @@ public class ConfigDungeon {
 
     public int maxRooms = 7;
 
-    public long seed = 23;
+    public final JRandom random;
 
     public final WorldManager worldManager;
 
@@ -23,6 +24,7 @@ public class ConfigDungeon {
 
     public ConfigDungeon(WorldManager worldManager) {
         this.worldManager = worldManager;
+        this.random = new JRandom();
     }
 
 }

@@ -3,7 +3,6 @@ package com.github.jotask.rosjam.engine.states;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.jotask.rosjam.game.Game;
-import com.github.jotask.rosjam.game.entity.Player;
 
 /**
  * GameState
@@ -14,8 +13,6 @@ import com.github.jotask.rosjam.game.entity.Player;
 public abstract class GameState extends State {
 
     protected final Game game;
-
-    private Player player;
 
     public GameState(final Game game) {
         this.game = game;
@@ -77,9 +74,5 @@ public abstract class GameState extends State {
     }
 
     public Game getGame() { return game; }
-
-    public void setPlayer(Player player) { this.player = player; }
-
-    public Player getPlayer() { return player; }
 
 }

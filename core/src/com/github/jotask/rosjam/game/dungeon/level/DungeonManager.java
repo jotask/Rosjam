@@ -4,13 +4,12 @@ import com.github.jotask.rosjam.Rosjam;
 import com.github.jotask.rosjam.engine.assets.DungeonAssets;
 import com.github.jotask.rosjam.engine.camera.RoomCamera;
 import com.github.jotask.rosjam.factory.DungeonFactory;
-import com.github.jotask.rosjam.game.DungeonState;
+import com.github.jotask.rosjam.game.EntityManager;
 import com.github.jotask.rosjam.game.Game;
 import com.github.jotask.rosjam.game.dungeon.Dungeon;
 import com.github.jotask.rosjam.game.dungeon.config.ConfigDungeon;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
-import com.github.jotask.rosjam.game.entity.Player;
 
 /**
  * DungeonManager
@@ -22,7 +21,6 @@ public class DungeonManager {
 
     private RoomCamera camera;
 
-    private Player player;
     private Dungeon dungeon;
 
     private Room previousRoom;
@@ -36,7 +34,6 @@ public class DungeonManager {
         this.levelManager = levelManager;
         DungeonAssets assets = Rosjam.get().getAssets().getDungeonAssets();
         this.dungeonFactory = new DungeonFactory(levelManager.worldManager.getWorld(), assets);
-        player = DungeonState.get().getPlayer();
         camera = (RoomCamera) Game.get().getCamera();
     }
 
@@ -57,7 +54,7 @@ public class DungeonManager {
 
         camera.moveTo(currentRoom);
 
-        player.goTo(door);
+        EntityManager.get().getPlayer().goTo(door);
 
         currentRoom.enter();
 

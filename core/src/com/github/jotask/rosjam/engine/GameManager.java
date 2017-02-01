@@ -75,8 +75,6 @@ public class GameManager extends GameState {
                 throw new RuntimeException("State not implemented");
         }
 
-        this.setPlayer(s.getPlayer());
-
         currentState = s;
         currentState.init();
 
