@@ -2,6 +2,7 @@ package com.github.jotask.rosjam.engine.camera;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.github.jotask.rosjam.game.entity.Player;
@@ -46,7 +47,8 @@ public class Camera extends OrthographicCamera {
     public void _update(){};
 
     public static void follow(Player player){
-        Camera.instance.position.set(player.getBody().getPosition(), Z);
+        float smooth = .5f;
+        Camera.instance.position.lerp(new Vector3(player.getBody().getPosition(), Z), smooth);
         Camera.instance.update();
     }
 
