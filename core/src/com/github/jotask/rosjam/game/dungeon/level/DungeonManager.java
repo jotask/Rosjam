@@ -40,6 +40,7 @@ public class DungeonManager {
     public void nextLevel(){
         dungeon = dungeonFactory.generateDungeon(new ConfigDungeon());
         currentRoom = dungeon.initialRoom;
+        currentRoom.enter();
         camera.moveTo(currentRoom);
     }
 

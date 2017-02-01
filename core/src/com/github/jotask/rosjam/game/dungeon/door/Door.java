@@ -24,6 +24,8 @@ public class Door {
     private Vector2 position;
     public Door.SIDE side;
 
+    public boolean isEntered;
+
     public final Room self;
     public Door connected;
 
@@ -39,6 +41,7 @@ public class Door {
         this.animation.setFrameDuration(.25f);
         this.animation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
         this.opened = true;
+        this.isEntered = false;
     }
 
     public void render(SpriteBatch sb){
@@ -79,8 +82,5 @@ public class Door {
     }
 
     public Vector2 getPosition() { return position; }
-
-
-
 
 }

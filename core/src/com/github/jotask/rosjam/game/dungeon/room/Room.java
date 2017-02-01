@@ -42,7 +42,7 @@ public class Room extends Entity {
         this.doors = new LinkedList<Door>();
         this.spawner = new LinkedList<Vector2>();
         this.enemies = new LinkedList<Enemy>();
-        this.completed = true;
+        this.completed = false;
     }
 
     @Override
@@ -85,11 +85,17 @@ public class Room extends Entity {
     public Body getBody() { return body; }
 
     public void enter(){
-        for(Vector2 v: spawner){
-            enemies.add(EntityFactory.createEnemy(v, this));
-        }
-        for(Door d: doors){
-            d.setOpen(false);
+        if(!completed) {
+            for (Vector2 v : spawner) {
+                enemies.add(EntityFactory.createEnemy(v, this));
+            }
+            for(Door d: doors){
+                d.setOpen(false);
+            }
+        }else{
+            for(Door d: doors){
+                d.setOpen(true);
+            }
         }
     }
 
@@ -102,9 +108,15 @@ public class Room extends Entity {
     public void enemyDied(Enemy enemy){
         this.enemies.remove(enemy);
         if(enemies.isEmpty()){
-            System.out.println("rooms is completed");
+            setCompleted(true);
+            for(Door d: doors){
+                d.setOpen(true);
+            }
         }
     }
 
     public boolean isCompleted() { return completed; }
+
+    public void setCompleted(boolean completed) { this.completed = completed; }
+
 }

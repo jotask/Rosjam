@@ -6,9 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Json;
 import com.github.jotask.rosjam.editor.TileData;
@@ -247,15 +244,6 @@ public class DungeonFactory {
 
     }
 
-    private void createEdgeFixture(Body body, Vector2 a, Vector2 b){
-        EdgeShape shape = new EdgeShape();
-        shape.set(a, b);
-        FixtureDef fd = new FixtureDef();
-        fd.shape = shape;
-        body.createFixture(fd);
-        shape.dispose();
-    }
-
     private static boolean isOccupied(final LinkedList<Room> rooms, final Vector2 nextRoom){
         for(Room r: rooms){
             if(r.bounds.contains(nextRoom)) {
@@ -292,20 +280,15 @@ public class DungeonFactory {
     private class Cleaner{
 
         public Dungeon cleanDungeon(final Dungeon dungeon){
+
             for(Room r: dungeon.getRooms()){
                 cleanRoom(r);
             }
 
-            spawnEnemies(dungeon);
+            dungeon.initialRoom.setCompleted(true);
 
             return dungeon;
 
-        }
-
-        private void spawnEnemies(Dungeon dungeon){
-            for(Room room: dungeon.getRooms()){
-                room.enter();
-            }
         }
 
         private void cleanRoom(final Room room){

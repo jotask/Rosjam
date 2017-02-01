@@ -12,7 +12,7 @@ import com.github.jotask.rosjam.util.JRandom;
  */
 public class ConfigDungeon {
 
-    public int maxRooms = 1;
+    public int maxRooms = 2;
 
     public final JRandom random;
 

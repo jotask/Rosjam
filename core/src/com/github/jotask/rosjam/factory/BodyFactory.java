@@ -114,18 +114,34 @@ class BodyFactory {
         float w = Room.WIDTH / 2f;
         float h = Room.HEIGHT / 2f;
 
+        final float off = .5f / 2f;
         final float offset = 1.4f;
         // Top
-        createWall(body, new Vector2(0,+h - (offset / 2f)), new Vector2(w, offset / 2f));
+        createWall(
+                body,
+                new Vector2(0,+h - (offset / 2f) + off),
+                new Vector2(w, (offset / 2f) + off)
+        );
 
         // Bottom
-        createWall(body, new Vector2(0,-h + (offset / 2f)), new Vector2(w, offset / 2f));
+        createWall(
+                body,
+                new Vector2(0,-h + (offset / 2f) - off),
+                new Vector2(w, (offset / 2f) + off)
+        );
 
         // Left
-        createWall(body, new Vector2(+w - (offset / 2f),0), new Vector2((offset / 2f), h));
+        createWall(
+                body,
+                new Vector2(+w - (offset / 2f) + off,0),
+                new Vector2((offset / 2f) + off, h)
+        );
 
         // Right
-        createWall(body, new Vector2(-w + (offset / 2f),0), new Vector2((offset / 2f), h));
+        createWall(body,
+                new Vector2(-w + (offset / 2f) - off,0),
+                new Vector2((offset / 2f) + off, h)
+        );
 
         room.setBody(body);
 
