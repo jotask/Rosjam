@@ -10,6 +10,9 @@ public class DesktopLauncher {
 
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 
+		cfg.backgroundFPS = 30;
+		cfg.foregroundFPS = 30;
+
 		cfg.title = "Rosjam";
 		cfg.width = 1280 / 2;
 		cfg.height = 720 / 2;
