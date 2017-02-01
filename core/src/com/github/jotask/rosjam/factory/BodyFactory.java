@@ -115,57 +115,33 @@ class BodyFactory {
         float h = Room.HEIGHT / 2f;
 
         final float offset = 1.4f;
+        // Top
+        createWall(body, new Vector2(0,+h - (offset / 2f)), new Vector2(w, offset / 2f));
 
-//        Array<Vector2> vertices = new Array<Vector2>();
-//
-//        Vector2 bone = new Vector2(-w, -h);
-//        Vector2 btwo = new Vector2(-w, h);
-//        Vector2 bthree = new Vector2(w, -h);
-//        Vector2 bfour = new Vector2(w, h);
-//
-//        vertices.spawn(bone);
-//        vertices.spawn(btwo);
-//        vertices.spawn(bthree);
-//        vertices.spawn(bfour);
-//
-//        Vector2 one = new Vector2(-w + offset, -h + offset);
-//        Vector2 two = new Vector2(-w + offset, h - offset);
-//        Vector2 three = new Vector2(w - offset, -h + offset);
-//        Vector2 four = new Vector2(w - offset, h - offset);
-//
-//        vertices.spawn(one);
-//        vertices.spawn(two);
-//        vertices.spawn(three);
-//        vertices.spawn(four);
-//
-//        Vector2[] v = new Vector2[vertices.size];
-//        for(int i = 0; i < v.length; i++){
-//            v[i] = vertices.get(i);
-//        }
+        // Bottom
+        createWall(body, new Vector2(0,-h + (offset / 2f)), new Vector2(w, offset / 2f));
 
-        // top
-        {
-            // TODO
-//            Vector2 p = new Vector2(
-//            );
-//            PolygonShape shape = new PolygonShape();
-//            shape.setAsBox(w, offset, p, 0);
-//            FixtureDef fd = new FixtureDef();
-//            fd.shape = shape;
-//            body.createFixture(fd);
-//            shape.dispose();
-        }
+        // Left
+        createWall(body, new Vector2(+w - (offset / 2f),0), new Vector2((offset / 2f), h));
 
-//        createEdgeFixture(body, one, two);
-//        createEdgeFixture(body, two, four);
-//        createEdgeFixture(body, three, one);
-//        createEdgeFixture(body, four, three);
+        // Right
+        createWall(body, new Vector2(-w + (offset / 2f),0), new Vector2((offset / 2f), h));
 
         room.setBody(body);
 
         body.setUserData(room);
     }
 
+    private static void createWall(Body body, Vector2 pos, Vector2 size){
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(size.x, size.y, pos, 0);
+        FixtureDef fd = new FixtureDef();
+        fd.shape = shape;
+        body.createFixture(fd);
+        shape.dispose();
+
+    }
 
 
 }

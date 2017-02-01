@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.github.jotask.rosjam.game.entity.Player;
 
 /**
  * Camera
@@ -13,7 +14,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  */
 public class Camera extends OrthographicCamera {
 
-    protected final int Z = 10;
+    public static final int Z = 10;
+
+    private static Camera instance;
 
     public Viewport viewport;
 
@@ -25,11 +28,13 @@ public class Camera extends OrthographicCamera {
 //        float w = 21f;
 //        float h = 11f;
 
-        float w = Gdx.graphics.getWidth() / 10;
-        float h = Gdx.graphics.getHeight() / 10;
+        float w = Gdx.graphics.getWidth() / 20f;
+        float h = Gdx.graphics.getHeight() / 20f;
 
         this.viewport = new FitViewport(w, h, this);
         this.viewport.apply();
+
+        instance = this;
 
     }
 
@@ -40,4 +45,16 @@ public class Camera extends OrthographicCamera {
 
     public void _update(){};
 
+    public static void follow(Player player){
+        Camera.instance.position.set(player.getBody().getPosition(), Z);
+        Camera.instance.update();
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        // TODO eliminate commentd
+        System.out.println("camera finalized");
+        super.finalize();
+        instance = null;
+    }
 }

@@ -10,10 +10,6 @@ import com.github.jotask.rosjam.game.dungeon.room.Room;
  */
 public class RoomCamera extends Camera{
 
-    public void setPosition(Room room){
-
-    }
-
     @Override
     public void _update() { }
 
