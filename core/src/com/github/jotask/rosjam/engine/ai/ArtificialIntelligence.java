@@ -1,8 +1,10 @@
 package com.github.jotask.rosjam.engine.ai;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.github.jotask.rosjam.engine.input.Controller;
-import com.github.jotask.rosjam.game.entity.BodyEntity;
+import com.github.jotask.rosjam.game.entity.Entity;
 
 /**
  * ArtificialIntelligence
@@ -10,17 +12,14 @@ import com.github.jotask.rosjam.game.entity.BodyEntity;
  * @author Jose Vives Iznardo
  * @since 23/01/2017
  */
-public class ArtificialIntelligence implements Controller {
+public class ArtificialIntelligence extends Entity implements Controller {
 
-    private BodyEntity entity;
-    private BodyEntity target;
+    protected Body body;
 
-    private BasicAI algorithm;
+    protected Vector2 dir;
 
-    private Vector2 dir;
-
-    public ArtificialIntelligence() {
-        this.algorithm = new BasicAI(this);
+    public ArtificialIntelligence(Body body) {
+        this.body = body;
         this.dir = new Vector2(0, 0);
     }
 
@@ -40,21 +39,14 @@ public class ArtificialIntelligence implements Controller {
     }
 
     @Override
-    public boolean resetLevel() {
+    public final boolean resetLevel() {
         return false;
     }
 
-    public void setEntity(BodyEntity e) {
-        if(this.entity != null){
-            throw new RuntimeException("entity is not null");
-        }
-        this.entity = e;
-    }
+    @Override
+    public void update() { }
 
-    public void setTarget(BodyEntity t) {
-        if(this.target != null) {
-            throw new RuntimeException("target is not null");
-        }
-        this.target = t;
-    }
+    @Override
+    public final void render(SpriteBatch sb) {}
+
 }

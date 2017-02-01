@@ -30,7 +30,6 @@ public class ControlEntity extends HealthEntity{
         dir.x *= SPEED;
         dir.y *= SPEED;
 
-
         body.setLinearVelocity(dir);
 
     }
