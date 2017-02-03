@@ -148,13 +148,12 @@ public class DungeonFactory {
         final LinkedList<Room> fars = new Graph(rooms.getFirst()).getFars();
         TextureRegion region = cfg.dungeonAssets.getBackground();
         Vector2  pos = null;
-
-        System.out.println("-----------------");
+        Door door = null;
 
         for(Room r: fars){
 
             // Choose a random door not connected
-            Door door = chooseRandomDoor(cfg, r.doors);
+            door = chooseRandomDoor(cfg, r.doors);
             if(door == null) continue;
 
             // Spawn a room
@@ -172,9 +171,19 @@ public class DungeonFactory {
 
             pos = nextRoom;
 
+            break;
+
         }
 
         BossRoom bossRoom = new BossRoom(pos, region);
+        BodyFactory.createRoom(bossRoom);
+
+        bossRoom.doors.add(getDoor(bossRoom, Door.SIDE.UP));
+        bossRoom.doors.add(getDoor(bossRoom, Door.SIDE.RIGHT));
+        bossRoom.doors.add(getDoor(bossRoom, Door.SIDE.DOWN));
+        bossRoom.doors.add(getDoor(bossRoom, Door.SIDE.LEFT));
+
+        connectRooms(door, bossRoom);
 
         rooms.add(bossRoom);
 
@@ -331,15 +340,15 @@ public class DungeonFactory {
 
         public Dungeon cleanDungeon(final Dungeon dungeon){
 
-            return dungeon;
-
-//            for(Room r: dungeon.getRooms()){
-//                cleanRoom(r);
-//            }
-//
-//            dungeon.initialRoom.setCompleted(true);
-//
 //            return dungeon;
+
+            for(Room r: dungeon.getRooms()){
+                cleanRoom(r);
+            }
+
+            dungeon.initialRoom.setCompleted(true);
+
+            return dungeon;
 
         }
 
