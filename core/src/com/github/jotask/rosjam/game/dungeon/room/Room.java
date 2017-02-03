@@ -28,7 +28,7 @@ public class Room extends Entity {
 
     public final Rectangle bounds;
 
-    private TextureRegion background;
+    protected TextureRegion background;
 
     private boolean completed;
 
