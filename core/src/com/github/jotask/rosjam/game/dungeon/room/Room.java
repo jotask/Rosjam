@@ -30,7 +30,7 @@ public class Room extends Entity {
 
     protected TextureRegion background;
 
-    private boolean completed;
+    protected boolean completed;
 
     public LinkedList<Door> doors;
     public LinkedList<Vector2> spawner;
