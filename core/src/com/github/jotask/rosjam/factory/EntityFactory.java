@@ -115,7 +115,7 @@ public class EntityFactory {
 
         shape.dispose();
 
-        TextureRegion region = Rosjam.get().getAssets().getPlayerAssets().getRegion(PlayerAssets.SPRITE.ENEMY);
+        TextureRegion region = Rosjam.get().getAssets().getPlayerAssets().getRegion(PlayerAssets.SPRITE.SPIDER);
 
         final Sprite sprite = new Sprite(region, body);
 
@@ -133,4 +133,5 @@ public class EntityFactory {
     public static Weapon getWeapon(BodyEntity owner) {
         return new Weapon(owner);
     }
+
 }

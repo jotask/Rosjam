@@ -2,6 +2,8 @@ package com.github.jotask.rosjam.game.dungeon.level;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.github.jotask.rosjam.engine.camera.Camera;
+import com.github.jotask.rosjam.engine.camera.RoomCamera;
 import com.github.jotask.rosjam.game.EntityManager;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.entity.Entity;
@@ -67,6 +69,13 @@ public class LevelManager extends Entity{
     private void nextRoom(){
         // TODO Check if is the door for next level
         dungeonManager.enterRoom(nextRoom);
+        Camera camera = this.worldManager.getGame().getCamera();
+        if(camera instanceof RoomCamera) {
+            RoomCamera cam = (RoomCamera) camera;
+            cam.moveTo(nextRoom.connected.self);
+        }else{
+            System.out.println(camera.getClass().toString());
+        }
         nextRoom = null;
     }
 

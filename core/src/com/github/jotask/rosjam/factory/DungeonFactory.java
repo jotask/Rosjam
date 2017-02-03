@@ -6,14 +6,15 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Json;
+import com.github.jotask.rosjam.Rosjam;
 import com.github.jotask.rosjam.editor.TileData;
 import com.github.jotask.rosjam.engine.assets.DungeonAssets;
 import com.github.jotask.rosjam.engine.assets.Tiles;
 import com.github.jotask.rosjam.game.dungeon.Dungeon;
 import com.github.jotask.rosjam.game.dungeon.config.ConfigDungeon;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
+import com.github.jotask.rosjam.game.dungeon.room.BossRoom;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
 
 import java.util.LinkedList;
@@ -26,63 +27,21 @@ import java.util.LinkedList;
  */
 public class DungeonFactory {
 
-    private final World world;
-
-    private final DungeonAssets assets;
-
-    public DungeonFactory(final World world, final DungeonAssets assets) {
-        this.world = world;
-        this.assets = assets;
-    }
-
     public final Dungeon generateDungeon(ConfigDungeon cfg){
 
         LinkedList<Room> rooms = new LinkedList<Room>();
 
-        Room initialRoom = room(null, new Vector2());
+        Room initialRoom = room(cfg, new Vector2());
         rooms.add(initialRoom);
 
         generator: while(rooms.size() < cfg.maxRooms){
 
             // Choose a random room
-            Room room;
-            {
-                boolean isValid;
-                do {
-                    int index = cfg.random.random(rooms.size());
-                    room = rooms.get(index);
-                    isValid = true;
-                } while (!isValid);
-            }
+            Room room = chooseRandomRoom(cfg, rooms);
 
             // Choose a random door not connected
-            final LinkedList<Door> doors = room.doors;
-            Door door;
-            {
-                boolean isValid = false;
-
-                // Check if all doors are connected
-                boolean areConnected = true;
-                for(Door door1: doors){
-                    if(door1.connected == null){
-                        areConnected = false;
-                        break;
-                    }
-                }
-                if(areConnected){
-                    continue generator;
-                }
-
-                do{
-                    int index = cfg.random.random(doors.size());
-                    door = doors.get(index);
-
-                    if(door.connected == null) {
-                        isValid = true;
-                    }
-
-                }while(!isValid);
-            }
+            Door door = chooseRandomDoor(cfg, room.doors);
+            if(door == null) continue generator;
 
             // Spawn a room
             {
@@ -101,27 +60,15 @@ public class DungeonFactory {
                 Room newRoom = room(cfg, nextRoom);
 
                 // Connect doors
-                {
-
-                    Door a = door;
-                    Door b = null;
-                    Door.SIDE opposite = a.getOpposite();
-                    for(Door ddd: newRoom.doors){
-                        if(ddd.side == opposite){
-                            b = ddd;
-                            break;
-                        }
-                    }
-
-                    a.connected = b;
-                    b.connected = a;
-
-                }
+                connectRooms(door, newRoom);
 
                 rooms.add(newRoom);
+
             }
 
         }
+
+        specialRooms(cfg, rooms);
 
         Dungeon dungeon = new Dungeon(rooms);
         dungeon.initialRoom = initialRoom;
@@ -132,9 +79,110 @@ public class DungeonFactory {
 
     }
 
+    private final void connectRooms(final Door door, final Room newRoom){
+
+        Door a = door;
+        Door b = null;
+        Door.SIDE opposite = a.getOpposite();
+        for(Door ddd: newRoom.doors){
+            if(ddd.side == opposite){
+                b = ddd;
+                break;
+            }
+        }
+
+        a.connected = b;
+        b.connected = a;
+
+    }
+
+    private final Room chooseRandomRoom(final ConfigDungeon cfg, LinkedList<Room> rooms){
+
+        Room room;
+
+        boolean isValid;
+        do {
+            int index = cfg.random.random(rooms.size());
+            room = rooms.get(index);
+            isValid = true;
+        } while (!isValid);
+
+        return room;
+
+    }
+
+    private final Door chooseRandomDoor(final ConfigDungeon cfg, LinkedList<Door> doors){
+        Door door;
+
+        boolean isValid = false;
+
+        // Check if all doors are connected
+        boolean areConnected = true;
+        for(Door door1: doors){
+            if(door1.connected == null){
+                areConnected = false;
+                break;
+            }
+        }
+
+        // FIXME
+        if(areConnected){
+            return null;
+        }
+
+        do{
+            int index = cfg.random.random(doors.size());
+            door = doors.get(index);
+
+            if(door.connected == null) {
+                isValid = true;
+            }
+
+        }while(!isValid);
+
+        return door;
+    }
+
+    private final void specialRooms(final ConfigDungeon cfg, final LinkedList<Room> rooms){
+        // Get the most far away room
+        final LinkedList<Room> fars = new Graph(rooms.getFirst()).getFars();
+        TextureRegion region = cfg.dungeonAssets.getBackground();
+        Vector2  pos = null;
+
+        System.out.println("-----------------");
+
+        for(Room r: fars){
+
+            // Choose a random door not connected
+            Door door = chooseRandomDoor(cfg, r.doors);
+            if(door == null) continue;
+
+            // Spawn a room
+            Vector2 nextRoom = getNextRoom(r, door);
+            nextRoom.x += 1f;
+            nextRoom.y += 1f;
+
+            // Check if in that position exist a room
+            if(isOccupied(rooms, nextRoom)){
+                continue;
+            }
+
+            nextRoom.x -= 1f;
+            nextRoom.y -= 1f;
+
+            pos = nextRoom;
+
+        }
+
+        BossRoom bossRoom = new BossRoom(pos, region);
+
+        rooms.add(bossRoom);
+
+    }
+
     private final Room room(final ConfigDungeon cfg, final Vector2 position){
 
-        TextureRegion background = assets.getBackground();
+        TextureRegion background = cfg.dungeonAssets.getBackground();
 
         Room room = new Room(position, background);
         BodyFactory.createRoom(room);
@@ -177,7 +225,7 @@ public class DungeonFactory {
 
     }
 
-    private void spawnRock(final Room room, final TileData d) {
+    private void spawnRock(final Room room, final TileData data) {
         // TODO create code to spawn rocks
     }
 
@@ -195,6 +243,8 @@ public class DungeonFactory {
         TextureRegion[] regions = new TextureRegion[4];
 
         // TODO Fix the door offset
+
+        DungeonAssets assets = Rosjam.get().getAssets().getDungeonAssets();
 
         float w = 9.28f;
         float h = 4.28f;
@@ -281,13 +331,15 @@ public class DungeonFactory {
 
         public Dungeon cleanDungeon(final Dungeon dungeon){
 
-            for(Room r: dungeon.getRooms()){
-                cleanRoom(r);
-            }
-
-            dungeon.initialRoom.setCompleted(true);
-
             return dungeon;
+
+//            for(Room r: dungeon.getRooms()){
+//                cleanRoom(r);
+//            }
+//
+//            dungeon.initialRoom.setCompleted(true);
+//
+//            return dungeon;
 
         }
 

@@ -1,5 +1,7 @@
 package com.github.jotask.rosjam.game.dungeon.config;
 
+import com.github.jotask.rosjam.Rosjam;
+import com.github.jotask.rosjam.engine.assets.DungeonAssets;
 import com.github.jotask.rosjam.game.DungeonState;
 import com.github.jotask.rosjam.game.world.WorldManager;
 import com.github.jotask.rosjam.util.JRandom;
@@ -12,11 +14,13 @@ import com.github.jotask.rosjam.util.JRandom;
  */
 public class ConfigDungeon {
 
-    public int maxRooms = 2;
+    public final DungeonAssets dungeonAssets;
 
     public final JRandom random;
 
     public final WorldManager worldManager;
+
+    public int maxRooms = 7;
 
     public ConfigDungeon(){
         this(DungeonState.get().getWorldManager());
@@ -25,6 +29,7 @@ public class ConfigDungeon {
     public ConfigDungeon(WorldManager worldManager) {
         this.worldManager = worldManager;
         this.random = new JRandom();
+        this.dungeonAssets = Rosjam.get().getAssets().getDungeonAssets();
     }
 
 }

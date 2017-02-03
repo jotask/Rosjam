@@ -2,7 +2,6 @@ package com.github.jotask.rosjam.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.github.jotask.rosjam.engine.camera.Camera;
 import com.github.jotask.rosjam.engine.states.GameState;
 import com.github.jotask.rosjam.game.dungeon.level.LevelManager;
 import com.github.jotask.rosjam.game.world.WorldManager;
@@ -58,7 +57,7 @@ public class DungeonState extends GameState {
         this.worldManager.update();
         this.manager.update();
 
-        Camera.follow(EntityManager.get().getPlayer());
+//        Camera.follow(EntityManager.get().getPlayer());
 
     }
 

@@ -29,8 +29,8 @@ public class Camera extends OrthographicCamera {
 //        float w = 21f;
 //        float h = 11f;
 
-        float w = Gdx.graphics.getWidth() / 20f;
-        float h = Gdx.graphics.getHeight() / 20f;
+        float w = Gdx.graphics.getWidth() / 5f;
+        float h = Gdx.graphics.getHeight() / 5f;
 
         this.viewport = new FitViewport(w, h, this);
         this.viewport.apply();
@@ -44,7 +44,7 @@ public class Camera extends OrthographicCamera {
         viewport.apply();
     }
 
-    public void _update(){};
+    public void _update(){}
 
     public static void follow(Player player){
         float smooth = .5f;
@@ -52,11 +52,6 @@ public class Camera extends OrthographicCamera {
         Camera.instance.update();
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        // TODO eliminate commentd
-        System.out.println("camera finalized");
-        super.finalize();
-        instance = null;
-    }
+    // TODO Dispose camera
+
 }

@@ -82,6 +82,8 @@ class BodyFactory {
 
     public static void createEnemy(Enemy enemy){
 
+        // TODO
+
 //        BodyDef bd = new BodyDef();
 //        bd.type = BodyDef.BodyType.DynamicBody;
 //        bd.position.set(center.x, center.y);

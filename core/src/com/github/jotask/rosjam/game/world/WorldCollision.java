@@ -95,8 +95,6 @@ class WorldCollision implements ContactListener {
                 door.setOpen(true);
                 door.isEntered = false;
 
-                System.out.println("endContact()");
-
             }
 
         }

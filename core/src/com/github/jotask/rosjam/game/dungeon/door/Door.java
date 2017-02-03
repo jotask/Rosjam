@@ -45,8 +45,11 @@ public class Door {
     }
 
     public void render(SpriteBatch sb){
+
         state += Gdx.graphics.getDeltaTime();
-        sb.draw(animation.getKeyFrame(state, true), position.x, position.y, 1f, 1f);
+        TextureRegion region = animation.getKeyFrame(state, true);
+
+        sb.draw(region, position.x, position.y, 1f, 1f);
     }
 
     public void debug(ShapeRenderer sr) {

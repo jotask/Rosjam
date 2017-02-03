@@ -87,7 +87,7 @@ public class EditorState extends CameraState {
             data.add(a.tile);
         }
         Json json = new Json();
-        String s = json.toJson(data);
+        String s = json.prettyPrint(data);
         FileHandle file = Gdx.files.local("rooms/" + randomName());
         file.writeString(s, false);
 

@@ -26,12 +26,16 @@ public class Debug extends Entity{
 
     private BitmapFont font;
 
+    private static int i = 0;
+
     private enum DEBUG{
 
-        FPS ("FPS: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f -13f * 0),
-        ENTITY ("e: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 13f * 1),
-        BODY ("b: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 13f * 2),
-        PLAYER ("p: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 13f * 3);
+        FPS ("FPS: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f -13f * i++),
+        HEAPMEMORY ("JH: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 13f * i++),
+        NATIVEMEMORY ("NH: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 13f * i++),
+        ENTITY ("e: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 13f * i++),
+        BODY ("b: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 13f * i++),
+        PLAYER ("p: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 13f * i++);
 
         final String string;
         final float x, y;
@@ -62,6 +66,12 @@ public class Debug extends Entity{
         delta *= 1000;
         draw(sb, String.valueOf((int) delta), DEBUG.FPS);
 
+        long javaHeap = Gdx.app.getJavaHeap();
+        draw(sb, String.valueOf(toMB(javaHeap)) + "mb", DEBUG.HEAPMEMORY);
+
+        long nativeHeap = Gdx.app.getNativeHeap();
+        draw(sb, String.valueOf(toMB(nativeHeap)) + "mb", DEBUG.NATIVEMEMORY);
+
         int entity = EntityManager.get().getSize();
         draw(sb, String.valueOf(entity), DEBUG.ENTITY);
 
@@ -88,6 +98,10 @@ public class Debug extends Entity{
         float y =+ debug.y;
 
         font.draw(sb, debug.string + text, x, y);
+    }
+
+    private long toMB(final long bytes){
+        return bytes / (1024 * 1024);
     }
 
 }

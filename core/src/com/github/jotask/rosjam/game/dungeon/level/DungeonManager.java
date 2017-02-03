@@ -1,7 +1,5 @@
 package com.github.jotask.rosjam.game.dungeon.level;
 
-import com.github.jotask.rosjam.Rosjam;
-import com.github.jotask.rosjam.engine.assets.DungeonAssets;
 import com.github.jotask.rosjam.engine.camera.RoomCamera;
 import com.github.jotask.rosjam.factory.DungeonFactory;
 import com.github.jotask.rosjam.game.EntityManager;
@@ -32,8 +30,7 @@ public class DungeonManager {
 
     public DungeonManager(LevelManager levelManager) {
         this.levelManager = levelManager;
-        DungeonAssets assets = Rosjam.get().getAssets().getDungeonAssets();
-        this.dungeonFactory = new DungeonFactory(levelManager.worldManager.getWorld(), assets);
+        this.dungeonFactory = new DungeonFactory();
         camera = (RoomCamera) Game.get().getCamera();
     }
 

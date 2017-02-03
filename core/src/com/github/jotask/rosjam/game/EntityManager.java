@@ -78,9 +78,7 @@ public class EntityManager implements Disposable{
         player.debug(sr);
     }
 
-    public static void add(Entity entity){
-        instance.addLocal(entity);
-    }
+    public static void add(Entity entity){ instance.addLocal(entity); }
 
     private void addLocal(Entity entity){
         entities.add(entity);
