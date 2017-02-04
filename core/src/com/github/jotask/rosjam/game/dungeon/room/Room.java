@@ -30,6 +30,8 @@ public class Room extends Entity {
 
     protected TextureRegion background;
 
+    private boolean inside = false;
+    private boolean entered = false;
     protected boolean completed;
 
     public LinkedList<Door> doors;
@@ -43,6 +45,7 @@ public class Room extends Entity {
         this.spawner = new LinkedList<Vector2>();
         this.enemies = new LinkedList<Enemy>();
         this.completed = false;
+        this.inside = false;
     }
 
     @Override
@@ -97,12 +100,15 @@ public class Room extends Entity {
                 d.setOpen(true);
             }
         }
+        this.inside = true;
+        this.entered = true;
     }
 
     public void exit(){
         for(Enemy e: enemies){
             e.despawn();
         }
+        this.inside = false;
     }
 
     public void enemyDied(Enemy enemy){
@@ -119,4 +125,7 @@ public class Room extends Entity {
 
     public void setCompleted(boolean completed) { this.completed = completed; }
 
+    public boolean isInside() { return inside; }
+
+    public boolean isEntered() { return entered; }
 }

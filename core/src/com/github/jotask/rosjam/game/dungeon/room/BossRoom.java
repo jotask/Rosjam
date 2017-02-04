@@ -1,6 +1,5 @@
 package com.github.jotask.rosjam.game.dungeon.room;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -13,6 +12,8 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class BossRoom extends Room {
 
+
+
     public BossRoom(Vector2 p, TextureRegion background) {
         super(p, background);
         this.completed = true;
@@ -20,10 +21,14 @@ public class BossRoom extends Room {
 
     @Override
     public void render(SpriteBatch sb) {
-        Color c = sb.getColor();
-        sb.setColor(Color.RED);
+//        Color c = sb.getColor();
+//        sb.setColor(Color.RED);
         super.render(sb);
-        sb.setColor(c);
+//        sb.setColor(c);
     }
 
+    @Override
+    public void setCompleted(boolean completed) {
+        super.setCompleted(completed);
+    }
 }

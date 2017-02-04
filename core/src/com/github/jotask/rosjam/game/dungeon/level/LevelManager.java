@@ -22,6 +22,7 @@ public class LevelManager extends Entity{
     private final DungeonManager dungeonManager;
 
     private int level = 0;
+    private boolean completed = false;
 
     private Door nextRoom;
 
@@ -35,6 +36,9 @@ public class LevelManager extends Entity{
     public void update() {
         if(nextRoom != null){
             nextRoom();
+        }else if(completed){
+            nextLevel();
+            completed = false;
         }
     }
 
@@ -44,6 +48,10 @@ public class LevelManager extends Entity{
     @Override
     public void debug(ShapeRenderer sr) {
         dungeonManager.getDungeon().debug(sr);
+    }
+
+    public void setCompleted(){
+        this.completed = true;
     }
 
     public void nextLevel(){

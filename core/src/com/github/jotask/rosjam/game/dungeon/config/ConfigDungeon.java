@@ -20,7 +20,7 @@ public class ConfigDungeon {
 
     public final WorldManager worldManager;
 
-    public int maxRooms = 2;
+    public int maxRooms = 3;
 
     public ConfigDungeon(){
         this(DungeonState.get().getWorldManager());
