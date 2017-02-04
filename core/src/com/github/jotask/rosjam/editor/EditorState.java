@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Json;
+import com.github.jotask.rosjam.Rosjam;
 import com.github.jotask.rosjam.engine.camera.Camera;
 import com.github.jotask.rosjam.engine.states.CameraState;
 
@@ -50,7 +51,7 @@ public class EditorState extends CameraState {
     public EditorState(Camera camera) {
         super(camera);
 
-        this.skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+        this.skin = Rosjam.get().getAssets().getSkin();
 
         this.menuEditor = new MenuEditor(this);
         this.editorScreen = new EditorScreen(this);
