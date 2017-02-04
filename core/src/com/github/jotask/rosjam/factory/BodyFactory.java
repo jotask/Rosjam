@@ -7,7 +7,6 @@ import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.dungeon.door.NextLevelDoor;
 import com.github.jotask.rosjam.game.dungeon.door.RoomDoor;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
-import com.github.jotask.rosjam.game.entity.Enemy;
 import com.github.jotask.rosjam.util.CollisionFilter;
 
 /**
@@ -94,8 +93,8 @@ class BodyFactory {
 
         Body body = world.createBody(bd);
 
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(.5f, .5f);
+        CircleShape shape = new CircleShape();
+        shape.setRadius(.4f);
 
         FixtureDef fd = new FixtureDef();
         fd.shape = shape;
@@ -110,27 +109,29 @@ class BodyFactory {
 
     }
 
-    public static void createEnemy(Enemy enemy){
+    public static Body createEnemy(final World world, final Vector2 position){
 
-        // TODO
+        // FIXME
 
-//        BodyDef bd = new BodyDef();
-//        bd.type = BodyDef.BodyType.DynamicBody;
-//        bd.position.set(center.x, center.y);
-//
-//        Body body = worldManager.getWorld().createBody(bd);
-//
-//        PolygonShape shape = new PolygonShape();
-//        shape.setAsBox(.5f, .5f);
-//
-//        FixtureDef fd = new FixtureDef();
-//        fd.shape = shape;
-//        fd.density = 1f;
-//        CollisionFilter.setMask(fd , CollisionFilter.EENTITY.ENEMY);
-//
-//        Fixture fixture = body.createFixture(fd);
-//
-//        shape.dispose();
+        BodyDef bd = new BodyDef();
+        bd.type = BodyDef.BodyType.DynamicBody;
+        bd.position.set(position.x, position.y);
+
+        Body body = world.createBody(bd);
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(.4f);
+
+        FixtureDef fd = new FixtureDef();
+        fd.shape = shape;
+        fd.density = 1f;
+        CollisionFilter.setMask(fd , CollisionFilter.EENTITY.ENEMY);
+
+        Fixture fixture = body.createFixture(fd);
+
+        shape.dispose();
+
+        return body;
 
     }
 

@@ -97,23 +97,7 @@ public class EntityFactory {
         center.x += .5f;
         center.y += .5f;
 
-        BodyDef bd = new BodyDef();
-        bd.type = BodyDef.BodyType.DynamicBody;
-        bd.position.set(center.x, center.y);
-
-        Body body = worldManager.getWorld().createBody(bd);
-
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(.5f, .5f);
-
-        FixtureDef fd = new FixtureDef();
-        fd.shape = shape;
-        fd.density = 1f;
-        CollisionFilter.setMask(fd , CollisionFilter.EENTITY.ENEMY);
-
-        Fixture fixture = body.createFixture(fd);
-
-        shape.dispose();
+        Body body = BodyFactory.createEnemy(worldManager.getWorld(), center);
 
         TextureRegion region = Rosjam.get().getAssets().getPlayerAssets().getRegion(PlayerAssets.SPRITE.SPIDER);
 
