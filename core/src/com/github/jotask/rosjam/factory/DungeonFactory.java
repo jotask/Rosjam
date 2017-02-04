@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Json;
 import com.github.jotask.rosjam.Rosjam;
 import com.github.jotask.rosjam.editor.TileData;
@@ -18,6 +19,7 @@ import com.github.jotask.rosjam.game.dungeon.door.NextLevelDoor;
 import com.github.jotask.rosjam.game.dungeon.door.RoomDoor;
 import com.github.jotask.rosjam.game.dungeon.room.BossRoom;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
+import com.github.jotask.rosjam.game.entity.Rock;
 
 import java.util.LinkedList;
 
@@ -243,9 +245,6 @@ public class DungeonFactory {
         room.doors.add(getDoor(room, Door.SIDE.DOWN));
         room.doors.add(getDoor(room, Door.SIDE.LEFT));
 
-        if(cfg == null)
-            return room;
-
         FileHandle dir = Gdx.files.internal("rooms");
         if(dir.list().length > 0) {
 
@@ -261,7 +260,7 @@ public class DungeonFactory {
                     case EMPTY:
                         continue;
                     case ROCK:
-                        spawnRock(room, t);
+                        spawnRock(cfg, room, t);
                         break;
                     case SPAWN:
                         spawner(room, t);
@@ -276,15 +275,26 @@ public class DungeonFactory {
 
     }
 
-    private void spawnRock(final Room room, final TileData data) {
-        // TODO create code to spawn rocks
+    private void spawnRock(final ConfigDungeon cfg, final Room room, final TileData data) {
+
+        Vector2 pos = new Vector2( room.getBounds().x + data.x + .5f, room.getBounds().y + data.y + .5f);
+
+        Body body = BodyFactory.createRock(cfg.worldManager.getWorld(), pos);
+
+        TextureRegion region = cfg.dungeonAssets.get(Tiles.ROCK_01);
+
+        Rock rock = new Rock(body, region);
+
+        room.entities.add(rock);
+
+
     }
 
     private void spawner(final Room room, final TileData data){
         Rectangle r = room.getBounds();
         Vector2 v = new Vector2();
-        v.x = r.x + data.x;
-        v.y = r.y + data.y;
+        v.x = r.x + data.x ;
+        v.y = r.y + data.y ;
         room.spawner.add(v);
     }
 
@@ -382,13 +392,12 @@ public class DungeonFactory {
 
         public Dungeon cleanDungeon(final Dungeon dungeon){
 
-//            return dungeon;
-
             for(Room r: dungeon.getRooms()){
                 cleanRoom(r);
             }
 
-            dungeon.initialRoom.setCompleted(true);
+            // TODO
+//            dungeon.initialRoom.setCompleted(true);
 
             return dungeon;
 

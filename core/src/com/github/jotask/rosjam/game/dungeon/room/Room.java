@@ -38,12 +38,15 @@ public class Room extends Entity {
     public LinkedList<Vector2> spawner;
     public LinkedList<Enemy> enemies;
 
+    public LinkedList<Entity> entities;
+
     public Room(final Vector2 p, TextureRegion background) {
         this.bounds = new Rectangle(p.x, p.y, WIDTH, HEIGHT);
         this.background = background;
         this.doors = new LinkedList<Door>();
         this.spawner = new LinkedList<Vector2>();
         this.enemies = new LinkedList<Enemy>();
+        this.entities = new LinkedList<Entity>();
         this.completed = false;
         this.inside = false;
     }
@@ -56,6 +59,9 @@ public class Room extends Entity {
         sb.draw(background, bounds.x, bounds.y, bounds.width, bounds.height);
         for(Door d: doors){
             d.render(sb);
+        }
+        for(Entity e: entities){
+            e.render(sb);
         }
     }
 

@@ -191,5 +191,29 @@ class BodyFactory {
 
     }
 
+    public static Body createRock(final World world, final Vector2 position){
+
+        BodyDef bd = new BodyDef();
+        bd.type = BodyDef.BodyType.StaticBody;
+        bd.position.set(position.x, position.y);
+
+        Body body = world.createBody(bd);
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(.5f, .5f);
+
+        FixtureDef fd = new FixtureDef();
+        fd.shape = shape;
+        fd.density = 1f;
+        CollisionFilter.setMask(fd , CollisionFilter.EENTITY.WALLS);
+
+        Fixture fixture = body.createFixture(fd);
+
+        shape.dispose();
+
+        return body;
+
+    }
+
 
 }

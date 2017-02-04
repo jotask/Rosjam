@@ -29,7 +29,14 @@ public enum Tiles {
     DOOR_LEFT_04("sprite5"),
 
     DOOR_NEXT_LEVEL_OPEN("sprite121"),
-    DOOR_NEXT_LEVEL_CLOSE("sprite122");
+    DOOR_NEXT_LEVEL_CLOSE("sprite122"),
+
+    ROCK_01("sprite145"),
+    ROCK_02("sprite146")
+
+    ;
+
+
 
     final String name;
 
