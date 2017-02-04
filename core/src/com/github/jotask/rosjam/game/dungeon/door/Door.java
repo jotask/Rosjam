@@ -1,12 +1,10 @@
 package com.github.jotask.rosjam.game.dungeon.door;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
+import com.github.jotask.rosjam.util.DoorSprite;
 
 /**
  * Door
@@ -20,7 +18,7 @@ public class Door {
 
     public enum SIDE{ UP, RIGHT, DOWN, LEFT }
 
-    private Animation<TextureRegion> animation;
+    private DoorSprite sprite;
     private Vector2 position;
 
     public boolean isEntered;
@@ -28,26 +26,18 @@ public class Door {
     public final Room self;
     public Door connected;
 
-    private float state;
-
     private boolean opened;
 
-    public Door(Vector2 position, final Room room, Animation<TextureRegion> animation) {
+    public Door(Vector2 position, final Room room, final DoorSprite sprite) {
         this.position = position;
         this.self = room;
-        this.animation = animation;
-        this.animation.setFrameDuration(.25f);
-        this.animation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+        this.sprite = sprite;
         this.opened = true;
         this.isEntered = false;
     }
 
     public void render(SpriteBatch sb){
-
-        state += Gdx.graphics.getDeltaTime();
-        TextureRegion region = animation.getKeyFrame(state, true);
-
-        sb.draw(region, position.x, position.y, 1f, 1f);
+        sprite.render(sb, this.getPosition());
     }
 
     public void debug(ShapeRenderer sr) {

@@ -1,9 +1,8 @@
 package com.github.jotask.rosjam.game.dungeon.door;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
+import com.github.jotask.rosjam.util.DoorSprite;
 
 /**
  * RoomDoor
@@ -15,8 +14,8 @@ public class RoomDoor extends Door {
 
     public Door.SIDE side;
 
-    public RoomDoor(Vector2 position, SIDE side, Room room, Animation<TextureRegion> animation) {
-        super(position, room, animation);
+    public RoomDoor(Vector2 position, SIDE side, Room room, DoorSprite sprite) {
+        super(position, room, sprite);
         this.side = side;
     }
 

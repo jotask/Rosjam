@@ -31,11 +31,12 @@ public class Enemy extends HealthEntity {
     @Override
     public void update() {
         this.intelligence.update();
+        this.sprite.update();
     }
 
     @Override
     public void render(SpriteBatch sb) {
-        sprite.render(sb);
+        this.sprite.render(sb);
     }
 
     public void despawn(){

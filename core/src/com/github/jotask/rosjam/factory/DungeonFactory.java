@@ -2,15 +2,12 @@ package com.github.jotask.rosjam.factory;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Json;
-import com.github.jotask.rosjam.Rosjam;
 import com.github.jotask.rosjam.editor.TileData;
-import com.github.jotask.rosjam.engine.assets.DungeonAssets;
 import com.github.jotask.rosjam.engine.assets.Tiles;
 import com.github.jotask.rosjam.game.dungeon.Dungeon;
 import com.github.jotask.rosjam.game.dungeon.config.ConfigDungeon;
@@ -20,6 +17,7 @@ import com.github.jotask.rosjam.game.dungeon.door.RoomDoor;
 import com.github.jotask.rosjam.game.dungeon.room.BossRoom;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
 import com.github.jotask.rosjam.game.entity.Rock;
+import com.github.jotask.rosjam.util.DoorSprite;
 
 import java.util.LinkedList;
 
@@ -35,7 +33,7 @@ public class DungeonFactory {
 
         LinkedList<Room> rooms = new LinkedList<Room>();
 
-        Room initialRoom = room(cfg, new Vector2());
+        Room initialRoom = room(cfg, new Vector2(), true);
         rooms.add(initialRoom);
 
         generator: while(rooms.size() < cfg.maxRooms){
@@ -205,21 +203,10 @@ public class DungeonFactory {
         {
 
             Vector2 p = new Vector2(bossRoom.getCenter().sub(.5f , .5f));
-            DungeonAssets assets = Rosjam.get().getAssets().getDungeonAssets();
 
-            TextureRegion[] regions = new TextureRegion[2];
-            regions[0] = assets.get(Tiles.DOOR_NEXT_LEVEL_OPEN);
-            regions[1] = assets.get(Tiles.DOOR_NEXT_LEVEL_CLOSE);
+            DoorSprite sprite = SpriteFactory.getFinalDoor();
 
-            if(regions[0] == null)
-                throw new RuntimeException("null");
-
-            if(regions[1] == null)
-                throw new RuntimeException("null");
-
-            Animation<TextureRegion> animation = new Animation<TextureRegion>(Door.ANIMATION_SPEED, regions);
-
-            NextLevelDoor nld = new NextLevelDoor(p, bossRoom, animation);
+            NextLevelDoor nld = new NextLevelDoor(p, bossRoom, sprite);
             bossRoom.doors.add(nld);
 
             BodyFactory.createDoor(nld);
@@ -234,6 +221,10 @@ public class DungeonFactory {
     }
 
     private final Room room(final ConfigDungeon cfg, final Vector2 position){
+        return room(cfg, position, false);
+    }
+
+    private final Room room(final ConfigDungeon cfg, final Vector2 position, boolean initial){
 
         TextureRegion background = cfg.dungeonAssets.getBackground();
 
@@ -244,6 +235,9 @@ public class DungeonFactory {
         room.doors.add(getDoor(room, Door.SIDE.RIGHT));
         room.doors.add(getDoor(room, Door.SIDE.DOWN));
         room.doors.add(getDoor(room, Door.SIDE.LEFT));
+
+        if(initial)
+            return room;
 
         FileHandle dir = Gdx.files.internal("rooms");
         if(dir.list().length > 0) {
@@ -301,11 +295,6 @@ public class DungeonFactory {
     private Door getDoor(final Room room, Door.SIDE side){
 
         Vector2 p = new Vector2(room.getBody().getPosition());
-        TextureRegion[] regions = new TextureRegion[4];
-
-        // TODO Fix the door offset
-
-        DungeonAssets assets = Rosjam.get().getAssets().getDungeonAssets();
 
         float w = 9.28f;
         float h = 4.28f;
@@ -314,42 +303,26 @@ public class DungeonFactory {
             case DOWN:
                 p.y += h - .4f;
                 p.x -= .5;
-                regions[0] = assets.get(Tiles.DOOR_TOP_01);
-                regions[1] = assets.get(Tiles.DOOR_TOP_02);
-                regions[2] = assets.get(Tiles.DOOR_TOP_03);
-                regions[3] = assets.get(Tiles.DOOR_TOP_04);
                 break;
             case RIGHT:
                 p.x += w - .4f;
                 p.y -= .5f;
-                regions[0] = assets.get(Tiles.DOOR_RIGHT_01);
-                regions[1] = assets.get(Tiles.DOOR_RIGHT_02);
-                regions[2] = assets.get(Tiles.DOOR_RIGHT_03);
-                regions[3] = assets.get(Tiles.DOOR_RIGHT_04);
                 break;
             case UP:
                 p.y -= h + .5f;
                 p.x -= .5;
-                regions[0] = assets.get(Tiles.DOOR_BOTTOM_01);
-                regions[1] = assets.get(Tiles.DOOR_BOTTOM_02);
-                regions[2] = assets.get(Tiles.DOOR_BOTTOM_03);
-                regions[3] = assets.get(Tiles.DOOR_BOTTOM_04);
                 break;
             case LEFT:
                 p.x -= w + .5f;
                 p.y -= .5f;
-                regions[0] = assets.get(Tiles.DOOR_LEFT_01);
-                regions[1] = assets.get(Tiles.DOOR_LEFT_02);
-                regions[2] = assets.get(Tiles.DOOR_LEFT_03);
-                regions[3] = assets.get(Tiles.DOOR_LEFT_04);
                 break;
             default:
                 throw new RuntimeException("Unknown Door type");
         }
 
-        Animation<TextureRegion> animation = new Animation<TextureRegion>(Door.ANIMATION_SPEED, regions);
+        DoorSprite sprite = SpriteFactory.getDoor(side);
 
-        Door door = new RoomDoor(p, side, room, animation);
+        Door door = new RoomDoor(p, side, room, sprite);
 
         return door;
 
@@ -396,8 +369,7 @@ public class DungeonFactory {
                 cleanRoom(r);
             }
 
-            // TODO
-//            dungeon.initialRoom.setCompleted(true);
+            dungeon.initialRoom.setCompleted(true);
 
             return dungeon;
 

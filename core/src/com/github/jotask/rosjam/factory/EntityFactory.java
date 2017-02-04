@@ -1,13 +1,7 @@
 package com.github.jotask.rosjam.factory;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.github.jotask.rosjam.Rosjam;
-import com.github.jotask.rosjam.engine.ai.ArtificialIntelligence;
-import com.github.jotask.rosjam.engine.ai.Spider;
-import com.github.jotask.rosjam.engine.assets.BulletAssets;
-import com.github.jotask.rosjam.engine.assets.PlayerAssets;
 import com.github.jotask.rosjam.game.DungeonState;
 import com.github.jotask.rosjam.game.EntityManager;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
@@ -38,9 +32,7 @@ public class EntityFactory {
 
         final Body body = BodyFactory.createPlayer(worldManager.getWorld(), center);
 
-        TextureRegion region = Rosjam.get().getAssets().getPlayerAssets().getRegion(PlayerAssets.SPRITE.DEFAULT);
-
-        final Sprite sprite = new Sprite(region, body);
+        final Sprite sprite = SpriteFactory.getPlayer(body);
 
         Player player = new Player(body, worldManager.getGame().getController(), sprite);
         player.getBody().setUserData(player);
@@ -76,9 +68,7 @@ public class EntityFactory {
 
         shape.dispose();
 
-        TextureRegion region = Rosjam.get().getAssets().getBulletAssets().getRegion(BulletAssets.SPRITE.DEFAULT);
-
-        final Sprite sprite = new Sprite(region, body);
+        final Sprite sprite = SpriteFactory.getBullet(body);
 
         Bullet bullet = new Bullet(body, sprite);
         bullet.getBody().setUserData(bullet);
@@ -90,28 +80,13 @@ public class EntityFactory {
     }
 
     public static Enemy createEnemy(final Vector2 p, final Room room){
+        return EntityFactory.createEnemy(EnemyFactory.ENEMY.SPIDER, p, room);
+    }
 
-        final WorldManager worldManager = DungeonState.get().getWorldManager();
-
-        final Vector2 center = new Vector2(p);
-        center.x += .5f;
-        center.y += .5f;
-
-        Body body = BodyFactory.createEnemy(worldManager.getWorld(), center);
-
-        TextureRegion region = Rosjam.get().getAssets().getPlayerAssets().getRegion(PlayerAssets.SPRITE.SPIDER);
-
-        final Sprite sprite = new Sprite(region, body);
-
-        ArtificialIntelligence ai = new Spider(body);
-
-        Enemy enemy = new Enemy(body, ai, sprite, room);
-        enemy.getBody().setUserData(enemy);
-
-        EntityManager.add(enemy);
-
-        return enemy;
-
+    public static Enemy createEnemy(final EnemyFactory.ENEMY enemy, final Vector2 p, final Room room){
+        Enemy e = EnemyFactory.get(enemy, p, room);
+        e.update();
+        return e;
     }
 
     public static Weapon getWeapon(BodyEntity owner) {

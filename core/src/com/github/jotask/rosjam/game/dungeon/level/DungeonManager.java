@@ -34,8 +34,15 @@ public class DungeonManager {
         camera = (RoomCamera) Game.get().getCamera();
     }
 
+    private ConfigDungeon getNextConfig(){
+        ConfigDungeon cfg = new ConfigDungeon();
+        cfg.level = levelManager.getLevel();
+        cfg.maxRooms += cfg.level;
+        return cfg;
+    }
+
     public void nextLevel(){
-        dungeon = dungeonFactory.generateDungeon(new ConfigDungeon());
+        dungeon = dungeonFactory.generateDungeon(getNextConfig());
         currentRoom = dungeon.initialRoom;
         currentRoom.enter();
         camera.moveTo(currentRoom);

@@ -87,4 +87,7 @@ public class LevelManager extends Entity{
         nextRoom = null;
     }
 
+    public int getLevel() {
+        return level;
+    }
 }

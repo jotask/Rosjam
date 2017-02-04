@@ -94,6 +94,10 @@ public class Room extends Entity {
     public Body getBody() { return body; }
 
     public void enter(){
+
+        if(spawner.isEmpty())
+            setCompleted(true);
+
         if(!completed) {
             for (Vector2 v : spawner) {
                 enemies.add(EntityFactory.createEnemy(v, this));

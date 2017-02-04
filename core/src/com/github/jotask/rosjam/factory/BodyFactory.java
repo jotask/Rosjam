@@ -111,8 +111,6 @@ class BodyFactory {
 
     public static Body createEnemy(final World world, final Vector2 position){
 
-        // FIXME
-
         BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
         bd.position.set(position.x, position.y);
