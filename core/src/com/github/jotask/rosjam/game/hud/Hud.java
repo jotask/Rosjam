@@ -3,11 +3,12 @@ package com.github.jotask.rosjam.game.hud;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.github.jotask.rosjam.Rosjam;
 import com.github.jotask.rosjam.game.Game;
 
 /**
@@ -23,40 +24,32 @@ public class Hud{
     private Camera camera;
 
     private final Game game;
+    private final Skin skin;
     private final Stage stage;
     private Table table;
 
-    private final float scale = 1f;
+    private final Map map;
 
     private final Application.ApplicationType type;
 
     public Hud(final Game game) {
         this.game = game;
 
-        // FIXME
-        // Change the viewport for different resolutions
-
-        this.camera = new OrthographicCamera(Gdx.graphics.getWidth() * scale,
-                Gdx.graphics.getHeight() * scale);
-
+        this.skin = Rosjam.get().getAssets().getSkin();
 
         this.stage = new Stage();
         this.table = new Table();
         this.table.setFillParent(true);
-
-        this.stage.getViewport().setCamera(this.camera);
+        this.table.debug();
         this.stage.addActor(table);
-        this.stage.setDebugAll(false);
-//        this.stage.getBatch().dispose();
 
-//        final SpriteBatch sb = Rosjam.get().getSb();
-//        this.stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), sb);
-//        this.stage.setDebugAll(true);
-
-//        table = new Table();
-//        table.setFillParent(true);
-//        table.setDebug(true);
-//        stage.addActor(table);
+        this.map = new Map();
+//        this.map.top().right();
+        map.debug();
+        float x = stage.getWidth() - Map.WIDTH;
+        float y = stage.getHeight() - Map.HEIGHT;
+        this.map.setPosition(x, y);
+        this.table.addActor(map);
 
         this.type = Gdx.app.getType();
 
@@ -76,13 +69,13 @@ public class Hud{
     public void render(SpriteBatch sb) {
         this.stage.draw();
         if(type == Application.ApplicationType.Android)
-        this.controls.render();
+            this.controls.render();
     }
 
     public void dispose() {
-         this.stage.dispose();
+        this.stage.dispose();
         if(type == Application.ApplicationType.Android)
-         this.controls.dispose();
+            this.controls.dispose();
     }
 
     public void resize(int width, int height) {
@@ -91,6 +84,7 @@ public class Hud{
         this.stage.getViewport().update(w, h, true);
 
         if(type == Application.ApplicationType.Android)this.controls.resize(w, h);
+
     }
 
     public void addControl(final Actor actor){ this.controls.addActor(actor); }
@@ -98,4 +92,7 @@ public class Hud{
     public Stage getStage() {
         return stage;
     }
+
+    public Map getMap() { return map; }
+
 }
