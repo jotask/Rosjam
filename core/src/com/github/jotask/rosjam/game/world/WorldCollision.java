@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.github.jotask.rosjam.game.DungeonState;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
+import com.github.jotask.rosjam.game.dungeon.door.NextLevelDoor;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
 import com.github.jotask.rosjam.game.entity.HealthEntity;
 import com.github.jotask.rosjam.game.item.Bullet;
@@ -58,6 +59,11 @@ class WorldCollision implements ContactListener {
         Object y = contact.getFixtureB().getUserData();
 
         if(z instanceof Door || y instanceof Door){
+
+            if(z instanceof NextLevelDoor || y instanceof NextLevelDoor){
+                DungeonState.get().getLevel().setCompleted();
+                return;
+            }
 
             Door door = null;
             if(z instanceof Door){

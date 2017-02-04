@@ -4,6 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.github.jotask.rosjam.game.DungeonState;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
+import com.github.jotask.rosjam.game.dungeon.door.NextLevelDoor;
+import com.github.jotask.rosjam.game.dungeon.door.RoomDoor;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
 import com.github.jotask.rosjam.game.entity.Enemy;
 import com.github.jotask.rosjam.util.CollisionFilter;
@@ -17,6 +19,34 @@ import com.github.jotask.rosjam.util.CollisionFilter;
 class BodyFactory {
 
     public static void createDoor(final Door door){
+        if(door instanceof RoomDoor){
+            createRoomDoor((RoomDoor) door);
+        }else if(door instanceof NextLevelDoor){
+            createNextLevelDoor((NextLevelDoor)door);
+        }else {
+            throw new RuntimeException("Unknown Door");
+        }
+    }
+
+    private static void createNextLevelDoor(NextLevelDoor door) {
+
+        Vector2 p = new Vector2();
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(.5f, .5f, p, 0f);
+
+        FixtureDef fd = new FixtureDef();
+        fd.shape = shape;
+        fd.isSensor = true;
+        CollisionFilter.setMask(fd , CollisionFilter.EENTITY.DOOR);
+
+        Body body = door.self.getBody();
+        Fixture f = body.createFixture(fd);
+        f.setUserData(door);
+
+    }
+
+    private static void createRoomDoor(final RoomDoor door){
 
         Vector2 p = new Vector2();
 

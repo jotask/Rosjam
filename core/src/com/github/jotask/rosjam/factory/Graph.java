@@ -16,22 +16,17 @@ public class Graph {
     static class Node {
         int weight;
         Room room;
-        LinkedList<Node> connected = new LinkedList<Node>();
         boolean visited;
     }
 
     static class NodeComparator implements Comparator<Node> {
 
         @Override
-        public int compare(Node o1, Node o2) {
-            // Assume neither string is null. Real code should
-            // probably be more robust
-            // You could also just return x.length() - y.length(),
-            // which would be more efficient.
-            if (o1.weight > o2.weight)
+        public int compare(Node node1, Node node2) {
+            if (node1.weight > node2.weight)
                 return -1;
 
-            if (o1.weight < o2.weight)
+            if (node1.weight < node2.weight)
                 return 1;
 
             return 0;

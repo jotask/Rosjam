@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.github.jotask.rosjam.Rosjam;
-import com.github.jotask.rosjam.game.DungeonState;
 import com.github.jotask.rosjam.game.EntityManager;
 import com.github.jotask.rosjam.game.entity.Entity;
 
@@ -31,11 +30,10 @@ public class Debug extends Entity{
     private enum DEBUG{
 
         FPS ("FPS: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f -13f * i++),
-        HEAPMEMORY ("JH: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 13f * i++),
-        NATIVEMEMORY ("NH: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 13f * i++),
-        ENTITY ("e: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 13f * i++),
-        BODY ("b: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 13f * i++),
-        PLAYER ("p: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 13f * i++);
+        HEAPMEMORY ("JavaHeap: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 13f * i++),
+        NATIVEMEMORY ("NativeHeap: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 13f * i++),
+        ENTITY ("Entities: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 13f * i++),
+        PLAYER ("Player: ", -Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 13f * i++);
 
         final String string;
         final float x, y;
@@ -74,10 +72,6 @@ public class Debug extends Entity{
 
         int entity = EntityManager.get().getSize();
         draw(sb, String.valueOf(entity), DEBUG.ENTITY);
-
-        int body = DungeonState.get().getWorldManager().getWorld().getBodyCount();
-        draw(sb, String.valueOf(body), DEBUG.BODY);
-
 
         Vector2 p = EntityManager.get().getPlayer().getBody().getPosition();
         DecimalFormat df = new DecimalFormat();

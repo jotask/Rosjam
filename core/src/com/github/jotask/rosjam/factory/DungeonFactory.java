@@ -14,6 +14,8 @@ import com.github.jotask.rosjam.engine.assets.Tiles;
 import com.github.jotask.rosjam.game.dungeon.Dungeon;
 import com.github.jotask.rosjam.game.dungeon.config.ConfigDungeon;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
+import com.github.jotask.rosjam.game.dungeon.door.NextLevelDoor;
+import com.github.jotask.rosjam.game.dungeon.door.RoomDoor;
 import com.github.jotask.rosjam.game.dungeon.room.BossRoom;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
 
@@ -40,7 +42,7 @@ public class DungeonFactory {
             Room room = chooseRandomRoom(cfg, rooms);
 
             // Choose a random door not connected
-            Door door = chooseRandomDoor(cfg, room.doors);
+            RoomDoor door = chooseRandomDoor(cfg, room.doors);
             if(door == null) continue generator;
 
             // Spawn a room
@@ -79,14 +81,18 @@ public class DungeonFactory {
 
     }
 
-    private final void connectRooms(final Door door, final Room newRoom){
+    private final void connectRooms(final RoomDoor door, final Room newRoom){
 
-        Door a = door;
-        Door b = null;
+        RoomDoor a = door;
+        RoomDoor b = null;
         Door.SIDE opposite = a.getOpposite();
         for(Door ddd: newRoom.doors){
-            if(ddd.side == opposite){
-                b = ddd;
+            if(!(ddd instanceof RoomDoor)){
+                continue;
+            }
+            RoomDoor rd = (RoomDoor) ddd;
+            if(rd.side == opposite){
+                b = rd;
                 break;
             }
         }
@@ -111,14 +117,19 @@ public class DungeonFactory {
 
     }
 
-    private final Door chooseRandomDoor(final ConfigDungeon cfg, LinkedList<Door> doors){
-        Door door;
+    private final RoomDoor chooseRandomDoor(final ConfigDungeon cfg, LinkedList<Door> doors){
+
+        RoomDoor door = null;
 
         boolean isValid = false;
 
         // Check if all doors are connected
         boolean areConnected = true;
         for(Door door1: doors){
+
+            if(!(door1 instanceof RoomDoor))
+                continue;
+
             if(door1.connected == null){
                 areConnected = false;
                 break;
@@ -132,7 +143,13 @@ public class DungeonFactory {
 
         do{
             int index = cfg.random.random(doors.size());
-            door = doors.get(index);
+            Door rd = doors.get(index);
+
+            if(!(rd instanceof RoomDoor)){
+                continue;
+            }
+
+            door = (RoomDoor) rd;
 
             if(door.connected == null) {
                 isValid = true;
@@ -148,7 +165,7 @@ public class DungeonFactory {
         final LinkedList<Room> fars = new Graph(rooms.getFirst()).getFars();
         TextureRegion region = cfg.dungeonAssets.getBackground();
         Vector2  pos = null;
-        Door door = null;
+        RoomDoor door = null;
 
         for(Room r: fars){
 
@@ -182,6 +199,31 @@ public class DungeonFactory {
         bossRoom.doors.add(getDoor(bossRoom, Door.SIDE.RIGHT));
         bossRoom.doors.add(getDoor(bossRoom, Door.SIDE.DOWN));
         bossRoom.doors.add(getDoor(bossRoom, Door.SIDE.LEFT));
+
+        {
+
+            Vector2 p = new Vector2(bossRoom.getCenter().sub(.5f , .5f));
+            DungeonAssets assets = Rosjam.get().getAssets().getDungeonAssets();
+
+            TextureRegion[] regions = new TextureRegion[2];
+            regions[0] = assets.get(Tiles.DOOR_NEXT_LEVEL_OPEN);
+            regions[1] = assets.get(Tiles.DOOR_NEXT_LEVEL_CLOSE);
+
+            if(regions[0] == null)
+                throw new RuntimeException("null");
+
+            if(regions[1] == null)
+                throw new RuntimeException("null");
+
+            Animation<TextureRegion> animation = new Animation<TextureRegion>(Door.ANIMATION_SPEED, regions);
+
+            NextLevelDoor nld = new NextLevelDoor(p, bossRoom, animation);
+            bossRoom.doors.add(nld);
+
+            BodyFactory.createDoor(nld);
+
+        }
+
 
         connectRooms(door, bossRoom);
 
@@ -297,7 +339,7 @@ public class DungeonFactory {
 
         Animation<TextureRegion> animation = new Animation<TextureRegion>(Door.ANIMATION_SPEED, regions);
 
-        Door door = new Door(p, side, room, animation);
+        Door door = new RoomDoor(p, side, room, animation);
 
         return door;
 
@@ -312,7 +354,7 @@ public class DungeonFactory {
         return false;
     }
 
-    private static Vector2 getNextRoom(final Room room, final Door door){
+    private static Vector2 getNextRoom(final Room room, final RoomDoor door){
 
         float x = room.bounds.x;
         float y = room.bounds.y;
@@ -356,6 +398,11 @@ public class DungeonFactory {
             final LinkedList<Door> doors = room.doors;
             for(int i = doors.size() - 1; i >= 0; i--){
                 Door d = doors.get(i);
+
+                if(d instanceof NextLevelDoor){
+                    continue;
+                }
+
                 if(d.connected == null){
                     doors.remove(i);
                 }else{

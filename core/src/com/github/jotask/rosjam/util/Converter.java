@@ -27,6 +27,7 @@ public class Converter {
         newLine(builder, "format: RGBA8888");
         newLine(builder, "filter: Nearest, Nearest");
         newLine(builder, "repeat: none");
+
         for(Tile t: tiles){
             builder.append(t.toString());
         }
@@ -45,6 +46,7 @@ public class Converter {
     }
 
     static class Tile{
+
         String name;
         int x, y, width, height;
 
