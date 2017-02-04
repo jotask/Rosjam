@@ -1,7 +1,10 @@
 package com.github.jotask.rosjam.engine.assets;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.github.jotask.rosjam.util.Converter;
 
 /**
  * Assets
@@ -13,6 +16,8 @@ public class Assets{
 
     private AssetManager assetManager;
 
+    private Skin skin;
+
     private BitmapFont font;
 
     private DungeonAssets dungeonAssets;
@@ -20,6 +25,9 @@ public class Assets{
     private BulletAssets bulletAssets;
 
     public Assets() {
+
+        new Converter();
+
         this.assetManager = new AssetManager();
         this.dungeonAssets = new DungeonAssets(this);
         this.playerAssets = new PlayerAssets(this);
@@ -30,6 +38,7 @@ public class Assets{
         assetManager.finishLoading();
 
         this.font = new BitmapFont();
+        this.skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
         this.playerAssets.prepare();
         this.bulletAssets.prepare();
@@ -45,5 +54,7 @@ public class Assets{
     public BulletAssets getBulletAssets() { return bulletAssets; }
 
     protected final AssetManager getAssetManager(){ return this.assetManager; }
+
+    public final Skin getSkin(){ return this.skin; }
 
 }

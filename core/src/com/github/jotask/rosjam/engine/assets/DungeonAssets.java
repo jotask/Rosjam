@@ -33,7 +33,9 @@ public class DungeonAssets implements Disposable {
         this.background = new TextureRegion(text);
     }
 
-    public TextureRegion get(com.github.jotask.rosjam.engine.assets.Tiles tile) { return this.atlas.findRegion(tile.name); }
+    public TextureRegion get(Tiles tile) {
+        return this.atlas.findRegion(tile.name);
+    }
 
     @Override
     public void dispose() {

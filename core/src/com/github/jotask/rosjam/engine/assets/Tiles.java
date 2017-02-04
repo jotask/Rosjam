@@ -26,7 +26,10 @@ public enum Tiles {
     DOOR_LEFT_01("sprite31"),
     DOOR_LEFT_02("sprite27"),
     DOOR_LEFT_03("sprite18"),
-    DOOR_LEFT_04("sprite5");
+    DOOR_LEFT_04("sprite5"),
+
+    DOOR_NEXT_LEVEL_OPEN("sprite121"),
+    DOOR_NEXT_LEVEL_CLOSE("sprite122");
 
     final String name;
 
