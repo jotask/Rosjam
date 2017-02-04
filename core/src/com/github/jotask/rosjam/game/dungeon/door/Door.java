@@ -22,7 +22,6 @@ public class Door {
 
     private Animation<TextureRegion> animation;
     private Vector2 position;
-    public Door.SIDE side;
 
     public boolean isEntered;
 
@@ -33,9 +32,8 @@ public class Door {
 
     private boolean opened;
 
-    public Door(Vector2 position, final Door.SIDE side, final Room room, Animation<TextureRegion> animation) {
+    public Door(Vector2 position, final Room room, Animation<TextureRegion> animation) {
         this.position = position;
-        this.side = side;
         this.self = room;
         this.animation = animation;
         this.animation.setFrameDuration(.25f);
@@ -53,7 +51,7 @@ public class Door {
     }
 
     public void debug(ShapeRenderer sr) {
-        sr.rect(position.x, position.y, 1f, 1f);
+        //sr.rect(position.x, position.y, 1f, 1f);
     }
 
     public void open(){
@@ -67,22 +65,6 @@ public class Door {
         return opened;
     }
     public void setOpen(boolean opn){ this.opened = opn; }
-
-    public Door.SIDE getOpposite(){
-        Door.SIDE side = this.side;
-        switch (side){
-            case LEFT:
-                return Door.SIDE.RIGHT;
-            case RIGHT:
-                return Door.SIDE.LEFT;
-            case UP:
-                return Door.SIDE.DOWN;
-            case DOWN:
-                return Door.SIDE.UP;
-            default:
-                throw new RuntimeException("Exception in opposites rooms");
-        }
-    }
 
     public Vector2 getPosition() { return position; }
 
