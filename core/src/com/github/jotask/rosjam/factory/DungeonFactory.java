@@ -3,6 +3,7 @@ package com.github.jotask.rosjam.factory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -275,12 +276,15 @@ public class DungeonFactory {
 
         Body body = BodyFactory.createRock(cfg.worldManager.getWorld(), pos);
 
-        TextureRegion region = cfg.dungeonAssets.get(Tiles.ROCK_01);
+        final LinkedList<TextureRegion> regions = new LinkedList<TextureRegion>();
+        regions.add(cfg.dungeonAssets.get(Tiles.ROCK_01));
+        regions.add(cfg.dungeonAssets.get(Tiles.ROCK_02));
 
-        Rock rock = new Rock(body, region);
+        int index = MathUtils.random(regions.size() - 1);
+
+        Rock rock = new Rock(body, regions.get(index));
 
         room.entities.add(rock);
-
 
     }
 

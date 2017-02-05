@@ -43,6 +43,7 @@ final class EnemyFactory {
         EntityManager.add(enemy);
 
         return enemy;
+
     }
 
 }
