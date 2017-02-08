@@ -14,8 +14,6 @@ import com.github.jotask.rosjam.util.DoorSprite;
  */
 public class Door {
 
-    public static final float ANIMATION_SPEED = 0.025f;
-
     public enum SIDE{ UP, RIGHT, DOWN, LEFT }
 
     private DoorSprite sprite;

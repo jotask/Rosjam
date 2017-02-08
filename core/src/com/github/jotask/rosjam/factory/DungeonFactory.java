@@ -3,12 +3,14 @@ package com.github.jotask.rosjam.factory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Json;
 import com.github.jotask.rosjam.editor.TileData;
 import com.github.jotask.rosjam.engine.assets.Tiles;
+import com.github.jotask.rosjam.game.Spawner;
 import com.github.jotask.rosjam.game.dungeon.Dungeon;
 import com.github.jotask.rosjam.game.dungeon.config.ConfigDungeon;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
@@ -16,7 +18,8 @@ import com.github.jotask.rosjam.game.dungeon.door.NextLevelDoor;
 import com.github.jotask.rosjam.game.dungeon.door.RoomDoor;
 import com.github.jotask.rosjam.game.dungeon.room.BossRoom;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
-import com.github.jotask.rosjam.game.entity.Rock;
+import com.github.jotask.rosjam.game.entity.obstacle.Rock;
+import com.github.jotask.rosjam.game.entity.enemy.Enemies;
 import com.github.jotask.rosjam.util.DoorSprite;
 
 import java.util.LinkedList;
@@ -192,7 +195,8 @@ public class DungeonFactory {
 
         }
 
-        BossRoom bossRoom = new BossRoom(pos, region);
+        // TODO add boss
+        BossRoom bossRoom = new BossRoom(pos, region, null);
         BodyFactory.createRoom(bossRoom);
 
         bossRoom.doors.add(getDoor(bossRoom, Door.SIDE.UP));
@@ -257,7 +261,7 @@ public class DungeonFactory {
                         spawnRock(cfg, room, t);
                         break;
                     case SPAWN:
-                        spawner(room, t);
+                        spawner(cfg.random.getRandomEnemy(), room, t);
                         break;
                     default:
                         throw new RuntimeException("Not Supported");
@@ -275,21 +279,30 @@ public class DungeonFactory {
 
         Body body = BodyFactory.createRock(cfg.worldManager.getWorld(), pos);
 
-        TextureRegion region = cfg.dungeonAssets.get(Tiles.ROCK_01);
+        final LinkedList<TextureRegion> regions = new LinkedList<TextureRegion>();
+        regions.add(cfg.dungeonAssets.get(Tiles.ROCK_01));
+        regions.add(cfg.dungeonAssets.get(Tiles.ROCK_02));
 
-        Rock rock = new Rock(body, region);
+        int index = MathUtils.random(regions.size() - 1);
+
+        Rock rock = new Rock(body, regions.get(index));
 
         room.entities.add(rock);
 
-
     }
 
-    private void spawner(final Room room, final TileData data){
+    private void spawner(final Enemies enemy, final Room room, final TileData data){
+
         Rectangle r = room.getBounds();
+
         Vector2 v = new Vector2();
-        v.x = r.x + data.x ;
-        v.y = r.y + data.y ;
-        room.spawner.add(v);
+        v.x = r.x + data.x + .5f;
+        v.y = r.y + data.y + .5f;
+
+        final Spawner s = new Spawner(enemy, v);
+
+        room.spawner.add(s);
+
     }
 
     private Door getDoor(final Room room, Door.SIDE side){

@@ -10,7 +10,7 @@ import com.github.jotask.rosjam.engine.input.Controller;
  * @author Jose Vives Iznardo
  * @since 24/01/2017
  */
-public class ControlEntity extends HealthEntity{
+public abstract class ControlEntity extends HealthEntity{
 
     private final float SPEED = 7f;
 

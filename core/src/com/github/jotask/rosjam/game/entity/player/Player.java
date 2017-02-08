@@ -1,4 +1,4 @@
-package com.github.jotask.rosjam.game.entity;
+package com.github.jotask.rosjam.game.entity.player;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -8,6 +8,7 @@ import com.github.jotask.rosjam.engine.input.Controller;
 import com.github.jotask.rosjam.factory.EntityFactory;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
+import com.github.jotask.rosjam.game.entity.ControlEntity;
 import com.github.jotask.rosjam.game.item.Weapon;
 import com.github.jotask.rosjam.util.Sprite;
 

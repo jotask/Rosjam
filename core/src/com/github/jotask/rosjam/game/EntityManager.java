@@ -4,9 +4,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Disposable;
 import com.github.jotask.rosjam.factory.EntityFactory;
-import com.github.jotask.rosjam.game.entity.Enemy;
+import com.github.jotask.rosjam.game.entity.enemy.Enemy;
 import com.github.jotask.rosjam.game.entity.Entity;
-import com.github.jotask.rosjam.game.entity.Player;
+import com.github.jotask.rosjam.game.entity.player.Player;
 
 import java.util.LinkedList;
 

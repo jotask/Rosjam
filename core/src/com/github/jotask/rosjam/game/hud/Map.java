@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
 
 /**
@@ -60,6 +61,8 @@ class Dungeon implements Drawable{
     }
 
     private void drawRoom(final Room r, Batch sb, float x, float y, float width, float height){
+
+        final float offset = 1f;
         if(!r.isEntered()) {
             return;
         }else if(r.isInside()){
@@ -67,7 +70,10 @@ class Dungeon implements Drawable{
         }else{
             sb.setColor(Color.BLACK);
         }
-        sb.draw(texture, x+ r.bounds.x, y + r.bounds.y, Room.WIDTH, Room.HEIGHT);
+        sb.draw(texture, x+ r.bounds.x + offset, y + r.bounds.y + offset, Room.WIDTH - offset, Room.HEIGHT - offset);
+        for(Door d: r.doors){
+            sb.draw(texture, d.getPosition().x * Room.WIDTH, r.bounds.y + d.getPosition().y, 1f, 1f);
+        }
     }
 
     @Override

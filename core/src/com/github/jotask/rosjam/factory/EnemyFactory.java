@@ -1,48 +1,73 @@
 package com.github.jotask.rosjam.factory;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.github.jotask.rosjam.engine.ai.ArtificialIntelligence;
-import com.github.jotask.rosjam.engine.ai.Spider;
+import com.badlogic.gdx.physics.box2d.World;
 import com.github.jotask.rosjam.game.DungeonState;
 import com.github.jotask.rosjam.game.EntityManager;
+import com.github.jotask.rosjam.game.Spawner;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
-import com.github.jotask.rosjam.game.entity.Enemy;
-import com.github.jotask.rosjam.game.world.WorldManager;
+import com.github.jotask.rosjam.game.entity.enemy.Enemies;
+import com.github.jotask.rosjam.game.entity.enemy.Enemy;
 import com.github.jotask.rosjam.util.Sprite;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * EnemyFactory
  *
  * @author Jose Vives Iznardo
- * @since 04/02/2017
+ * @since 08/02/2017
  */
-final class EnemyFactory {
+public class EnemyFactory {
 
-    public enum ENEMY{ SPIDER }
+    public static Enemy spawn(Room room, Spawner spawner) {
 
-    private EnemyFactory(){}
+        Enemy enemy = get(room, spawner.type);
 
-    public static Enemy get(ENEMY type, final Vector2 p, final Room room){
-
-        final WorldManager worldManager = DungeonState.get().getWorldManager();
-
-        final Vector2 center = new Vector2(p);
-        center.x += .5f;
-        center.y += .5f;
-
-        Body body = BodyFactory.createEnemy(worldManager.getWorld(), center);
-
-        final Sprite sprite = SpriteFactory.getEnemy(ENEMY.SPIDER, body);
-
-        ArtificialIntelligence ai = new Spider(body);
-
-        Enemy enemy = new Enemy(body, ai, sprite, room);
-        enemy.getBody().setUserData(enemy);
+        enemy.getBody().setTransform(spawner.position, 0);
 
         EntityManager.add(enemy);
 
         return enemy;
+
+    }
+
+    /**
+     * http://stackoverflow.com/questions/6094575/creating-an-instance-using-the-class-name-and-calling-constructor
+     *
+     * @param room
+     * @param type
+     * @return
+     */
+    private static Enemy get(final Room room, final Enemies type){
+
+        final World world = DungeonState.get().getWorldManager().getWorld();
+        final Body body = BodyFactory.createEnemy(world, .4f);
+        final Sprite sprite = SpriteEnemyFactory.get(type, body);
+
+        Class<?> c = null;
+        try {
+            c = Class.forName(type.aClass.getName());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        Constructor<?> cons = c.getConstructors()[0];
+        Object object = null;
+        try {
+             object = cons.newInstance(body, sprite, room);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        if(!(object instanceof Enemy))
+            throw new RuntimeException("Error spawning enemy");
+
+        return (Enemy) object;
     }
 
 }

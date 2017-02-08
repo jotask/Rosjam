@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.github.jotask.rosjam.engine.states.GameState;
 import com.github.jotask.rosjam.game.Game;
-import com.github.jotask.rosjam.game.entity.Player;
+import com.github.jotask.rosjam.game.entity.player.Player;
 
 /**
  * WorldManager

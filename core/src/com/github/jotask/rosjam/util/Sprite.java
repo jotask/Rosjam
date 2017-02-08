@@ -39,6 +39,16 @@ public class Sprite{
         update();
         Vector2 pos = this.body.getPosition();
         Vector2 p = new Vector2(pos).sub(.5f, .5f);
+
+        float dir = body.getLinearVelocity().x;
+        if(dir < 0){
+            if(!region.isFlipX())
+            region.flip(true, false);
+        }else{
+            if(region.isFlipX())
+                region.flip(true, false);
+        }
+
         sb.draw(region, p.x , p.y, 1f, 1f);
     }
 

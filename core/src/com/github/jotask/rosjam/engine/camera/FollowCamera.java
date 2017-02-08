@@ -2,7 +2,7 @@ package com.github.jotask.rosjam.engine.camera;
 
 import com.badlogic.gdx.math.Vector2;
 import com.github.jotask.rosjam.game.entity.BodyEntity;
-import com.github.jotask.rosjam.game.entity.Player;
+import com.github.jotask.rosjam.game.entity.player.Player;
 
 /**
  * FollowCamera

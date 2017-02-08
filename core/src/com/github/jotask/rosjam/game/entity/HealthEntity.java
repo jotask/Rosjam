@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.Body;
  * @author Jose Vives Iznardo
  * @since 24/01/2017
  */
-public class HealthEntity extends BodyEntity {
+public abstract class HealthEntity extends BodyEntity {
 
     private final float MAX_HEALTH = 100f;
     private float currentHealth;

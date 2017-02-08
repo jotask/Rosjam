@@ -22,6 +22,7 @@ public class Assets{
 
     private DungeonAssets dungeonAssets;
     private PlayerAssets playerAssets;
+    private EnemyAssets enemyAssets;
     private BulletAssets bulletAssets;
 
     public Assets() {
@@ -31,6 +32,7 @@ public class Assets{
         this.assetManager = new AssetManager();
         this.dungeonAssets = new DungeonAssets(this);
         this.playerAssets = new PlayerAssets(this);
+        this.enemyAssets = new EnemyAssets(this);
         this.bulletAssets = new BulletAssets(this);
     }
 
@@ -41,6 +43,7 @@ public class Assets{
         this.skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
         this.playerAssets.prepare();
+        this.enemyAssets.prepare();
         this.bulletAssets.prepare();
 
     }
@@ -52,6 +55,8 @@ public class Assets{
     public PlayerAssets getPlayerAssets() { return playerAssets; }
 
     public BulletAssets getBulletAssets() { return bulletAssets; }
+
+    public EnemyAssets getEnemyAssets() { return enemyAssets; }
 
     protected final AssetManager getAssetManager(){ return this.assetManager; }
 

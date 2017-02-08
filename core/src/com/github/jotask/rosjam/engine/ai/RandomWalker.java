@@ -6,18 +6,18 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.github.jotask.rosjam.util.Timer;
 
 /**
- * Spider
+ * RandomWalker
  *
  * @author Jose Vives Iznardo
  * @since 01/02/2017
  */
-public class Spider extends ArtificialIntelligence {
+public class RandomWalker extends ArtificialIntelligence {
 
-    private final float SPEED = 100f;
+    private final float SPEED = 50f;
 
     private Timer timer;
 
-    public Spider(Body body) {
+    public RandomWalker(Body body) {
         super(body);
         this.timer = new Timer(1f);
     }
