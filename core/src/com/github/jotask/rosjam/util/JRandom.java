@@ -1,6 +1,7 @@
 package com.github.jotask.rosjam.util;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.github.jotask.rosjam.game.entity.enemy.Enemies;
 
 import java.util.Random;
 
@@ -25,6 +26,11 @@ public final class JRandom {
 
     public int random(int range){
         return random.nextInt(range);
+    }
+
+    public Enemies getRandomEnemy(){
+        final Enemies[] values = Enemies.values();
+        return values[random(values.length)];
     }
 
 }
