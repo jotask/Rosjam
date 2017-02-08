@@ -6,10 +6,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.github.jotask.rosjam.factory.EntityFactory;
+import com.github.jotask.rosjam.factory.EnemyFactory;
+import com.github.jotask.rosjam.game.Spawner;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
-import com.github.jotask.rosjam.game.entity.Enemy;
 import com.github.jotask.rosjam.game.entity.Entity;
+import com.github.jotask.rosjam.game.entity.enemy.Enemy;
 
 import java.util.LinkedList;
 
@@ -35,7 +36,7 @@ public class Room extends Entity {
     protected boolean completed;
 
     public LinkedList<Door> doors;
-    public LinkedList<Vector2> spawner;
+    public LinkedList<Spawner> spawner;
     public LinkedList<Enemy> enemies;
 
     public LinkedList<Entity> entities;
@@ -44,7 +45,7 @@ public class Room extends Entity {
         this.bounds = new Rectangle(p.x, p.y, WIDTH, HEIGHT);
         this.background = background;
         this.doors = new LinkedList<Door>();
-        this.spawner = new LinkedList<Vector2>();
+        this.spawner = new LinkedList<Spawner>();
         this.enemies = new LinkedList<Enemy>();
         this.entities = new LinkedList<Entity>();
         this.completed = false;
@@ -99,8 +100,9 @@ public class Room extends Entity {
             setCompleted(true);
 
         if(!completed) {
-            for (Vector2 v : spawner) {
-                enemies.add(EntityFactory.createEnemy(v, this));
+            for (Spawner v : spawner) {
+                Enemy enemy = EnemyFactory.spawn(this, v);
+                enemies.add(enemy);
             }
             for(Door d: doors){
                 d.setOpen(false);
