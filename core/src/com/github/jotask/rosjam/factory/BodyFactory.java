@@ -109,16 +109,15 @@ class BodyFactory {
 
     }
 
-    public static Body createEnemy(final World world, final Vector2 position){
+    public static Body createEnemy(final World world, final float radius){
 
         BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
-        bd.position.set(position.x, position.y);
 
         Body body = world.createBody(bd);
 
         CircleShape shape = new CircleShape();
-        shape.setRadius(.4f);
+        shape.setRadius(radius);
 
         FixtureDef fd = new FixtureDef();
         fd.shape = shape;

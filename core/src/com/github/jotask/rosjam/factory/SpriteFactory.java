@@ -109,14 +109,6 @@ public class SpriteFactory {
         return sprite;
     }
 
-    public static Sprite getEnemy(EnemyFactory.ENEMY enemy, final Body body){
-        TextureRegion region = Rosjam.get().getAssets().getPlayerAssets().getRegion(PlayerAssets.SPRITE.SPIDER);
-        Animation<TextureRegion> animation = new Animation<TextureRegion>(Ref.ANIMATION_SPEED, region);
-        animation.setFrameDuration(Ref.ANIMATION_FRAME);
-        Sprite sprite = new Sprite(body, animation);
-        return sprite;
-    }
-
     public static Sprite getPlayer(final Body body) {
         TextureRegion region = Rosjam.get().getAssets().getPlayerAssets().getRegion(PlayerAssets.SPRITE.DEFAULT);
         Animation<TextureRegion> animation = new Animation<TextureRegion>(Ref.ANIMATION_SPEED, region);
@@ -143,4 +135,5 @@ public class SpriteFactory {
         DoorSprite sprite = new DoorSprite(animation);
         return sprite;
     }
+
 }

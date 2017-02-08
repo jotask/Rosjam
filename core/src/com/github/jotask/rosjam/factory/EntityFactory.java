@@ -4,10 +4,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.github.jotask.rosjam.game.DungeonState;
 import com.github.jotask.rosjam.game.EntityManager;
-import com.github.jotask.rosjam.game.dungeon.room.Room;
 import com.github.jotask.rosjam.game.entity.BodyEntity;
-import com.github.jotask.rosjam.game.entity.Enemy;
-import com.github.jotask.rosjam.game.entity.Player;
+import com.github.jotask.rosjam.game.entity.player.Player;
+import com.github.jotask.rosjam.game.entity.enemy.Enemy;
 import com.github.jotask.rosjam.game.item.Bullet;
 import com.github.jotask.rosjam.game.item.Weapon;
 import com.github.jotask.rosjam.game.world.WorldManager;
@@ -77,16 +76,6 @@ public class EntityFactory {
 
         return bullet;
 
-    }
-
-    public static Enemy createEnemy(final Vector2 p, final Room room){
-        return EntityFactory.createEnemy(EnemyFactory.ENEMY.SPIDER, p, room);
-    }
-
-    public static Enemy createEnemy(final EnemyFactory.ENEMY enemy, final Vector2 p, final Room room){
-        Enemy e = EnemyFactory.get(enemy, p, room);
-        e.update();
-        return e;
     }
 
     public static Weapon getWeapon(BodyEntity owner) {
