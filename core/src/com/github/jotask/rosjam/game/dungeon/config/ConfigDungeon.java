@@ -22,7 +22,7 @@ public class ConfigDungeon {
 
     public int level = 0;
 
-    public int maxRooms = 23;
+    public int maxRooms = 7;
 
     public ConfigDungeon(){
         this(DungeonState.get().getWorldManager());
