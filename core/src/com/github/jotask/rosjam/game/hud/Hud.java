@@ -3,11 +3,13 @@ package com.github.jotask.rosjam.game.hud;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.github.jotask.rosjam.Rosjam;
 import com.github.jotask.rosjam.game.Game;
 
@@ -35,9 +37,12 @@ public class Hud{
     public Hud(final Game game) {
         this.game = game;
 
+        this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
         this.skin = Rosjam.get().getAssets().getSkin();
 
         this.stage = new Stage();
+        this.stage.setViewport(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         this.table = new Table();
         this.table.setFillParent(true);
         this.table.debug();
@@ -79,11 +84,10 @@ public class Hud{
     }
 
     public void resize(int width, int height) {
-        int w = Gdx.graphics.getWidth();
-        int h = Gdx.graphics.getHeight();
-        this.stage.getViewport().update(w, h, true);
 
-        if(type == Application.ApplicationType.Android)this.controls.resize(w, h);
+        this.stage.getViewport().update(width, height, true);
+
+        if(type == Application.ApplicationType.Android)this.controls.resize(width, height);
 
     }
 

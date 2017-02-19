@@ -196,7 +196,7 @@ public class DungeonFactory {
         }
 
         // TODO add boss
-        BossRoom bossRoom = new BossRoom(pos, region, null);
+        BossRoom bossRoom = new BossRoom(pos, region);
         BodyFactory.createRoom(bossRoom);
 
         bossRoom.doors.add(getDoor(bossRoom, Door.SIDE.UP));
