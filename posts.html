@@ -92,17 +92,12 @@
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
                 <div class="post-preview">
-                    <a href="#"> <h1 class="post-title"> Week 03 </h1> </a>
-                    <p>This first week.</p>
-                    <blockquote>The dreams of yesterday are the hopes of today and the reality of tomorrow. Science has not yet mastered prophecy. We predict too much for the next year and yet far too little for the next ten.</blockquote>
-                    <p class="post-meta">Posted by <a href="#">Jose Vives</a> on February 17, 2017</p>
-                </div>
-                <hr>
-
-                <div class="post-preview">
                     <a href="#"> <h1 class="post-title"> Week 02 </h1> </a>
-                    <p>This first week.</p>
-                    <blockquote>The dreams of yesterday are the hopes of today and the reality of tomorrow. Science has not yet mastered prophecy. We predict too much for the next year and yet far too little for the next ten.</blockquote>
+                    <p>Some decision has been taken for the project. The general idea for the game is to compete throw the enemies. An AI system needs to be implemented for some enemies. This week I didn't work on the project, but instead I have been doing research in different types of techniques for the enemies.</p>
+                    <p><b><a href="http://robocode.sourceforge.net/">Robocode</a></b> was the the first approach to implement an agent system for the enemies. The main idea of Robocode is each agent has a set of instruction possible for each agent. The goal is to code an agent to survive in a battle. </p>
+                    <p><b>Neuroevolution</b> is a machine learning technique to evolve a neuronal network using genetics algorithm. It uses the output of the genetic algorithm for the backpropagation, and addind the possibility of cratating new neurons to improve the output of the aNN. In other words, uses the genetic algotihm to train the Neuronal Network</p>
+                    <p>The main idea of Robocode its okay, but i don't like that I need to implement all the funcionts for all the possible functions and hardcode all the decisions. So I decided to use Neuroevolution instead. The algorithm for this is going to be <a href="http://nn.cs.utexas.edu/?jneat">NEAT</a> (NeuroEvolution of Augmenting Topologies)</p>
+                    <p>The main idea for the game is to start one run and the same time you compite against the machine. The goal is to see how deeper you can go without daying. At the same another thread is going to run the simulation to train the Network. Each time and the best enemy in the simulation is going to be choose to control the enemies.</p>
                     <p class="post-meta">Posted by <a href="#">Jose Vives</a> on February 10, 2017</p>
                 </div>
                 <hr>
@@ -156,7 +151,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="https://github.com/jotask">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
                                     <i class="fa fa-github fa-stack-1x fa-inverse"></i>
