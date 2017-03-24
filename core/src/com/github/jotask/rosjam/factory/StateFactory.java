@@ -39,7 +39,7 @@ public class StateFactory {
     }
 
     private static final Game getGameState(){
-        RoomCamera camera = new RoomCamera();
+        RoomCamera camera = new RoomCamera(21f, 11f);
         Game gs = new Game(camera);
         return gs;
     }

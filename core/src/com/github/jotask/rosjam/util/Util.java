@@ -20,4 +20,8 @@ public class Util {
         return new Color(r, g, b, 1f);
     }
 
+    public static double map(double value, double low1, double high1, float low2, float high2){
+        return low2 + (value - low1) * (high2 - low2) / (high1 - low1);
+    }
+
 }
