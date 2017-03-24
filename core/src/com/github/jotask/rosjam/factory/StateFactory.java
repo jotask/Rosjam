@@ -7,6 +7,7 @@ import com.github.jotask.rosjam.engine.camera.RoomCamera;
 import com.github.jotask.rosjam.engine.states.CameraState;
 import com.github.jotask.rosjam.game.Game;
 import com.github.jotask.rosjam.menu.Menu;
+import com.github.jotask.rosjam.option.Options;
 import com.github.jotask.rosjam.splash.Splash;
 import com.github.jotask.rosjam.test.TestState;
 
@@ -31,6 +32,8 @@ public class StateFactory {
                 return getSplashState();
             case MENU:
                 return getMenuState();
+            case OPTIONS:
+                return getOptionsState();
             default:
                 throw new RuntimeException("State not implemented");
 
@@ -42,6 +45,12 @@ public class StateFactory {
         RoomCamera camera = new RoomCamera(21f, 11f);
         Game gs = new Game(camera);
         return gs;
+    }
+
+    private static final Options getOptionsState(){
+        Camera camera = new Camera();
+        Options option = new Options(camera);
+        return option;
     }
 
     private static final Menu getMenuState(){

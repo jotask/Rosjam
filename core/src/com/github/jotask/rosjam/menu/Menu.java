@@ -13,6 +13,7 @@ import com.github.jotask.rosjam.Rosjam;
 import com.github.jotask.rosjam.engine.GameStateManager;
 import com.github.jotask.rosjam.engine.camera.Camera;
 import com.github.jotask.rosjam.engine.states.CameraState;
+import com.github.jotask.rosjam.util.Ref;
 
 /**
  * Menu
@@ -35,7 +36,7 @@ public class Menu extends CameraState {
         table.setFillParent(true);
         table.padTop(125f);
         {
-            TextButton start = new TextButton("StartGame", skin);
+            TextButton start = new TextButton("Start new run", skin);
             start.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -43,13 +44,27 @@ public class Menu extends CameraState {
                 }
             });
             table.add(start).fillX().padBottom(5f).row();
-            TextButton cont = new TextButton("Continue", skin);
+
+            // TODO implement continue
+            TextButton cont = new TextButton("Continue run", skin);
             table.add(cont).fillX().padBottom(5f).row();
+
             TextButton options = new TextButton("Options", skin);
+            options.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    Rosjam.get().getGsm().changeState(GameStateManager.STATE.OPTIONS);
+                }
+            });
             table.add(options).fillX().padBottom(5f).row();
+
+            // TODO add simulation state
+            TextButton simulation = new TextButton("Simulation", skin);
+            table.add(simulation).fillX().padBottom(5f).row();
+
         }
         this.stage.addActor(table);
-        this.stage.setDebugAll(true);
+        this.stage.setDebugAll(Ref.DEBUG);
         Gdx.input.setInputProcessor(this.stage);
     }
 

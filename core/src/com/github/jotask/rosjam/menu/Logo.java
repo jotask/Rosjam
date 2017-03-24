@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.flowpowered.noise.Noise;
 import com.flowpowered.noise.NoiseQuality;
@@ -30,6 +31,8 @@ public class Logo implements MenuObject {
 
     private float angle;
 
+    private final int seed;
+
     Logo(final Camera camera) {
         this.region = Rosjam.get().getAssets().getStateAssets().getRegion(StateAssets.Images.SPLASH);
         final float x = camera.viewportWidth * .5f - (this.region.getRegionWidth()  * .5f);
@@ -37,6 +40,9 @@ public class Logo implements MenuObject {
         this.position = new Vector2(x, y);
         this.angle = 0f;
         this.scale = 1f;
+
+        this.seed = MathUtils.randomSign();
+
     }
 
     @Override
