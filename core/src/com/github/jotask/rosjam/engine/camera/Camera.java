@@ -21,13 +21,17 @@ public class Camera extends OrthographicCamera {
 
     public Viewport viewport;
 
-    public Camera() {
-        super(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    public Camera(){
+        this(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    }
+
+    public Camera(final float w, final float h) {
+        super(w, h);
         this.position.set(0, 0, Z);
         this.update();
 
-        float w = 21f;
-        float h = 11f;
+//        float w = 21f;
+//        float h = 11f;
 
 //        float w = Gdx.graphics.getWidth() / 5f;
 //        float h = Gdx.graphics.getHeight() / 5f;

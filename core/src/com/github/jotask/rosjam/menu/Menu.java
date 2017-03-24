@@ -1,8 +1,7 @@
 package com.github.jotask.rosjam.menu;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.github.jotask.rosjam.engine.states.AbstractState;
+import com.github.jotask.rosjam.engine.camera.Camera;
+import com.github.jotask.rosjam.engine.states.CameraState;
 
 /**
  * Menu
@@ -10,30 +9,10 @@ import com.github.jotask.rosjam.engine.states.AbstractState;
  * @author Jose Vives Iznardo
  * @since 13/01/2017
  */
-public class Menu extends AbstractState {
+public class Menu extends CameraState {
 
-    @Override
-    public void init() {
-
+    public Menu(Camera camera) {
+        super(camera);
     }
 
-    @Override
-    public void update() {
-
-    }
-
-    @Override
-    public void render(SpriteBatch sb) {
-
-    }
-
-    @Override
-    public void debug(ShapeRenderer sr) {
-
-    }
-
-    @Override
-    public void dispose() {
-
-    }
 }

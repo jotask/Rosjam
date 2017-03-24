@@ -76,7 +76,6 @@ public class GameManager extends GameState {
         }
 
         currentState = s;
-        currentState.init();
 
     }
 

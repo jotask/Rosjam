@@ -10,17 +10,12 @@ import com.github.jotask.rosjam.game.Game;
  * @author Jose Vives Iznardo
  * @since 16/01/2017
  */
-public abstract class GameState extends State {
+public abstract class GameState implements IState {
 
     protected final Game game;
 
     public GameState(final Game game) {
         this.game = game;
-    }
-
-    @Override
-    public void init() {
-
     }
 
     @Override

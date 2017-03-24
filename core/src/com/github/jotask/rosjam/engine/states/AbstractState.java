@@ -12,11 +12,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 public abstract class AbstractState implements IState {
 
     @Override
-    public void init() {
-
-    }
-
-    @Override
     public void preUpdate() {
 
     }

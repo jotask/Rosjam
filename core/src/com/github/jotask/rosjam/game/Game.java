@@ -33,19 +33,14 @@ public class Game extends CameraState {
     public Game(Camera camera) {
         super(camera);
         Game.instance = this;
-    }
 
-    @Override
-    public void init() {
 
         this.debug = new Debug();
 
         this.hud = new Hud(this);
         this.controller = new InputController(this);
         this.gameManager = new GameManager(this, this.getController());
-
     }
-
 
     @Override
     public void preUpdate() { this.gameManager.preUpdate(); }

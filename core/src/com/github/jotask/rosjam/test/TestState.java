@@ -18,9 +18,6 @@ public class TestState extends CameraState {
     }
 
     @Override
-    public void init() { }
-
-    @Override
     public void update() { }
 
     @Override

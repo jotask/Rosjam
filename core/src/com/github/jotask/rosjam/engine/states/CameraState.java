@@ -10,17 +10,12 @@ import com.github.jotask.rosjam.engine.camera.Camera;
  * @author Jose Vives Iznardo
  * @since 16/01/2017
  */
-public class CameraState extends State {
+public class CameraState implements IState {
 
     protected final Camera camera;
 
     public CameraState(final Camera camera) {
         this.camera = camera;
-    }
-
-    @Override
-    public void init() {
-
     }
 
     @Override

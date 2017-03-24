@@ -11,8 +11,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
  */
 public interface IState {
 
-    void init();
-
     void preUpdate();
     void update();
     void postUpdate();

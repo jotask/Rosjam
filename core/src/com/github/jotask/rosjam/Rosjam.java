@@ -40,6 +40,8 @@ public class Rosjam extends ApplicationAdapter {
 
 		gsm = new GameStateManager();
 
+		Gdx.gl.glClearColor(1, 1, 1, 1);
+
 	}
 
 	@Override
