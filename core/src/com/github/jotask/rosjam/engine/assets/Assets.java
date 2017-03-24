@@ -24,6 +24,7 @@ public class Assets{
     private PlayerAssets playerAssets;
     private EnemyAssets enemyAssets;
     private BulletAssets bulletAssets;
+    private StateAssets stateAssets;
 
     public Assets() {
 
@@ -34,6 +35,7 @@ public class Assets{
         this.playerAssets = new PlayerAssets(this);
         this.enemyAssets = new EnemyAssets(this);
         this.bulletAssets = new BulletAssets(this);
+        this.stateAssets = new StateAssets(this);
     }
 
     public void loadEverything(){
@@ -45,6 +47,7 @@ public class Assets{
         this.playerAssets.prepare();
         this.enemyAssets.prepare();
         this.bulletAssets.prepare();
+        this.stateAssets.prepare();
 
     }
 
@@ -58,7 +61,9 @@ public class Assets{
 
     public EnemyAssets getEnemyAssets() { return enemyAssets; }
 
-    protected final AssetManager getAssetManager(){ return this.assetManager; }
+    public StateAssets getStateAssets() { return stateAssets; }
+
+    final AssetManager getAssetManager(){ return this.assetManager; }
 
     public final Skin getSkin(){ return this.skin; }
 
