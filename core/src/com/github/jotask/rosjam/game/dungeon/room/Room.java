@@ -96,6 +96,10 @@ public class Room extends Entity {
 
     public void enter(){
 
+        for(final Door d: this.doors){
+            d.reset();
+        }
+
         if(spawner.isEmpty())
             setCompleted(true);
 

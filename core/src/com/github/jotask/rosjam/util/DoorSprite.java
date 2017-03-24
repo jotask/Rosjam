@@ -14,7 +14,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class DoorSprite {
 
-    private final Animation<TextureRegion> animation;
+    public final Animation<TextureRegion> animation;
 
     private TextureRegion region;
 
@@ -35,13 +35,21 @@ public class DoorSprite {
 
     public void update() {
         state += Gdx.graphics.getDeltaTime();
-        region = animation.getKeyFrame(state, true);
+        region = animation.getKeyFrame(state, false);
     }
 
     public void render(SpriteBatch sb, Vector2 position) {
         update();
         Vector2 p = new Vector2(position);
         sb.draw(region, p.x, p.y, 1f, 1f);
+    }
+
+    public void open(){
+        this.animation.setPlayMode(Animation.PlayMode.REVERSED);
+    }
+
+    public void close(){
+        this.animation.setPlayMode(Animation.PlayMode.NORMAL);
     }
 
 }

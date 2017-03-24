@@ -42,17 +42,21 @@ public class Door {
         //sr.rect(position.x, position.y, 1f, 1f);
     }
 
-    public void open(){
-        opened = true;
-    }
-    public void close(){
-        opened = false;
-    }
-
     public boolean isOpen() {
         return opened;
     }
-    public void setOpen(boolean opn){ this.opened = opn; }
+    public void setOpen(boolean opn){
+        this.opened = opn;
+        if(this.opened){
+            this.sprite.open();
+        }else{
+            this.sprite.close();
+        }
+    }
+
+    public void reset(){
+        this.setOpen(false);
+    }
 
     public Vector2 getPosition() { return position; }
 

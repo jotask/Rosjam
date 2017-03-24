@@ -63,7 +63,7 @@ public class SpriteFactory {
 
         Animation<TextureRegion> animation = new Animation<TextureRegion>(Ref.ANIMATION_SPEED, regions);
         animation.setFrameDuration(Ref.ANIMATION_FRAME);
-        animation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+        animation.setPlayMode(Animation.PlayMode.NORMAL);
         DoorSprite sprite = new DoorSprite(animation);
         return sprite;
     }
