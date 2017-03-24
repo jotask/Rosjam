@@ -42,11 +42,11 @@ public class Menu extends CameraState {
                     Rosjam.get().getGsm().changeState(GameStateManager.STATE.GAME);
                 }
             });
-            table.add(start).fillX().row();
+            table.add(start).fillX().padBottom(5f).row();
             TextButton cont = new TextButton("Continue", skin);
-            table.add(cont).fillX().row();
+            table.add(cont).fillX().padBottom(5f).row();
             TextButton options = new TextButton("Options", skin);
-            table.add(options).fillX().row();
+            table.add(options).fillX().padBottom(5f).row();
         }
         this.stage.addActor(table);
         this.stage.setDebugAll(true);
@@ -75,5 +75,10 @@ public class Menu extends CameraState {
     @Override
     public void dispose() {
         this.stage.dispose();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        this.stage.getViewport().update(width, height);
     }
 }
