@@ -40,7 +40,7 @@ public class EnemyFactory {
      * @param type
      * @return
      */
-    private static Enemy get(final Room room, final Enemies type){
+    public static Enemy get(final Room room, final Enemies type){
 
         final World world = DungeonState.get().getWorldManager().getWorld();
         final Body body = BodyFactory.createEnemy(world, .4f);

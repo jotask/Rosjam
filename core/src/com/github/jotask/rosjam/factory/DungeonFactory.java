@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Json;
+import com.github.jotask.rosjam.editor.EditorState;
 import com.github.jotask.rosjam.editor.TileData;
 import com.github.jotask.rosjam.engine.assets.Tiles;
 import com.github.jotask.rosjam.game.Spawner;
@@ -18,8 +19,8 @@ import com.github.jotask.rosjam.game.dungeon.door.NextLevelDoor;
 import com.github.jotask.rosjam.game.dungeon.door.RoomDoor;
 import com.github.jotask.rosjam.game.dungeon.room.BossRoom;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
-import com.github.jotask.rosjam.game.entity.obstacle.Rock;
 import com.github.jotask.rosjam.game.entity.enemy.Enemies;
+import com.github.jotask.rosjam.game.entity.obstacle.Rock;
 import com.github.jotask.rosjam.util.DoorSprite;
 
 import java.util.LinkedList;
@@ -54,7 +55,7 @@ public class DungeonFactory {
                 nextRoom.x += 1f;
                 nextRoom.y += 1f;
 
-                // Check if in that position exist a room
+                // Check if in that start exist a room
                 if(isOccupied(rooms, nextRoom)){
                     continue generator;
                 }
@@ -181,7 +182,7 @@ public class DungeonFactory {
             nextRoom.x += 1f;
             nextRoom.y += 1f;
 
-            // Check if in that position exist a room
+            // Check if in that start exist a room
             if(isOccupied(rooms, nextRoom)){
                 continue;
             }
@@ -251,6 +252,12 @@ public class DungeonFactory {
 
             Json json = new Json();
             final LinkedList<TileData> tiles = json.fromJson(LinkedList.class, TileData.class, file);
+
+            EditorState.Tile[][] layout = new EditorState.Tile[Room.WIDTH][Room.HEIGHT];
+            for(TileData t: tiles){
+                layout[t.x][t.y] = t.tile;
+            }
+            room.setLayout(layout);
 
             for (TileData t : tiles) {
                 switch (t.tile) {

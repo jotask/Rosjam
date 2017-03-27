@@ -39,7 +39,7 @@ public class Door {
     }
 
     public void debug(ShapeRenderer sr) {
-        //sr.rect(position.x, position.y, 1f, 1f);
+        //sr.rect(start.x, start.y, 1f, 1f);
     }
 
     public boolean isOpen() {

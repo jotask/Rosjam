@@ -60,7 +60,7 @@ public class StateFactory {
     }
 
     private static final TestState getTestState(){
-        Camera camera = new Camera();
+        Camera camera = new Camera(21f, 11f);
         TestState ts = new TestState(camera);
         return ts;
     }

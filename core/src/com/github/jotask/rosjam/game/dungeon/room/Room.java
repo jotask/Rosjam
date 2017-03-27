@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.github.jotask.rosjam.editor.EditorState;
 import com.github.jotask.rosjam.factory.EnemyFactory;
 import com.github.jotask.rosjam.game.Spawner;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
@@ -40,6 +41,8 @@ public class Room extends Entity {
     public LinkedList<Enemy> enemies;
 
     public LinkedList<Entity> entities;
+
+    private EditorState.Tile[][] layout;
 
     public Room(final Vector2 p, TextureRegion background) {
         this.bounds = new Rectangle(p.x, p.y, WIDTH, HEIGHT);
@@ -144,4 +147,7 @@ public class Room extends Entity {
     public boolean isInside() { return inside; }
 
     public boolean isEntered() { return entered; }
+
+    public void setLayout(EditorState.Tile[][] layout) { this.layout = layout; }
+    public EditorState.Tile[][] getLayout() { return layout; }
 }

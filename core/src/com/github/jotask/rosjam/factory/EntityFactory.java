@@ -23,9 +23,12 @@ public class EntityFactory {
 
     private EntityFactory() { }
 
-    public static Player generatePlayer() {
-
+    public static Player generatePlayer(){
         final WorldManager worldManager = DungeonState.get().getWorldManager();
+        return generatePlayer(worldManager);
+    }
+
+    public static Player generatePlayer(final WorldManager worldManager) {
 
         final Vector2 center = new Vector2();
 

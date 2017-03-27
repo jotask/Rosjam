@@ -15,7 +15,8 @@ import com.github.jotask.rosjam.util.Sprite;
 public class Snake extends Enemy {
 
     public Snake(Body body, Sprite sprite, Room room) {
-        super(body, new RandomWalker(body), sprite, room);
+        super(body, sprite, room);
+        this.setAI(new RandomWalker(this.body));
     }
 
 }

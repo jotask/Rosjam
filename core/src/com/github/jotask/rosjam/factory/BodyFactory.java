@@ -15,7 +15,7 @@ import com.github.jotask.rosjam.util.CollisionFilter;
  * @author Jose Vives Iznardo
  * @since 31/01/2017
  */
-class BodyFactory {
+public class BodyFactory {
 
     public static void createDoor(final Door door){
         if(door instanceof RoomDoor){
