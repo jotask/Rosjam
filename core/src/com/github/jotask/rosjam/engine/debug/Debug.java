@@ -59,6 +59,7 @@ public class Debug extends Entity{
         sb.end();
         sb.setProjectionMatrix(camera.combined);
         sb.begin();
+        this.font.setColor(Color.RED);
 
         float delta = Gdx.graphics.getDeltaTime();
         delta *= 1000;

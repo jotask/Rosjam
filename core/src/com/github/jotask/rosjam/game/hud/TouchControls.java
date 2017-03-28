@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
  */
 public class TouchControls {
 
-    private Stage stage;
+    public Stage stage;
     private Table table;
 
     public TouchControls(final Stage stage, final Camera camera) {

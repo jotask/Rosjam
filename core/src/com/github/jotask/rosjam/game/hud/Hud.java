@@ -7,10 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.github.jotask.rosjam.Rosjam;
 import com.github.jotask.rosjam.game.Game;
 
 /**
@@ -26,11 +23,9 @@ public class Hud{
     private Camera camera;
 
     private final Game game;
-    private final Skin skin;
     private final Stage stage;
-    private Table table;
 
-    private final Map map;
+//    private final Map map;
 
     private final Application.ApplicationType type;
 
@@ -39,25 +34,10 @@ public class Hud{
 
         this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        this.skin = Rosjam.get().getAssets().getSkin();
-
         this.stage = new Stage();
         this.stage.setViewport(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
-        this.table = new Table();
-        this.table.setFillParent(true);
-        this.table.debug();
-        this.stage.addActor(table);
-
-        this.map = new Map();
-//        this.map.top().right();
-        map.debug();
-        float x = stage.getWidth() - Map.WIDTH;
-        float y = stage.getHeight() - Map.HEIGHT;
-        this.map.setPosition(x, y);
-        this.table.addActor(map);
 
         this.type = Gdx.app.getType();
-
         //Only if is in android
         if(type == Application.ApplicationType.Android) {
             this.controls = new TouchControls(this.stage, this.camera);
@@ -72,13 +52,12 @@ public class Hud{
     }
 
     public void render(SpriteBatch sb) {
-        this.stage.draw();
+
         if(type == Application.ApplicationType.Android)
             this.controls.render();
     }
 
     public void dispose() {
-        this.stage.dispose();
         if(type == Application.ApplicationType.Android)
             this.controls.dispose();
     }
@@ -94,9 +73,9 @@ public class Hud{
     public void addControl(final Actor actor){ this.controls.addActor(actor); }
 
     public Stage getStage() {
-        return stage;
+        return this.controls.stage;
     }
 
-    public Map getMap() { return map; }
+//    public Map getMap() { return map; }
 
 }

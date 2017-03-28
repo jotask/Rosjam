@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.jotask.rosjam.engine.states.GameState;
 import com.github.jotask.rosjam.game.dungeon.level.LevelManager;
+import com.github.jotask.rosjam.game.hud.dungeon.DungeonHud;
 import com.github.jotask.rosjam.game.world.WorldManager;
 
 /**
@@ -20,6 +21,10 @@ public class DungeonState extends GameState {
             throw new RuntimeException("DungeonState isNull");
         return instance;
     }
+
+    private DungeonHud hud;
+
+    public Score score;
 
     private WorldManager worldManager;
 
@@ -40,6 +45,10 @@ public class DungeonState extends GameState {
         this.level = new LevelManager(this.worldManager);
         this.level.nextLevel();
 
+        score = new Score(this);
+
+        this.hud = new com.github.jotask.rosjam.game.hud.dungeon.DungeonHud(this);
+
     }
 
     private void reset(){
@@ -59,6 +68,9 @@ public class DungeonState extends GameState {
 
 //        Camera.follow(EntityManager.get().getPlayer());
 
+        this.score.update();
+        this.hud.update();
+
     }
 
     @Override
@@ -73,6 +85,11 @@ public class DungeonState extends GameState {
     }
 
     @Override
+    public void postRender(SpriteBatch sb) {
+        this.hud.render(sb);
+    }
+
+    @Override
     public void debug(ShapeRenderer sr) {
         this.level.debug(sr);
         this.worldManager.debug(sr);
@@ -80,7 +97,8 @@ public class DungeonState extends GameState {
 
     @Override
     public void postDebug(ShapeRenderer sr) {
-        worldManager.debug(sr);
+        this.worldManager.debug(sr);
+        this.hud.debug(sr);
     }
 
     @Override
@@ -95,4 +113,5 @@ public class DungeonState extends GameState {
     }
 
     public LevelManager getLevel() { return level; }
+
 }

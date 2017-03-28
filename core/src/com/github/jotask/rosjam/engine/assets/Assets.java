@@ -25,6 +25,7 @@ public class Assets{
     private EnemyAssets enemyAssets;
     private BulletAssets bulletAssets;
     private StateAssets stateAssets;
+    private HudAssets hudAssets;
 
     public Assets() {
 
@@ -36,6 +37,7 @@ public class Assets{
         this.enemyAssets = new EnemyAssets(this);
         this.bulletAssets = new BulletAssets(this);
         this.stateAssets = new StateAssets(this);
+        this.hudAssets = new HudAssets(this);
     }
 
     public void loadEverything(){
@@ -48,6 +50,7 @@ public class Assets{
         this.enemyAssets.prepare();
         this.bulletAssets.prepare();
         this.stateAssets.prepare();
+        this.hudAssets.prepare();
 
     }
 
@@ -66,5 +69,7 @@ public class Assets{
     final AssetManager getAssetManager(){ return this.assetManager; }
 
     public final Skin getSkin(){ return this.skin; }
+
+    public HudAssets getHudAssets() { return hudAssets; }
 
 }

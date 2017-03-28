@@ -9,6 +9,8 @@ import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.dungeon.door.NextLevelDoor;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
 import com.github.jotask.rosjam.game.entity.HealthEntity;
+import com.github.jotask.rosjam.game.entity.enemy.Enemy;
+import com.github.jotask.rosjam.game.entity.player.Player;
 import com.github.jotask.rosjam.game.item.Bullet;
 
 /**
@@ -24,6 +26,20 @@ class WorldCollision implements ContactListener {
 
         Object a = contact.getFixtureA().getBody().getUserData();
         Object b = contact.getFixtureB().getBody().getUserData();
+
+        if((a instanceof Player || b instanceof Player) && (a instanceof Enemy || b instanceof Enemy)){
+            Player player;
+            Enemy enemy;
+            if(a instanceof Player){
+                player = (Player) a;
+                enemy = (Enemy) b;
+            }else{
+                player = (Player) b;
+                enemy = (Enemy) a;
+            }
+            player.damage(1);
+//            enemy.damage(1);
+        }
 
         if(a instanceof Bullet || b instanceof Bullet) {
 
@@ -49,7 +65,7 @@ class WorldCollision implements ContactListener {
                     ent = (HealthEntity) b;
                 }
 
-                float dmg = bullet.getDamage();
+                int dmg = bullet.getDamage();
                 ent.damage(dmg);
 
             }

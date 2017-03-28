@@ -3,10 +3,10 @@ package com.github.jotask.rosjam.engine.ai;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.github.jotask.rosjam.editor.EditorState;
 import com.github.jotask.rosjam.game.EntityManager;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
-import com.github.jotask.rosjam.game.entity.enemy.Enemy;
 import com.github.jotask.rosjam.game.entity.player.Player;
 import com.github.jotask.rosjam.util.Timer;
 
@@ -31,8 +31,6 @@ public class AStar extends ArtificialIntelligence {
 
     private final Timer timer;
 
-    private Enemy enemy;
-
     Node start;
     Node end;
 
@@ -40,9 +38,8 @@ public class AStar extends ArtificialIntelligence {
 
     final Player player;
 
-    public AStar(final Enemy enemy, final Room room) {
-        super(enemy.getBody());
-        this.enemy = enemy;
+    public AStar(final Body body, final Room room) {
+        super(body);
         this.room = room;
 
         this.player = EntityManager.get().getPlayer();

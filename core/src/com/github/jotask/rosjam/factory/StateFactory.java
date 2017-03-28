@@ -1,5 +1,6 @@
 package com.github.jotask.rosjam.factory;
 
+import com.badlogic.gdx.Gdx;
 import com.github.jotask.rosjam.editor.EditorState;
 import com.github.jotask.rosjam.engine.GameStateManager;
 import com.github.jotask.rosjam.engine.camera.Camera;
@@ -7,6 +8,7 @@ import com.github.jotask.rosjam.engine.camera.RoomCamera;
 import com.github.jotask.rosjam.engine.states.CameraState;
 import com.github.jotask.rosjam.game.Game;
 import com.github.jotask.rosjam.menu.Menu;
+import com.github.jotask.rosjam.neat.NeatState;
 import com.github.jotask.rosjam.option.Options;
 import com.github.jotask.rosjam.splash.Splash;
 import com.github.jotask.rosjam.test.TestState;
@@ -34,11 +36,21 @@ public class StateFactory {
                 return getMenuState();
             case OPTIONS:
                 return getOptionsState();
+            case NEAT:
+                return getNeatState();
             default:
                 throw new RuntimeException("State not implemented");
 
         }
 
+    }
+
+    private static final NeatState getNeatState(){
+        float w = Gdx.graphics.getWidth() / 10f;
+        float h = Gdx.graphics.getHeight() / 10f;
+        final Camera camera = new Camera(w, h);
+        NeatState ns = new NeatState(camera);
+        return ns;
     }
 
     private static final Game getGameState(){
