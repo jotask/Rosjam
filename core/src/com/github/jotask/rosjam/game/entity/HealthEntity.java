@@ -10,13 +10,14 @@ import com.badlogic.gdx.physics.box2d.Body;
  */
 public abstract class HealthEntity extends BodyEntity {
 
-    private final float MAX_HEALTH = 100f;
-    private float currentHealth;
+    private final int MAX_HEALTH = 10;
+    public int currentHealth;
 
     protected HealthEntity(Body body) {
         super(body);
 
-        this.currentHealth = MAX_HEALTH;
+        // FIXME
+        this.currentHealth = MAX_HEALTH / 2;
 
     }
 
@@ -25,11 +26,15 @@ public abstract class HealthEntity extends BodyEntity {
         super.update();
     }
 
-    public void damage(float dmg){
+    public void damage(int dmg){
         this.currentHealth  -= dmg;
         if(this.currentHealth <= 0){
             this.needsToDie = true;
         }
     }
+
+    public int getMAX_HEALTH() { return MAX_HEALTH; }
+
+    public int getCurrentHealth() { return currentHealth; }
 
 }

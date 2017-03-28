@@ -18,8 +18,8 @@ import com.github.jotask.rosjam.game.world.WorldManager;
 public class LevelManager extends Entity{
 
     public final WorldManager worldManager;
-    private final EntityManager entityManager;
-    private final DungeonManager dungeonManager;
+    public final EntityManager entityManager;
+    public final DungeonManager dungeonManager;
 
     private int level = 0;
     private boolean completed = false;

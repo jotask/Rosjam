@@ -10,6 +10,8 @@ import com.github.jotask.rosjam.engine.GameStateManager;
  */
 public class Ref {
 
+    public static final boolean APP_DEBUG = false;
+
     public static final boolean DEBUG = true;
 
     public static final float ANIMATION_SPEED = .25f;

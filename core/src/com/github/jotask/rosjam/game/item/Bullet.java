@@ -15,7 +15,7 @@ import com.github.jotask.rosjam.util.Timer;
  */
 public class Bullet extends BodyEntity{
 
-    private final float damage = 150f;
+    private final int damage = 10;
 
     private final float SPEED = 10f;
 
@@ -63,5 +63,5 @@ public class Bullet extends BodyEntity{
         return timer.isPassed() || !body.isAwake();
     }
 
-    public float getDamage() { return damage; }
+    public int getDamage() { return damage; }
 }

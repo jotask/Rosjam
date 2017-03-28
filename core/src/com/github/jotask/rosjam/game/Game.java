@@ -10,6 +10,7 @@ import com.github.jotask.rosjam.engine.input.Controller;
 import com.github.jotask.rosjam.engine.input.InputController;
 import com.github.jotask.rosjam.engine.states.CameraState;
 import com.github.jotask.rosjam.game.hud.Hud;
+import com.github.jotask.rosjam.util.Ref;
 
 /**
  * Game
@@ -24,6 +25,7 @@ public class Game extends CameraState {
         return instance;
     }
 
+    // TODO refactor this into rosjam
     private Debug debug;
 
     private GameManager gameManager;
@@ -33,7 +35,6 @@ public class Game extends CameraState {
     public Game(Camera camera) {
         super(camera);
         Game.instance = this;
-
 
         this.debug = new Debug();
 
@@ -58,7 +59,9 @@ public class Game extends CameraState {
     public void postRender(SpriteBatch sb) {
         this.gameManager.postRender(sb);
         this.hud.render(sb);
-        this.debug.render(sb);
+        if(Ref.APP_DEBUG) {
+            this.debug.render(sb);
+        }
     }
 
     @Override

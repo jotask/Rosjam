@@ -47,6 +47,10 @@ public class Player extends ControlEntity {
             weapon.shot(getController().getShootDirection());
         }
 
+        if(this.getCurrentHealth() < 0){
+            this.currentHealth = this.getMAX_HEALTH();
+        }
+
     }
 
     @Override

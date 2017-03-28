@@ -23,7 +23,7 @@ public class DungeonAssets implements Disposable {
     private TextureRegion background;
     private AssetManager manager;
 
-    public DungeonAssets(final Assets assets) {
+    DungeonAssets(final Assets assets) {
         this.assets = assets;
         this.atlas = new TextureAtlas(Gdx.files.internal("convert/sprites.atlas"));
         this.manager = new AssetManager();
