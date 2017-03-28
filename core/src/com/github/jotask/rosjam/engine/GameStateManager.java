@@ -17,7 +17,7 @@ import com.github.jotask.rosjam.util.Ref;
  */
 public class GameStateManager extends AbstractState implements Disposable{
 
-    public enum STATE { SPLASH, MENU, GAME, TEST, EDITOR, OPTIONS }
+    public enum STATE { SPLASH, MENU, GAME, TEST, EDITOR, OPTIONS, NEAT }
 
     private CameraState currentState;
 
