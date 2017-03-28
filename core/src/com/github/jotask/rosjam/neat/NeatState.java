@@ -71,6 +71,7 @@ public class NeatState extends CameraState {
         this.stage.act(Gdx.graphics.getDeltaTime());
         this.neat.update();
         this.networkRenderer.createNetwork(this.neat.getJota().getBest());
+        // TODO update fitness gui
     }
 
     @Override

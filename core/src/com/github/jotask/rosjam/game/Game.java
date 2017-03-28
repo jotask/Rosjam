@@ -10,6 +10,7 @@ import com.github.jotask.rosjam.engine.input.Controller;
 import com.github.jotask.rosjam.engine.input.InputController;
 import com.github.jotask.rosjam.engine.states.CameraState;
 import com.github.jotask.rosjam.game.hud.Hud;
+import com.github.jotask.rosjam.neat.NeatThread;
 import com.github.jotask.rosjam.util.Ref;
 
 /**
@@ -32,6 +33,9 @@ public class Game extends CameraState {
     private InputController controller;
     private Hud hud;
 
+    private Thread thread;
+    private NeatThread neatThread;
+
     public Game(Camera camera) {
         super(camera);
         Game.instance = this;
@@ -41,6 +45,11 @@ public class Game extends CameraState {
         this.hud = new Hud(this);
         this.controller = new InputController(this);
         this.gameManager = new GameManager(this, this.getController());
+
+        this.neatThread = new NeatThread();
+        this.thread = new Thread(this.neatThread);
+        this.thread.start();
+
     }
 
     @Override
@@ -91,6 +100,13 @@ public class Game extends CameraState {
     public void dispose() {
         this.gameManager.dispose();
         this.hud.dispose();
+        this.neatThread.stop();
+        try {
+            this.thread.join(3000);
+        } catch (InterruptedException e) {
+            System.err.println("Unable to close loop");
+            e.printStackTrace();
+        }
         this.instance = null;
     }
 
