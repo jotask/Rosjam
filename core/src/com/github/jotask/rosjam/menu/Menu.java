@@ -58,9 +58,15 @@ public class Menu extends CameraState {
             });
             table.add(options).fillX().padBottom(5f).row();
 
-            // TODO add simulation state
             TextButton simulation = new TextButton("Simulation", skin);
+            simulation.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    Rosjam.get().getGsm().changeState(GameStateManager.STATE.NEAT);
+                }
+            });
             table.add(simulation).fillX().padBottom(5f).row();
+
 
         }
         this.stage.addActor(table);

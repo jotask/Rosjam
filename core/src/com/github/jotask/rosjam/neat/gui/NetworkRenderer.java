@@ -49,7 +49,7 @@ public class NetworkRenderer implements Renderer {
 //        x = cam.position.x - ( w * .5f);
 //        y = cam.position.y  - (h * .5f);
 
-        y -= 150f;
+        y -= 100f;
         x += 20f;
 
         this.rectangle = new Rectangle(x, y, w, h);
@@ -61,13 +61,16 @@ public class NetworkRenderer implements Renderer {
     }
 
     public void createNetwork(NeatEnemy e) {
-        this.graph.clear();
 
-        if(e.getNetwork() == this.network){
+        if(e == null){
+            return;
+        }else if(e.getNetwork() == this.network){
             return;
         }else{
             this.network = e.getNetwork();
         }
+
+        this.graph.clear();
 
         // Create new network for render
         float yInpStart = rectangle.y + (rectangle.height * .5f) + ((Cell.SIZE * Constants.INPUTS) * .5f) - Cell.SIZE;
@@ -146,6 +149,7 @@ public class NetworkRenderer implements Renderer {
 
     @Override
     public void debug(final ShapeRenderer sr) {
+
         sr.set(ShapeRenderer.ShapeType.Filled);
         sr.setColor(c);
         sr.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);

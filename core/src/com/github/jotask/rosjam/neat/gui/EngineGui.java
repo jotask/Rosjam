@@ -32,8 +32,8 @@ public class EngineGui {
     }
 
     public void render(SpriteBatch sb){
-        float x = -camera.viewportWidth / 2f;
-        float y = camera.viewportHeight / 2f;
+        float x = camera.position.x - camera.viewportWidth / 2f;
+        float y = camera.position.y + camera.viewportHeight / 2f;
         x += OFFSET;
         y -= OFFSET;
         int i = 0;

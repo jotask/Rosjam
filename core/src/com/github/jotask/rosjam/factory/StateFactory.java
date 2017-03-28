@@ -1,5 +1,6 @@
 package com.github.jotask.rosjam.factory;
 
+import com.badlogic.gdx.Gdx;
 import com.github.jotask.rosjam.editor.EditorState;
 import com.github.jotask.rosjam.engine.GameStateManager;
 import com.github.jotask.rosjam.engine.camera.Camera;
@@ -45,8 +46,8 @@ public class StateFactory {
     }
 
     private static final NeatState getNeatState(){
-        float w = 60f;
-        float h = 50f;
+        float w = Gdx.graphics.getWidth() / 10f;
+        float h = Gdx.graphics.getHeight() / 10f;
         final Camera camera = new Camera(w, h);
         NeatState ns = new NeatState(camera);
         return ns;
