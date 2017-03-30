@@ -2,6 +2,8 @@ package com.github.jotask.rosjam.neat.config;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.github.jotask.rosjam.neat.jneat.util.JException;
+import com.github.jotask.rosjam.option.Options;
+import com.github.jotask.rosjam.option.OptionsSaveLoad;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -14,12 +16,44 @@ import java.util.Properties;
  */
 public class LoadConfig {
 
-    public static Config loadConfig(final String f) throws JException, IOException{
+    public static Config load(){
+        Properties properties = new Properties();
+        FileHandle file = new FileHandle(Options.file);
+        if(!file.exists()){
+            return LoadConfig.loadDefault();
+        }
+
+        try {
+            properties.load(file.read());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return LoadConfig.loadDefault();
+        }
+
+        String f = properties.getProperty(Options.OPTIONS.NEATFILE.name());
+
+        final Config cfg;
+        try {
+            cfg = loadConfig(OptionsSaveLoad.PATH + f);
+            if(cfg != null){
+                System.out.println("loaded");
+                return cfg;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return LoadConfig.loadDefault();
+        }
+
+        return LoadConfig.loadDefault();
+
+    }
+
+    private static Config loadConfig(final String f) throws JException, IOException{
 
         FileHandle file = new FileHandle(f);
 
         if(!file.exists()){
-            throw new JException("File not exist");
+            throw new JException("File not exist: " + f);
         }
 
         final Properties properties = new Properties();

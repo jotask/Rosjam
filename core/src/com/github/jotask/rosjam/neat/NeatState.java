@@ -14,6 +14,8 @@ import com.github.jotask.rosjam.Rosjam;
 import com.github.jotask.rosjam.engine.GameStateManager;
 import com.github.jotask.rosjam.engine.camera.Camera;
 import com.github.jotask.rosjam.engine.states.CameraState;
+import com.github.jotask.rosjam.neat.config.Config;
+import com.github.jotask.rosjam.neat.config.LoadConfig;
 import com.github.jotask.rosjam.neat.gui.EngineGui;
 import com.github.jotask.rosjam.neat.gui.JotaGui;
 import com.github.jotask.rosjam.neat.gui.NetworkRenderer;
@@ -43,7 +45,10 @@ public class NeatState extends CameraState {
         super(camera);
         ORIGINAL_DEBUG = Ref.DEBUG;
         Ref.DEBUG = true;
-        this.neat = new Neat();
+
+        final Config cfg = LoadConfig.load();
+
+        this.neat = new Neat(cfg);
         this.engineGui = new EngineGui(this);
         this.renderer = new Box2DDebugRenderer();
         this.jotaGui = new JotaGui(this);

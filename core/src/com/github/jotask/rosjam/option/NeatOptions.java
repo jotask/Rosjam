@@ -47,6 +47,9 @@ public class NeatOptions extends CameraState {
     final TextField deltaweight;
     final TextField deltathreshold;
 
+    final TextField timeincrease;
+    final TextField eachgeneration;
+
     final SelectBox<String> select;
 
     // FIXME when is not files create a default file
@@ -341,6 +344,22 @@ public class NeatOptions extends CameraState {
 
                     deltathreshold = new TextField("", skin);
                     table.add(deltathreshold).width(width);
+                }
+                table.row();
+                {
+                    Label label = new Label("Time increase: ", skin);
+                    table.add(label);
+
+                    timeincrease = new TextField("", skin);
+                    table.add(timeincrease).width(width);
+                }
+                table.row();
+                {
+                    Label label = new Label("Increase in each generations: ", skin);
+                    table.add(label);
+
+                    eachgeneration = new TextField("", skin);
+                    table.add(eachgeneration).width(width);
                 }
                 table.row();
                 {

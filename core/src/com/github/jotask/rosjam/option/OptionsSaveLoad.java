@@ -17,7 +17,7 @@ import static com.github.jotask.rosjam.neat.config.Config.Property.*;
  * @author Jose Vives Iznardo
  * @since 30/03/2017
  */
-abstract class OptionsSaveLoad {
+public abstract class OptionsSaveLoad {
 
     public static final String PATH = "config/neat/";
 
@@ -65,6 +65,8 @@ abstract class OptionsSaveLoad {
             opt.deltadisjoint.setText(prop.getProperty(DELTA_DISJOINT.name()));
             opt.deltaweight.setText(prop.getProperty(DELTA_WEIGHTS.name()));
             opt.deltathreshold.setText(prop.getProperty(DELTA_THRESHOLD.name()));
+            opt.eachgeneration.setText(prop.getProperty(EACH_GENERATION.name()));
+            opt.timeincrease.setText(prop.getProperty(TIME_INCREASE.name()));
 
             opt.mutation.setValue(new Float(prop.getProperty(MUTATION.name())));
             opt.commmutation.setValue(new Float(prop.getProperty(CONN_MUTATION.name())));
@@ -169,6 +171,12 @@ abstract class OptionsSaveLoad {
 
             if(isNumber(opt.deltathreshold.getText()))
                 props.setProperty(DELTA_THRESHOLD.name(), String.valueOf(opt.deltathreshold.getText()));
+
+            if(isNumber(opt.eachgeneration.getText()))
+                props.setProperty(EACH_GENERATION.name(), String.valueOf(opt.eachgeneration.getText()));
+
+            if(isNumber(opt.timeincrease.getText()))
+                props.setProperty(TIME_INCREASE.name(), String.valueOf(opt.timeincrease.getText()));
 
             // Sliders
             props.setProperty(MUTATION.name(), String.valueOf(opt.mutation.getValue()));

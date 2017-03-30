@@ -3,7 +3,7 @@ package com.github.jotask.rosjam.neat;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.github.jotask.rosjam.neat.config.LoadConfig;
+import com.github.jotask.rosjam.neat.config.Config;
 import com.github.jotask.rosjam.neat.engine.EntityManager;
 import com.github.jotask.rosjam.neat.engine.Factory;
 import com.github.jotask.rosjam.neat.engine.WorldListener;
@@ -15,18 +15,17 @@ public class Neat{
 	private static Neat instance;
 	public static Neat get(){ return instance; }
 
-	World world;
+	final World world;
 
-	EntityManager entityManager;
+	final EntityManager entityManager;
 
+	final Factory factory;
 
-	Factory factory;
+	private final Jota jota;
 
-	private Jota jota;
+	private final Player player;
 
-	private Player player;
-
-	public Neat() {
+	public Neat(final Config config) {
 
 		Neat.instance = this;
 
@@ -41,7 +40,7 @@ public class Neat{
 
 		this.player = factory.getPlayer();
 
-		this.jota = new Jota(LoadConfig.loadDefault());
+		this.jota = new Jota(config);
 
 	}
 

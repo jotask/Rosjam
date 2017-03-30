@@ -1,5 +1,8 @@
 package com.github.jotask.rosjam.neat;
 
+import com.github.jotask.rosjam.neat.config.Config;
+import com.github.jotask.rosjam.neat.config.LoadConfig;
+
 /**
  * NeatThread
  *
@@ -18,7 +21,10 @@ public class NeatThread implements Runnable{
 
     @Override
     public void run() {
-        this.neat = new Neat();
+
+        final Config cfg = LoadConfig.load();
+
+        this.neat = new Neat(cfg);
         while(this.isRunning) {
             this.neat.update();
         }

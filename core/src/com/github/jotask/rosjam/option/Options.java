@@ -25,11 +25,9 @@ import java.util.Properties;
  */
 public class Options extends CameraState{
 
-    enum OPTIONS{
-        NEATFILE
-    }
+    public enum OPTIONS{ NEATFILE }
 
-    private final String file = "config/config.properties";
+    public static final String file = "config/config.properties";
 
     final Stage stage;
 
