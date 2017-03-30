@@ -9,6 +9,7 @@ import com.github.jotask.rosjam.engine.states.CameraState;
 import com.github.jotask.rosjam.game.Game;
 import com.github.jotask.rosjam.menu.Menu;
 import com.github.jotask.rosjam.neat.NeatState;
+import com.github.jotask.rosjam.option.NeatOptions;
 import com.github.jotask.rosjam.option.Options;
 import com.github.jotask.rosjam.splash.Splash;
 import com.github.jotask.rosjam.test.TestState;
@@ -36,6 +37,8 @@ public class StateFactory {
                 return getMenuState();
             case OPTIONS:
                 return getOptionsState();
+            case NEATOPTIONS:
+                return getNeatOptionsState();
             case NEAT:
                 return getNeatState();
             default:
@@ -62,6 +65,12 @@ public class StateFactory {
     private static final Options getOptionsState(){
         Camera camera = new Camera();
         Options option = new Options(camera);
+        return option;
+    }
+
+    private static final NeatOptions getNeatOptionsState(){
+        Camera camera = new Camera();
+        NeatOptions option = new NeatOptions(camera);
         return option;
     }
 

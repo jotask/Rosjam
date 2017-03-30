@@ -18,7 +18,7 @@ public class LoadDialog extends Dialog {
 
     private SelectBox<String> selectBox;
 
-    public LoadDialog(EditorState editorState) {
+    LoadDialog(EditorState editorState) {
         this("LoadDialog", editorState);
     }
 

@@ -6,7 +6,7 @@ package com.github.jotask.rosjam.neat.config;
  * @author Jose Vives Iznardo
  * @since 22/03/2017
  */
-class Default {
+public class Default {
 
     public static final int POPULATION    = 50;
     public static final int STALE_SPECIES = 15;

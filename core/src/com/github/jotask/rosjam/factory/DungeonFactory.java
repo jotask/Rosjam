@@ -196,7 +196,6 @@ public class DungeonFactory {
 
         }
 
-        // TODO add boss
         BossRoom bossRoom = new BossRoom(pos, region);
         BodyFactory.createRoom(bossRoom);
 
