@@ -43,9 +43,10 @@ public class DungeonState extends GameState {
         this.manager = EntityManager.get();
 
         this.level = new LevelManager(this.worldManager);
-        this.level.nextLevel();
 
-        score = new Score(this);
+        score = new Score();
+
+        this.level.nextLevel();
 
         this.hud = new com.github.jotask.rosjam.game.hud.dungeon.DungeonHud(this);
 
@@ -65,8 +66,6 @@ public class DungeonState extends GameState {
         this.level.update();
         this.worldManager.update();
         this.manager.update();
-
-//        Camera.follow(EntityManager.get().getPlayer());
 
         this.score.update();
         this.hud.update();

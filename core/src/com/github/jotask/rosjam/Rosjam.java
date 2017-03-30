@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.jotask.rosjam.engine.GameStateManager;
 import com.github.jotask.rosjam.engine.assets.Assets;
+import com.github.jotask.rosjam.engine.debug.Debug;
 import com.github.jotask.rosjam.util.Ref;
 
 public class Rosjam extends ApplicationAdapter {
@@ -24,6 +25,8 @@ public class Rosjam extends ApplicationAdapter {
 
 	private GameStateManager gsm;
 
+	private Debug debug;
+
 	private Assets assets;
 
 	@Override
@@ -33,12 +36,14 @@ public class Rosjam extends ApplicationAdapter {
 		this.assets = new Assets();
 		this.assets.loadEverything();
 
-		sb = new SpriteBatch();
+		this.sb = new SpriteBatch();
 
-		sr = new ShapeRenderer();
-		sr.setAutoShapeType(true);
+		this.sr = new ShapeRenderer();
+		this.sr.setAutoShapeType(true);
 
-		gsm = new GameStateManager();
+		this.gsm = new GameStateManager();
+
+		this.debug = new Debug();
 
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 
@@ -49,23 +54,31 @@ public class Rosjam extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		gsm.update();
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);      //clears the buffer
-		gsm.render(sb);
+		this.gsm.update();
+
+		// Clears the buffer
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		this.gsm.render(sb);
+
+		if(Ref.APP_DEBUG)
+			this.debug.render(sb);
+
 		if(Ref.DEBUG)
-			gsm.debug(sr);
+			this.gsm.debug(sr);
+
 	}
 	
 	@Override
 	public void dispose () {
-		gsm.dispose();
+		this.gsm.dispose();
 		instance = null;
 	}
 
 	public final GameStateManager getGsm(){ return this.gsm; }
 
-	public final SpriteBatch getSb() { return sb; }
+	public final SpriteBatch getSb() { return this.sb; }
 
-	public Assets getAssets() { return assets; }
+	public Assets getAssets() { return this.assets; }
 
 }

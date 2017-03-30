@@ -6,12 +6,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.github.jotask.rosjam.Rosjam;
-import com.github.jotask.rosjam.game.EntityManager;
 import com.github.jotask.rosjam.game.entity.Entity;
-
-import java.text.DecimalFormat;
 
 /**
  * Debug
@@ -56,7 +52,6 @@ public class Debug extends Entity{
 
     @Override
     public void render(SpriteBatch sb) {
-        sb.end();
         sb.setProjectionMatrix(camera.combined);
         sb.begin();
         this.font.setColor(Color.RED);
@@ -71,15 +66,17 @@ public class Debug extends Entity{
         long nativeHeap = Gdx.app.getNativeHeap();
         draw(sb, String.valueOf(toMB(nativeHeap)) + "mb", DEBUG.NATIVEMEMORY);
 
-        int entity = EntityManager.get().getSize();
-        draw(sb, String.valueOf(entity), DEBUG.ENTITY);
+//        int entity = EntityManager.get().getSize();
+//        draw(sb, String.valueOf(entity), DEBUG.ENTITY);
 
-        Vector2 p = EntityManager.get().getPlayer().getBody().getPosition();
-        DecimalFormat df = new DecimalFormat();
-        df.setMaximumFractionDigits(2);
-        String x = df.format(p.x);
-        String y = df.format(p.y);
-        draw(sb, (x + " : " + y), DEBUG.PLAYER);
+//        Vector2 p = EntityManager.get().getPlayer().getBody().getPosition();
+//        DecimalFormat df = new DecimalFormat();
+//        df.setMaximumFractionDigits(2);
+//        String x = df.format(p.x);
+//        String y = df.format(p.y);
+//        draw(sb, (x + " : " + y), DEBUG.PLAYER);
+
+        sb.end();
 
     }
 
