@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.jotask.rosjam.engine.camera.Camera;
 import com.github.jotask.rosjam.engine.camera.RoomCamera;
+import com.github.jotask.rosjam.game.DungeonState;
 import com.github.jotask.rosjam.game.EntityManager;
+import com.github.jotask.rosjam.game.Score;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.entity.Entity;
 import com.github.jotask.rosjam.game.world.WorldManager;
@@ -57,6 +59,7 @@ public class LevelManager extends Entity{
     public void nextLevel(){
         // Augment level
         level++;
+        DungeonState.get().score.addScore(Score.FLOOR_CLEARED);
 
         // Delete everything
         entityManager.reset();

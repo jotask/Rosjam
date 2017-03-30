@@ -72,7 +72,9 @@ class MapHud {
 
     private void resizeMap(){
 
-        System.out.println("----------------");
+        // FIXME
+
+//        System.out.println("----------------");
 
         this.center.setZero();
 
@@ -80,7 +82,10 @@ class MapHud {
         final LinkedList<Room> visited = new LinkedList<Room>();
         open.add(this.dungeon.initialRoom);
 
-        final Rectangle b = new Rectangle(0,0,Room.WIDTH,Room.HEIGHT);
+        float x = 0;
+        float y = 0;
+        float w = 0;
+        float h = 0;
 
         Room current;
         while(!open.isEmpty()){
@@ -89,15 +94,27 @@ class MapHud {
 
             final Rectangle r = current.getBounds();
 
-            if(!b.contains(r.getCenter(new Vector2()))){
+            if(r.x < x){
+                System.out.println( "1. "+ r.x + " < " + x);
+                x = r.x;
+                System.out.println("        x: " + x );
+            }
+            if(x + w < r.x + r.width){
+                System.out.println( "2. " + (x + w) + " < " + (r.x + r.width));
+                w = r.x + r.width;
+                System.out.println("        w: " + w);
+            }
 
-                System.out.println(b.toString() + " : " + r.toString());
 
-                if(r.x < b.x){
-                    b.x -= Room.WIDTH;
-                }else if(!b.contains(r.x + r.width, Room.HEIGHT * .5f)){
-                    b.width += Room.WIDTH;
-                }
+//            if(!b.contains(r.getCenter(new Vector2()))){
+
+//                System.out.println(b.toString() + " : " + r.toString());
+
+//                if(r.x < b.x){
+//                    b.x -= Room.WIDTH;
+//                }else if(!b.contains(r.x + r.width, Room.HEIGHT * .5f)){
+//                    b.width += Room.WIDTH;
+//                }
 //                else if(r.width > b.x + r.x + r.width){
 //                    b.width += Room.WIDTH;
 //                }
@@ -106,8 +123,8 @@ class MapHud {
 //                }else if(r.height > b.y + r.y + r.height){
 //                    b.height += Room.HEIGHT;
 //                }
-                System.out.println(b.toString());
-                System.out.println("---");
+//                System.out.println(b.toString());
+//                System.out.println("---");
 
 //                if(r.y < b.y){
 //                    b.y += r.height;
@@ -117,7 +134,7 @@ class MapHud {
 //                    System.out.println("h");
 //                }
 
-            }
+//            }
 
             for(final Door d: current.doors){
                 if(d.connected == null)
@@ -129,7 +146,10 @@ class MapHud {
                     open.addLast(d.connected.self);
                 }
             }
+
         }
+
+        this.rectangle.set(x, y, w, h);
 
         // FIXME
 //        this.rectangle.set(0,0,0,0);
@@ -146,8 +166,10 @@ class MapHud {
 //        p.y -= this.rectangle.getHeight() * .5f;
 //        this.rectangle.setPosition(p.x, p.y);
 
-        this.rectangle.set(b);
-        this.rectangle.getCenter(this.center);
+//        this.rectangle.set(b);
+//        this.rectangle.getCenter(this.center);
+
+
 
     }
 

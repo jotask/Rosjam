@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.github.jotask.rosjam.game.DungeonState;
+import com.github.jotask.rosjam.game.Score;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.dungeon.door.NextLevelDoor;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
@@ -38,6 +39,7 @@ class WorldCollision implements ContactListener {
                 enemy = (Enemy) a;
             }
             player.damage(1);
+            DungeonState.get().score.addScore(Score.HIT_BY_ENEMY);
 //            enemy.damage(1);
         }
 

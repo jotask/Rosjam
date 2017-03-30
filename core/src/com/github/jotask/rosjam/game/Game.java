@@ -3,15 +3,13 @@ package com.github.jotask.rosjam.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.github.jotask.rosjam.engine.GameManager;
 import com.github.jotask.rosjam.engine.camera.Camera;
-import com.github.jotask.rosjam.engine.debug.Debug;
 import com.github.jotask.rosjam.engine.input.Controller;
 import com.github.jotask.rosjam.engine.input.InputController;
 import com.github.jotask.rosjam.engine.states.CameraState;
+import com.github.jotask.rosjam.engine.states.GameState;
 import com.github.jotask.rosjam.game.hud.Hud;
 import com.github.jotask.rosjam.neat.NeatThread;
-import com.github.jotask.rosjam.util.Ref;
 
 /**
  * Game
@@ -21,15 +19,19 @@ import com.github.jotask.rosjam.util.Ref;
  */
 public class Game extends CameraState {
 
+    enum GAMESTATES{ PLAY, PAUSE, GAMEOVER }
+
     private static Game instance;
     public static Game get(){
         return instance;
     }
 
-    // TODO refactor this into rosjam
-    private Debug debug;
+    private final GameState play;
+    private final GameState pause;
+    private final GameState gameover;
 
-    private GameManager gameManager;
+    private GAMESTATES currentState = GAMESTATES.PLAY;
+
     private InputController controller;
     private Hud hud;
 
@@ -40,11 +42,13 @@ public class Game extends CameraState {
         super(camera);
         Game.instance = this;
 
-        this.debug = new Debug();
+        this.controller = new InputController(this);
+
+        this.play  = new DungeonState(this);
+        this.pause = new PauseState(this);
+        this.gameover = new GameOverState(this);
 
         this.hud = new Hud(this);
-        this.controller = new InputController(this);
-        this.gameManager = new GameManager(this, this.getController());
 
         this.neatThread = new NeatThread();
         this.thread = new Thread(this.neatThread);
@@ -53,52 +57,148 @@ public class Game extends CameraState {
     }
 
     @Override
-    public void preUpdate() { this.gameManager.preUpdate(); }
-
-    @Override
-    public void postUpdate() {
-        this.gameManager.postUpdate();
-        this.getCamera()._update();
-    }
-
-    @Override
-    public void preRender(SpriteBatch sb) { this.gameManager.preRender(sb); }
-
-    @Override
-    public void postRender(SpriteBatch sb) {
-        this.gameManager.postRender(sb);
-        this.hud.render(sb);
-        if(Ref.APP_DEBUG) {
-            this.debug.render(sb);
+    public void preUpdate() {
+        switch (this.currentState){
+            case PLAY:
+                this.play.preUpdate();
+                break;
+            case PAUSE:
+                this.pause.preUpdate();
+                break;
+            case GAMEOVER:
+                this.gameover.preUpdate();
+                break;
         }
     }
 
     @Override
-    public void preDebug(ShapeRenderer sr) { this.gameManager.preDebug(sr); }
+    public void postUpdate() {
+        switch (this.currentState){
+            case PLAY:
+                this.play.postUpdate();
+                break;
+            case PAUSE:
+                this.pause.postUpdate();
+                break;
+            case GAMEOVER:
+                this.gameover.postUpdate();
+                break;
+        }
+        this.getCamera()._update();
+    }
 
     @Override
-    public void postDebug(ShapeRenderer sr) { this.gameManager.postDebug(sr); }
+    public void preRender(SpriteBatch sb) {
+        switch (this.currentState){
+            case PLAY:
+                this.play.preRender(sb);
+                break;
+            case PAUSE:
+                this.pause.preRender(sb);
+                break;
+            case GAMEOVER:
+                this.gameover.preRender(sb);
+                break;
+        }
+    }
+
+    @Override
+    public void postRender(SpriteBatch sb) {
+        switch (this.currentState){
+            case PLAY:
+                this.play.postRender(sb);
+                break;
+            case PAUSE:
+                this.pause.postRender(sb);
+                break;
+            case GAMEOVER:
+                this.gameover.postRender(sb);
+                break;
+        }
+        this.hud.render(sb);
+    }
+
+    @Override
+    public void preDebug(ShapeRenderer sr) {
+        switch (this.currentState){
+            case PLAY:
+                this.play.preDebug(sr);
+                break;
+            case PAUSE:
+                this.pause.preDebug(sr);
+                break;
+            case GAMEOVER:
+                this.gameover.preDebug(sr);
+                break;
+        }
+    }
+
+    @Override
+    public void postDebug(ShapeRenderer sr) {
+        switch (this.currentState){
+            case PLAY:
+                this.play.postDebug(sr);
+                break;
+            case PAUSE:
+                this.pause.postDebug(sr);
+                break;
+            case GAMEOVER:
+                this.gameover.postDebug(sr);
+                break;
+        }
+    }
 
     @Override
     public void update() {
-        this.gameManager.update();
+        switch (this.currentState){
+            case PLAY:
+                this.play.update();
+                break;
+            case PAUSE:
+                this.pause.update();
+                break;
+            case GAMEOVER:
+                this.gameover.update();
+                break;
+        }
         this.hud.update(Gdx.graphics.getDeltaTime());
-        this.debug.update();
     }
 
     @Override
     public void render(SpriteBatch sb) {
-        this.gameManager.render(sb);
+        switch (this.currentState){
+            case PLAY:
+                this.play.render(sb);
+                break;
+            case PAUSE:
+                this.pause.render(sb);
+                break;
+            case GAMEOVER:
+                this.gameover.render(sb);
+                break;
+        }
     }
 
     @Override
     public void debug(ShapeRenderer sr) {
-        this.gameManager.debug(sr);
+        switch (this.currentState){
+            case PLAY:
+                this.play.debug(sr);
+                break;
+            case PAUSE:
+                this.pause.debug(sr);
+                break;
+            case GAMEOVER:
+                this.gameover.debug(sr);
+                break;
+        }
     }
 
     @Override
     public void dispose() {
-        this.gameManager.dispose();
+        this.gameover.dispose();
+        this.pause.dispose();
+        this.gameover.dispose();
         this.hud.dispose();
         this.neatThread.stop();
         try {
@@ -120,8 +220,6 @@ public class Game extends CameraState {
 
     public Hud getHud() { return hud; }
 
-    public GameManager getGameManager() { return gameManager; }
-
-
+    public void changeState(final GAMESTATES gs){ this.currentState = gs; }
 
 }
