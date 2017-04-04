@@ -3,6 +3,7 @@ package com.github.jotask.rosjam.game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.jotask.rosjam.engine.states.GameState;
+import com.github.jotask.rosjam.factory.EntityFactory;
 import com.github.jotask.rosjam.game.dungeon.level.LevelManager;
 import com.github.jotask.rosjam.game.hud.dungeon.DungeonHud;
 import com.github.jotask.rosjam.game.world.WorldManager;
@@ -14,13 +15,6 @@ import com.github.jotask.rosjam.game.world.WorldManager;
  * @since 14/01/2017
  */
 public class DungeonState extends GameState {
-
-    private static DungeonState instance;
-    public static DungeonState get() {
-        if(instance == null)
-            throw new RuntimeException("DungeonState isNull");
-        return instance;
-    }
 
     private DungeonHud hud;
 
@@ -34,13 +28,14 @@ public class DungeonState extends GameState {
 
     public DungeonState(final Game game) {
         super(game);
+        this.manager = EntityManager.get();
+    }
 
-        if(DungeonState.instance != null)
-            throw new RuntimeException("DungeonState isNot Null");
-        DungeonState.instance = this;
+    void init(){
 
         this.worldManager = new WorldManager(game);
-        this.manager = EntityManager.get();
+
+        this.manager.createPlayer(EntityFactory.generatePlayer(this.worldManager));
 
         this.level = new LevelManager(this.worldManager);
 
@@ -48,8 +43,7 @@ public class DungeonState extends GameState {
 
         this.level.nextLevel();
 
-        this.hud = new com.github.jotask.rosjam.game.hud.dungeon.DungeonHud(this);
-
+        this.hud = new DungeonHud(this);
     }
 
     private void reset(){
@@ -102,9 +96,7 @@ public class DungeonState extends GameState {
 
     @Override
     public void dispose() {
-        super.dispose();
         this.manager.dispose();
-        DungeonState.instance = null;
     }
 
     public WorldManager getWorldManager() {

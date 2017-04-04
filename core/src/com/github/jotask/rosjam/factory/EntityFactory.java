@@ -2,11 +2,11 @@ package com.github.jotask.rosjam.factory;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.github.jotask.rosjam.game.DungeonState;
 import com.github.jotask.rosjam.game.EntityManager;
+import com.github.jotask.rosjam.game.Game;
 import com.github.jotask.rosjam.game.entity.BodyEntity;
-import com.github.jotask.rosjam.game.entity.player.Player;
 import com.github.jotask.rosjam.game.entity.enemy.Enemy;
+import com.github.jotask.rosjam.game.entity.player.Player;
 import com.github.jotask.rosjam.game.item.Bullet;
 import com.github.jotask.rosjam.game.item.Weapon;
 import com.github.jotask.rosjam.game.world.WorldManager;
@@ -24,7 +24,10 @@ public class EntityFactory {
     private EntityFactory() { }
 
     public static Player generatePlayer(){
-        final WorldManager worldManager = DungeonState.get().getWorldManager();
+        if(Game.get().getPlay() == null){
+            System.out.println("isNull");
+        }
+        final WorldManager worldManager = Game.get().getPlay().getWorldManager();
         return generatePlayer(worldManager);
     }
 
@@ -44,7 +47,7 @@ public class EntityFactory {
 
     public static Bullet getBullet(BodyEntity entity){
 
-        final WorldManager worldManager = DungeonState.get().getWorldManager();
+        final WorldManager worldManager = Game.get().getPlay().getWorldManager();
 
         BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;

@@ -2,7 +2,7 @@ package com.github.jotask.rosjam.factory;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.github.jotask.rosjam.game.DungeonState;
+import com.github.jotask.rosjam.game.Game;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.dungeon.door.NextLevelDoor;
 import com.github.jotask.rosjam.game.dungeon.door.RoomDoor;
@@ -134,7 +134,7 @@ public class BodyFactory {
 
     public static void createRoom(final Room room){
 
-        World world = DungeonState.get().getWorldManager().getWorld();
+        World world = Game.get().getPlay().getWorldManager().getWorld();
 
         BodyDef bd = new BodyDef();
         bd.position.set(room.getCenter());

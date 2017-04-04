@@ -7,7 +7,6 @@ import com.github.jotask.rosjam.engine.camera.Camera;
 import com.github.jotask.rosjam.engine.input.Controller;
 import com.github.jotask.rosjam.engine.input.InputController;
 import com.github.jotask.rosjam.engine.states.CameraState;
-import com.github.jotask.rosjam.engine.states.GameState;
 import com.github.jotask.rosjam.game.hud.Hud;
 import com.github.jotask.rosjam.neat.NeatThread;
 
@@ -22,13 +21,11 @@ public class Game extends CameraState {
     enum GAMESTATES{ PLAY, PAUSE, GAMEOVER }
 
     private static Game instance;
-    public static Game get(){
-        return instance;
-    }
+    public static Game get(){ return instance; }
 
-    private final GameState play;
-    private final GameState pause;
-    private final GameState gameover;
+    private final DungeonState play;
+    private final PauseState pause;
+    private final GameOverState gameover;
 
     private GAMESTATES currentState = GAMESTATES.PLAY;
 
@@ -40,11 +37,13 @@ public class Game extends CameraState {
 
     public Game(Camera camera) {
         super(camera);
+
         Game.instance = this;
 
         this.controller = new InputController(this);
 
         this.play  = new DungeonState(this);
+        this.play.init();
         this.pause = new PauseState(this);
         this.gameover = new GameOverState(this);
 
@@ -221,5 +220,7 @@ public class Game extends CameraState {
     public Hud getHud() { return hud; }
 
     public void changeState(final GAMESTATES gs){ this.currentState = gs; }
+
+    public DungeonState getPlay() { return play; }
 
 }

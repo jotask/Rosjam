@@ -2,7 +2,7 @@ package com.github.jotask.rosjam.game.dungeon.config;
 
 import com.github.jotask.rosjam.Rosjam;
 import com.github.jotask.rosjam.engine.assets.DungeonAssets;
-import com.github.jotask.rosjam.game.DungeonState;
+import com.github.jotask.rosjam.game.Game;
 import com.github.jotask.rosjam.game.world.WorldManager;
 import com.github.jotask.rosjam.util.JRandom;
 
@@ -25,7 +25,7 @@ public class ConfigDungeon {
     public int maxRooms = 7;
 
     public ConfigDungeon(){
-        this(DungeonState.get().getWorldManager());
+        this(Game.get().getPlay().getWorldManager());
     }
 
     public ConfigDungeon(WorldManager worldManager) {

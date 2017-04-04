@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.github.jotask.rosjam.game.DungeonState;
+import com.github.jotask.rosjam.game.Game;
 import com.github.jotask.rosjam.game.Score;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.dungeon.door.NextLevelDoor;
@@ -28,6 +29,8 @@ class WorldCollision implements ContactListener {
         Object a = contact.getFixtureA().getBody().getUserData();
         Object b = contact.getFixtureB().getBody().getUserData();
 
+        final DungeonState dungeonState = Game.get().getPlay();
+
         if((a instanceof Player || b instanceof Player) && (a instanceof Enemy || b instanceof Enemy)){
             Player player;
             Enemy enemy;
@@ -39,7 +42,7 @@ class WorldCollision implements ContactListener {
                 enemy = (Enemy) a;
             }
             player.damage(1);
-            DungeonState.get().score.addScore(Score.HIT_BY_ENEMY);
+            dungeonState.score.addScore(Score.HIT_BY_ENEMY);
 //            enemy.damage(1);
         }
 
@@ -79,7 +82,7 @@ class WorldCollision implements ContactListener {
         if(z instanceof Door || y instanceof Door){
 
             if(z instanceof NextLevelDoor || y instanceof NextLevelDoor){
-                DungeonState.get().getLevel().setCompleted();
+                dungeonState.getLevel().setCompleted();
                 return;
             }
 
@@ -92,7 +95,7 @@ class WorldCollision implements ContactListener {
 
             // TODO
             if(door.self.isCompleted() && !door.isEntered) {
-                DungeonState.get().getLevel().nextRoom(door);
+                dungeonState.getLevel().nextRoom(door);
                 door.connected.isEntered = true;
             }
         }

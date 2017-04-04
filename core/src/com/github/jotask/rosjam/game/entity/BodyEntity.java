@@ -3,7 +3,7 @@ package com.github.jotask.rosjam.game.entity;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.github.jotask.rosjam.game.DungeonState;
+import com.github.jotask.rosjam.game.Game;
 
 /**
  * BodyEntity
@@ -37,7 +37,7 @@ public abstract class BodyEntity extends Entity {
 
     @Override
     public void die() {
-        DungeonState.get().getWorldManager().delete(this.body);
+        Game.get().getPlay().getWorldManager().delete(this.body);
     }
 
     public Body getBody() { return body; }

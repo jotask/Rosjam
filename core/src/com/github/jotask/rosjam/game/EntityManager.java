@@ -3,9 +3,8 @@ package com.github.jotask.rosjam.game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Disposable;
-import com.github.jotask.rosjam.factory.EntityFactory;
-import com.github.jotask.rosjam.game.entity.enemy.Enemy;
 import com.github.jotask.rosjam.game.entity.Entity;
+import com.github.jotask.rosjam.game.entity.enemy.Enemy;
 import com.github.jotask.rosjam.game.entity.player.Player;
 
 import java.util.LinkedList;
@@ -31,8 +30,15 @@ public class EntityManager implements Disposable{
 
     private EntityManager() {
         EntityManager.instance = this;
-        player = EntityFactory.generatePlayer();
         entities = new LinkedList<Entity>();
+    }
+
+    void createPlayer(final Player player){
+        if(this.player == null){
+            this.player = player;
+        }else{
+            throw new RuntimeException("Player already existing");
+        }
     }
 
     public void dispose() {

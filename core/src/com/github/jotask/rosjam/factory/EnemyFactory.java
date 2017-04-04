@@ -2,8 +2,8 @@ package com.github.jotask.rosjam.factory;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.github.jotask.rosjam.game.DungeonState;
 import com.github.jotask.rosjam.game.EntityManager;
+import com.github.jotask.rosjam.game.Game;
 import com.github.jotask.rosjam.game.Spawner;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
 import com.github.jotask.rosjam.game.entity.enemy.Enemies;
@@ -42,7 +42,7 @@ public class EnemyFactory {
      */
     public static Enemy get(final Room room, final Enemies type){
 
-        final World world = DungeonState.get().getWorldManager().getWorld();
+        final World world = Game.get().getPlay().getWorldManager().getWorld();
         final Body body = BodyFactory.createEnemy(world, .4f);
         final Sprite sprite = SpriteEnemyFactory.get(type, body);
 
