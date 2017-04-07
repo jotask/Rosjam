@@ -36,8 +36,8 @@ public class Game extends CameraState {
     private InputController controller;
     private Hud hud;
 
-    private Thread thread;
-    private NeatThread neatThread;
+    private final Thread thread;
+    public final NeatThread neatThread;
 
     public Game(Camera camera) {
         super(camera);

@@ -26,7 +26,7 @@ public class RandomWalker extends ArtificialIntelligence {
     public void update() {
 
         if(timer.isPassed(true)) {
-            body.setLinearVelocity(new Vector2(0,0));
+            body.setLinearVelocity(Vector2.Zero);
             body.setAngularVelocity(0);
             randomMovement();
         }else{

@@ -31,7 +31,7 @@ public class Jota {
 
     private final JotaManager manager;
 
-    private final Config config;
+    public final Config config;
 
     private NeatEnemy best;
 

@@ -26,7 +26,8 @@ public final class JRandom {
     }
 
     public Enemies getRandomEnemy(){
-        return Enemies.GOBLIN_MAGIC;
+        // FIXME
+        return Enemies.GOBLIN_MELE;
 //        final Enemies[] values = Enemies.values();
 //        return values[random(values.length)];
     }

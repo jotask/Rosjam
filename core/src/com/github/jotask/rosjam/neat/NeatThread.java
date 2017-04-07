@@ -2,6 +2,7 @@ package com.github.jotask.rosjam.neat;
 
 import com.github.jotask.rosjam.neat.config.Config;
 import com.github.jotask.rosjam.neat.config.LoadConfig;
+import com.github.jotask.rosjam.neat.jneat.network.Network;
 
 /**
  * NeatThread
@@ -34,5 +35,11 @@ public class NeatThread implements Runnable{
     public void stop(){
         this.isRunning = false;
     }
+
+    public synchronized Network getBestNetwork(){
+        return this.neat.getJota().getBest().getNetwork();
+    }
+
+    public synchronized float getThreshold(){ return new Float(neat.getJota().getConfig().get(Config.Property.THRESHOLD)); }
 
 }
