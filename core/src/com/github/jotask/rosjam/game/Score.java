@@ -44,6 +44,6 @@ public class Score {
         this.score += scr;
     }
 
-    public long getScore() { return score; }
+    public long getScore() { return this.score; }
 
 }

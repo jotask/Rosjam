@@ -28,7 +28,7 @@ public abstract class HealthEntity extends BodyEntity {
 
     public void damage(int dmg){
         this.currentHealth  -= dmg;
-        if(this.currentHealth <= 0){
+        if(this.currentHealth <= 1){
             this.needsToDie = true;
         }
     }

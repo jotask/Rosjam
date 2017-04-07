@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
@@ -25,12 +26,20 @@ public class GameOverState extends GameState {
 
     final Camera camera;
 
+    final Label score;
+
     public GameOverState(final Game game) {
         super(game);
         this.camera = new Camera();
         this.stage = new Stage(game.getHud().getStage().getViewport(), Rosjam.get().getSb());
         final Skin skin = Rosjam.get().getAssets().getSkin();
         this.pause = new Window("GameOver", skin);
+        {
+            final Label lab = new Label("Max score: ", skin);
+            pause.add(lab).row();
+            score = new Label(String.valueOf(game.getPlay().score.getScore()), skin);
+            pause.add(score).row();
+        }
         {
             final TextButton btn = new TextButton("Exit", skin);
             btn.addListener(new ClickListener(){
@@ -53,6 +62,7 @@ public class GameOverState extends GameState {
     @Override
     public void enterState(){
         Gdx.input.setInputProcessor(this.stage);
+        this.score.setText(String.valueOf(game.getPlay().score.getScore()));
         float x = camera.position.x + (camera.viewportWidth *.5f) - (pause.getWidth() * .5f);
         float y = camera.position.y + (camera.viewportHeight *.5f) - (pause.getHeight() * .5f);
         this.pause.setPosition(x, y);

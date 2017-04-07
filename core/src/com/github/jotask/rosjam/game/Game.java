@@ -2,6 +2,7 @@ package com.github.jotask.rosjam.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.jotask.rosjam.Rosjam;
@@ -21,7 +22,7 @@ import com.github.jotask.rosjam.neat.NeatThread;
  */
 public class Game extends CameraState {
 
-    enum GAMESTATES{ PLAY, PAUSE, GAMEOVER }
+    public enum GAMESTATES{ PLAY, PAUSE, GAMEOVER }
 
     private static Game instance;
     public static Game get(){ return instance; }
@@ -117,6 +118,7 @@ public class Game extends CameraState {
                 this.pause.postRender(sb);
                 break;
             case GAMEOVER:
+                this.play.postRender(sb);
                 this.gameover.postRender(sb);
                 break;
         }
@@ -156,12 +158,16 @@ public class Game extends CameraState {
     @Override
     public void update() {
 
+        // FIXME delete
         if(Gdx.input.isKeyJustPressed(Input.Keys.P)){
             if(currentState != GAMESTATES.PAUSE)
                 changeState(GAMESTATES.PAUSE);
         }else if(Gdx.input.isKeyJustPressed(Input.Keys.O)){
             if(currentState != GAMESTATES.PLAY)
                 changeState(GAMESTATES.PLAY);
+        }else if(Gdx.input.isKeyJustPressed(Input.Keys.I)){
+            if(currentState != GAMESTATES.GAMEOVER)
+                changeState(GAMESTATES.GAMEOVER);
         }
 
         switch (this.currentState){
@@ -266,10 +272,12 @@ public class Game extends CameraState {
 
     public DungeonState getPlay() { return play; }
 
-    public void exit(boolean save){
-        System.out.println("exit this state: " + save);
+    void exit(boolean save){
         if(save){
             InitialParameters.save(this.getPlay());
+        }else{
+            FileHandle f = Gdx.files.local(InitialParameters.file);
+            f.delete();
         }
         changeState(GAMESTATES.PLAY);
         Rosjam.get().getGsm().changeState(GameStateManager.STATE.MENU);

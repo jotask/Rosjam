@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.github.jotask.rosjam.engine.input.Controller;
 import com.github.jotask.rosjam.factory.EntityFactory;
+import com.github.jotask.rosjam.game.Game;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
 import com.github.jotask.rosjam.game.entity.ControlEntity;
@@ -48,7 +49,7 @@ public class Player extends ControlEntity {
         }
 
         if(this.getCurrentHealth() < 0){
-            this.currentHealth = this.getMAX_HEALTH();
+            Game.get().changeState(Game.GAMESTATES.GAMEOVER);
         }
 
     }
