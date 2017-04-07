@@ -6,6 +6,7 @@ import com.github.jotask.rosjam.engine.camera.Camera;
 import com.github.jotask.rosjam.engine.camera.RoomCamera;
 import com.github.jotask.rosjam.game.EntityManager;
 import com.github.jotask.rosjam.game.Game;
+import com.github.jotask.rosjam.game.InitialParameters;
 import com.github.jotask.rosjam.game.Score;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.entity.Entity;
@@ -23,15 +24,16 @@ public class LevelManager extends Entity{
     public final EntityManager entityManager;
     public final DungeonManager dungeonManager;
 
-    private int level = 0;
+    private int level;
     private boolean completed = false;
 
     private Door nextRoom;
 
-    public LevelManager(WorldManager worldManager) {
+    public LevelManager(WorldManager worldManager, final InitialParameters.Cfg cfg) {
         this.worldManager = worldManager;
+        this.level = cfg.level;
         this.entityManager = EntityManager.get();
-        this.dungeonManager = new DungeonManager(this);
+        this.dungeonManager = new DungeonManager(this, cfg);
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.github.jotask.rosjam.engine.camera.RoomCamera;
 import com.github.jotask.rosjam.factory.DungeonFactory;
 import com.github.jotask.rosjam.game.EntityManager;
 import com.github.jotask.rosjam.game.Game;
+import com.github.jotask.rosjam.game.InitialParameters;
 import com.github.jotask.rosjam.game.dungeon.Dungeon;
 import com.github.jotask.rosjam.game.dungeon.config.ConfigDungeon;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
@@ -28,14 +29,18 @@ public class DungeonManager {
 
     private final DungeonFactory dungeonFactory;
 
-    public DungeonManager(LevelManager levelManager) {
+    private long initialseed;
+
+    public DungeonManager(LevelManager levelManager, InitialParameters.Cfg cfg) {
         this.levelManager = levelManager;
         this.dungeonFactory = new DungeonFactory();
         camera = (RoomCamera) Game.get().getCamera();
+        this.initialseed = cfg.seed;
     }
 
     private ConfigDungeon getNextConfig(){
-        ConfigDungeon cfg = new ConfigDungeon();
+        this.initialseed++;
+        ConfigDungeon cfg = new ConfigDungeon(this.levelManager.worldManager, initialseed);
         cfg.level = levelManager.getLevel();
         cfg.maxRooms += cfg.level;
         return cfg;

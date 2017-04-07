@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.Body;
  */
 public abstract class HealthEntity extends BodyEntity {
 
-    private final int MAX_HEALTH = 10;
+    public static final int MAX_HEALTH = 10;
     public int currentHealth;
 
     protected HealthEntity(Body body) {
@@ -36,5 +36,9 @@ public abstract class HealthEntity extends BodyEntity {
     public int getMAX_HEALTH() { return MAX_HEALTH; }
 
     public int getCurrentHealth() { return currentHealth; }
+
+    public void setCurrentHealth(int health){
+        this.currentHealth = health;
+    }
 
 }

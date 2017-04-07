@@ -37,7 +37,9 @@ public class DungeonFactory {
 
         LinkedList<Room> rooms = new LinkedList<Room>();
 
-        Room initialRoom = room(cfg, new Vector2(), true);
+        int ids = 0;
+
+        Room initialRoom = room(ids++, cfg, new Vector2(), true);
         rooms.add(initialRoom);
 
         generator: while(rooms.size() < cfg.maxRooms){
@@ -63,7 +65,7 @@ public class DungeonFactory {
                 nextRoom.x -= 1f;
                 nextRoom.y -= 1f;
 
-                Room newRoom = room(cfg, nextRoom);
+                Room newRoom = room(ids++, cfg, nextRoom);
 
                 // Connect doors
                 connectRooms(door, newRoom);
@@ -74,7 +76,7 @@ public class DungeonFactory {
 
         }
 
-        specialRooms(cfg, rooms);
+        specialRooms(ids, cfg, rooms);
 
         Dungeon dungeon = new Dungeon(rooms);
         dungeon.initialRoom = initialRoom;
@@ -164,7 +166,7 @@ public class DungeonFactory {
         return door;
     }
 
-    private final void specialRooms(final ConfigDungeon cfg, final LinkedList<Room> rooms){
+    private final void specialRooms(int ids, final ConfigDungeon cfg, final LinkedList<Room> rooms){
         // Get the most far away room
         final LinkedList<Room> fars = new Graph(rooms.getFirst()).getFars();
         TextureRegion region = cfg.dungeonAssets.getBackground();
@@ -196,7 +198,7 @@ public class DungeonFactory {
 
         }
 
-        BossRoom bossRoom = new BossRoom(pos, region);
+        BossRoom bossRoom = new BossRoom(ids++, pos, region);
         BodyFactory.createRoom(bossRoom);
 
         bossRoom.doors.add(getDoor(bossRoom, Door.SIDE.UP));
@@ -224,15 +226,15 @@ public class DungeonFactory {
 
     }
 
-    private final Room room(final ConfigDungeon cfg, final Vector2 position){
-        return room(cfg, position, false);
+    private final Room room(final int id, final ConfigDungeon cfg, final Vector2 position){
+        return room(id, cfg, position, false);
     }
 
-    private final Room room(final ConfigDungeon cfg, final Vector2 position, boolean initial){
+    private final Room room(final int id, final ConfigDungeon cfg, final Vector2 position, boolean initial){
 
         TextureRegion background = cfg.dungeonAssets.getBackground();
 
-        Room room = new Room(position, background);
+        Room room = new Room(id, position, background);
         BodyFactory.createRoom(room);
 
         room.doors.add(getDoor(room, Door.SIDE.UP));

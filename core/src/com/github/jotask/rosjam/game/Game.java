@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.github.jotask.rosjam.Rosjam;
+import com.github.jotask.rosjam.engine.GameStateManager;
 import com.github.jotask.rosjam.engine.camera.Camera;
 import com.github.jotask.rosjam.engine.input.Controller;
 import com.github.jotask.rosjam.engine.input.InputController;
@@ -266,8 +268,11 @@ public class Game extends CameraState {
 
     public void exit(boolean save){
         System.out.println("exit this state: " + save);
-        // FIXME
+        if(save){
+            InitialParameters.save(this.getPlay());
+        }
         changeState(GAMESTATES.PLAY);
+        Rosjam.get().getGsm().changeState(GameStateManager.STATE.MENU);
     }
 
 }

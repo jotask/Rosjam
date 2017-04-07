@@ -27,13 +27,12 @@ public class Score {
     public static final int HIT_BY_ENEMY = -10;
 
     private final Timer timer;
-    private final long initialScore = 627;
 
     private long score;
 
-    public Score() {
+    public Score(final InitialParameters.Cfg cfg) {
         this.timer = new Timer(1f);
-        this.score = this.initialScore;
+        this.score = cfg.score;
     }
 
     public void update() {

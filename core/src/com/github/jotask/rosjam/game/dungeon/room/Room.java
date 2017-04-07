@@ -44,7 +44,10 @@ public class Room extends Entity {
 
     private EditorState.Tile[][] layout;
 
-    public Room(final Vector2 p, TextureRegion background) {
+    public final int id;
+
+    public Room(final int id, final Vector2 p, TextureRegion background) {
+        this.id = id;
         this.bounds = new Rectangle(p.x, p.y, WIDTH, HEIGHT);
         this.background = background;
         this.doors = new LinkedList<Door>();

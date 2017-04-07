@@ -1,6 +1,5 @@
 package com.github.jotask.rosjam.util;
 
-import com.badlogic.gdx.math.MathUtils;
 import com.github.jotask.rosjam.game.entity.enemy.Enemies;
 
 import java.util.Random;
@@ -15,8 +14,6 @@ public final class JRandom {
 
     private final Random random;
     private final long seed;
-
-    public JRandom(){ this(MathUtils.random(Long.MAX_VALUE)); }
 
     public JRandom(long seed) {
         this.seed = seed;

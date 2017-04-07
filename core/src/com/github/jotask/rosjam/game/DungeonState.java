@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.jotask.rosjam.engine.states.GameState;
 import com.github.jotask.rosjam.factory.EntityFactory;
 import com.github.jotask.rosjam.game.dungeon.level.LevelManager;
+import com.github.jotask.rosjam.game.entity.player.Player;
 import com.github.jotask.rosjam.game.hud.dungeon.DungeonHud;
 import com.github.jotask.rosjam.game.world.WorldManager;
 
@@ -33,13 +34,17 @@ public class DungeonState extends GameState {
 
     void init(){
 
+        final InitialParameters.Cfg cfg = InitialParameters.load();
+
         this.worldManager = new WorldManager(game);
 
-        this.manager.createPlayer(EntityFactory.generatePlayer(this.worldManager));
+        final Player player = EntityFactory.generatePlayer(this.worldManager);
+        player.setCurrentHealth(cfg.health);
+        this.manager.createPlayer(player);
 
-        this.level = new LevelManager(this.worldManager);
+        this.level = new LevelManager(this.worldManager, cfg);
 
-        score = new Score();
+        score = new Score(cfg);
 
         this.level.nextLevel();
 

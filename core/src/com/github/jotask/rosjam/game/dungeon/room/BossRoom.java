@@ -12,8 +12,8 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class BossRoom extends Room {
 
-    public BossRoom(Vector2 p, TextureRegion background) {
-        super(p, background);
+    public BossRoom(final int id, Vector2 p, TextureRegion background) {
+        super(id, p, background);
         this.completed = true;
     }
 

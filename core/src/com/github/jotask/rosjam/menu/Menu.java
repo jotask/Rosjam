@@ -1,6 +1,7 @@
 package com.github.jotask.rosjam.menu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -13,6 +14,7 @@ import com.github.jotask.rosjam.Rosjam;
 import com.github.jotask.rosjam.engine.GameStateManager;
 import com.github.jotask.rosjam.engine.camera.Camera;
 import com.github.jotask.rosjam.engine.states.CameraState;
+import com.github.jotask.rosjam.game.InitialParameters;
 import com.github.jotask.rosjam.util.Ref;
 
 /**
@@ -36,18 +38,26 @@ public class Menu extends CameraState {
         table.setFillParent(true);
         table.padTop(125f);
         {
-            TextButton start = new TextButton("Start new run", skin);
-            start.addListener(new ClickListener(){
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    Rosjam.get().getGsm().changeState(GameStateManager.STATE.GAME);
-                }
-            });
-            table.add(start).fillX().padBottom(5f).row();
+            {
 
-            // TODO implement continue
-            TextButton cont = new TextButton("Continue run", skin);
-            table.add(cont).fillX().padBottom(5f).row();
+                final FileHandle file = Gdx.files.local(InitialParameters.file);
+
+                TextButton start = new TextButton("Start new run", skin);
+                start.addListener(new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        file.delete();
+                        Rosjam.get().getGsm().changeState(GameStateManager.STATE.GAME);
+                    }
+                });
+                table.add(start).fillX().padBottom(5f).row();
+
+                if (file.exists()) {
+                    TextButton cont = new TextButton("Continue run", skin);
+                    table.add(cont).fillX().padBottom(5f).row();
+                }
+            }
+
 
             TextButton options = new TextButton("Options", skin);
             options.addListener(new ClickListener(){
