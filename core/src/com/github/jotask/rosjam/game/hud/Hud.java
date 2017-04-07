@@ -72,9 +72,7 @@ public class Hud{
 
     public void addControl(final Actor actor){ this.controls.addActor(actor); }
 
-    public Stage getStage() {
-        return this.controls.stage;
-    }
+    public Stage getStage() { return this.stage; }
 
 //    public Map getMap() { return map; }
 

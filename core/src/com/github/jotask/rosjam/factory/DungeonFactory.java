@@ -267,7 +267,7 @@ public class DungeonFactory {
                         spawnRock(cfg, room, t);
                         break;
                     case SPAWN:
-                        spawner(cfg.random.getRandomEnemy(), room, t);
+                        spawner(cfg, room, t);
                         break;
                     default:
                         throw new RuntimeException("Not Supported");
@@ -297,9 +297,11 @@ public class DungeonFactory {
 
     }
 
-    private void spawner(final Enemies enemy, final Room room, final TileData data){
+    private void spawner(final ConfigDungeon cfg, final Room room, final TileData data){
 
         Rectangle r = room.getBounds();
+
+        final Enemies enemy = cfg.random.getRandomEnemy();
 
         Vector2 v = new Vector2();
         v.x = r.x + data.x + .5f;

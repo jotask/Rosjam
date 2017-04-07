@@ -25,7 +25,7 @@ public class DungeonHud {
 
     private final ScoreHud score;
     private final LifeHud life;
-    private final MapHud map;
+//    private final MapHud map;
 
     public DungeonHud(DungeonState dungeonState) {
         this.dungeonState = dungeonState;
@@ -35,13 +35,13 @@ public class DungeonHud {
 
         this.score = new ScoreHud(this);
         this.life = new LifeHud(this);
-        this.map = new MapHud(this);
+//        this.map = new MapHud(this);
     }
 
     public void update(){
         this.score.update();
         this.life.update();
-        this.map.update();
+//        this.map.update();
     }
 
     public void render(final SpriteBatch sb){
@@ -51,14 +51,14 @@ public class DungeonHud {
         sb.begin();
         this.score.render(sb);
         this.life.render(sb);
-        this.map.render(sb);
+//        this.map.render(sb);
     }
 
     public void debug(final ShapeRenderer sr){
         sr.end();
         sr.setProjectionMatrix(this.camera.combined);
         sr.begin();
-        this.map.debug(sr);
+//        this.map.debug(sr);
     }
 
 }

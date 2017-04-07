@@ -68,6 +68,14 @@ public abstract class GameState implements IState {
 
     }
 
+    public void enterState(){
+
+    }
+
+    public void exitState(){
+
+    }
+
     public Game getGame() { return game; }
 
 }

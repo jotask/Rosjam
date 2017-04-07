@@ -26,7 +26,7 @@ public class DungeonState extends GameState {
 
     private final EntityManager manager;
 
-    public DungeonState(final Game game) {
+    DungeonState(final Game game) {
         super(game);
         this.manager = EntityManager.get();
     }
@@ -44,6 +44,7 @@ public class DungeonState extends GameState {
         this.level.nextLevel();
 
         this.hud = new DungeonHud(this);
+
     }
 
     private void reset(){
@@ -105,4 +106,5 @@ public class DungeonState extends GameState {
 
     public LevelManager getLevel() { return level; }
 
+    public DungeonHud getHud() { return hud; }
 }

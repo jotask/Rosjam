@@ -1,6 +1,7 @@
 package com.github.jotask.rosjam.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.jotask.rosjam.engine.camera.Camera;
@@ -27,7 +28,7 @@ public class Game extends CameraState {
     private final PauseState pause;
     private final GameOverState gameover;
 
-    private GAMESTATES currentState = GAMESTATES.PLAY;
+    private GAMESTATES currentState;
 
     private InputController controller;
     private Hud hud;
@@ -44,14 +45,17 @@ public class Game extends CameraState {
 
         this.play  = new DungeonState(this);
         this.play.init();
-        this.pause = new PauseState(this);
-        this.gameover = new GameOverState(this);
 
         this.hud = new Hud(this);
+
+        this.pause = new PauseState(this);
+        this.gameover = new GameOverState(this);
 
         this.neatThread = new NeatThread();
         this.thread = new Thread(this.neatThread);
         this.thread.start();
+
+        changeState(GAMESTATES.PLAY);
 
     }
 
@@ -149,6 +153,15 @@ public class Game extends CameraState {
 
     @Override
     public void update() {
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.P)){
+            if(currentState != GAMESTATES.PAUSE)
+                changeState(GAMESTATES.PAUSE);
+        }else if(Gdx.input.isKeyJustPressed(Input.Keys.O)){
+            if(currentState != GAMESTATES.PLAY)
+                changeState(GAMESTATES.PLAY);
+        }
+
         switch (this.currentState){
             case PLAY:
                 this.play.update();
@@ -170,9 +183,11 @@ public class Game extends CameraState {
                 this.play.render(sb);
                 break;
             case PAUSE:
+                this.play.render(sb);
                 this.pause.render(sb);
                 break;
             case GAMEOVER:
+                this.play.render(sb);
                 this.gameover.render(sb);
                 break;
         }
@@ -219,8 +234,40 @@ public class Game extends CameraState {
 
     public Hud getHud() { return hud; }
 
-    public void changeState(final GAMESTATES gs){ this.currentState = gs; }
+    public void changeState(final GAMESTATES gs){
+        if(currentState!= null) {
+            switch (currentState) {
+                case PAUSE:
+                    this.pause.exitState();
+                    break;
+                case GAMEOVER:
+                    this.gameover.exitState();
+                    break;
+                case PLAY:
+                    this.play.exitState();
+                    break;
+            }
+        }
+        this.currentState = gs;
+        switch (currentState){
+            case PAUSE:
+                this.pause.enterState();
+                break;
+            case GAMEOVER:
+                this.gameover.enterState();
+                break;
+            case PLAY:
+                this.play.enterState();
+                break;
+        }
+    }
 
     public DungeonState getPlay() { return play; }
+
+    public void exit(boolean save){
+        System.out.println("exit this state: " + save);
+        // FIXME
+        changeState(GAMESTATES.PLAY);
+    }
 
 }
