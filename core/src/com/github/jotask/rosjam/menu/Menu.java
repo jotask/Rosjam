@@ -54,6 +54,12 @@ public class Menu extends CameraState {
 
                 if (file.exists()) {
                     TextButton cont = new TextButton("Continue run", skin);
+                    cont.addListener(new ClickListener(){
+                        @Override
+                        public void clicked(InputEvent event, float x, float y) {
+                            Rosjam.get().getGsm().changeState(GameStateManager.STATE.GAME);
+                        }
+                    });
                     table.add(cont).fillX().padBottom(5f).row();
                 }
             }

@@ -40,6 +40,7 @@ public class DungeonState extends GameState {
 
         final Player player = EntityFactory.generatePlayer(this.worldManager);
         player.setCurrentHealth(cfg.health);
+
         this.manager.createPlayer(player);
 
         this.level = new LevelManager(this.worldManager, cfg);

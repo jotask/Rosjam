@@ -212,7 +212,7 @@ public class Game extends CameraState {
 
     @Override
     public void dispose() {
-        this.gameover.dispose();
+        this.play.dispose();
         this.pause.dispose();
         this.gameover.dispose();
         this.hud.dispose();
