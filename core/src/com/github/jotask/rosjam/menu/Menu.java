@@ -83,6 +83,15 @@ public class Menu extends CameraState {
             });
             table.add(simulation).fillX().padBottom(5f).row();
 
+            TextButton exit = new TextButton("Exit", skin);
+            exit.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    Gdx.app.exit();
+                }
+            });
+            table.add(exit).fillX().padBottom(5f).row();
+
 
         }
         this.stage.addActor(table);

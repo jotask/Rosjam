@@ -99,6 +99,7 @@ public class BodyFactory {
         FixtureDef fd = new FixtureDef();
         fd.shape = shape;
         fd.density = 1f;
+        fd.friction = 15f;
         CollisionFilter.setMask(fd , CollisionFilter.EENTITY.PLAYER);
 
         Fixture fixture = body.createFixture(fd);

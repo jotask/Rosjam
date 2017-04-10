@@ -23,32 +23,26 @@ public class ArtificialIntelligence extends Entity implements Controller {
         this.dir = new Vector2(0, 0);
     }
 
-    @Override
     public Vector2 getDirection() {
         return dir;
     }
 
-    @Override
     public boolean isShooting() {
         return false;
     }
 
-    @Override
     public Vector2 getShootDirection() {
         return null;
     }
 
-    @Override
     public final boolean resetLevel() {
         return false;
     }
 
-    @Override
     public void update() { }
 
-    @Override
     public final void render(SpriteBatch sb) {}
 
-    @Override
     public final boolean pause() { return false; }
+
 }

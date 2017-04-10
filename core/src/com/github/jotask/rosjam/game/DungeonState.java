@@ -1,5 +1,7 @@
 package com.github.jotask.rosjam.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.jotask.rosjam.engine.states.GameState;
@@ -27,9 +29,12 @@ public class DungeonState extends GameState {
 
     private final EntityManager manager;
 
+    private final InputProcessor inputProcessor;
+
     DungeonState(final Game game) {
         super(game);
         this.manager = EntityManager.get();
+        this.inputProcessor = Gdx.input.getInputProcessor();
     }
 
     void init(){
@@ -113,4 +118,8 @@ public class DungeonState extends GameState {
     public LevelManager getLevel() { return level; }
 
     public DungeonHud getHud() { return hud; }
+
+    @Override
+    public void enterState() { Gdx.input.setInputProcessor(this.inputProcessor); }
+
 }

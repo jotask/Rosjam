@@ -60,9 +60,7 @@ public class Player extends ControlEntity {
     }
 
     @Override
-    public void debug(ShapeRenderer sr) {
-
-    }
+    public void debug(ShapeRenderer sr) { }
 
     public void goTo(Door door){ moveTo = door.connected.getPosition();}
 

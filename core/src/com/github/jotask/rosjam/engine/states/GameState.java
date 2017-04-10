@@ -19,62 +19,38 @@ public abstract class GameState implements IState {
     }
 
     @Override
-    public void preUpdate() {
-
-    }
+    public void preUpdate() { }
 
     @Override
-    public void update() {
-
-    }
+    public void update() { }
 
     @Override
-    public void postUpdate() {
-
-    }
+    public void postUpdate() { }
 
     @Override
-    public void preRender(SpriteBatch sb) {
-
-    }
+    public void preRender(SpriteBatch sb) { }
 
     @Override
-    public void render(SpriteBatch sb) {
-
-    }
+    public void render(SpriteBatch sb) { }
 
     @Override
-    public void postRender(SpriteBatch sb) {
-
-    }
+    public void postRender(SpriteBatch sb) { }
 
     @Override
-    public void preDebug(ShapeRenderer sr) {
-
-    }
+    public void preDebug(ShapeRenderer sr) { }
 
     @Override
-    public void debug(ShapeRenderer sr) {
-
-    }
+    public void debug(ShapeRenderer sr) { }
 
     @Override
-    public void postDebug(ShapeRenderer sr) {
-
-    }
+    public void postDebug(ShapeRenderer sr) { }
 
     @Override
-    public void dispose() {
+    public void dispose() { }
 
-    }
+    public void enterState(){ }
 
-    public void enterState(){
-
-    }
-
-    public void exitState(){
-
-    }
+    public void exitState(){ }
 
     public Game getGame() { return game; }
 

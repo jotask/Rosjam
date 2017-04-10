@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
  * @author Jose Vives Iznardo
  * @since 14/01/2017
  */
-public interface Controller {
+public interface Controller{
 
     Vector2 getDirection();
 
