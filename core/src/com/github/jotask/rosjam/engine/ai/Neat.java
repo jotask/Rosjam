@@ -16,7 +16,7 @@ import com.github.jotask.rosjam.util.Timer;
  */
 public class Neat extends ArtificialIntelligence {
 
-    public final float SPEED = 10f;
+    private final float SPEED = 25f;
 
     private final Network network;
 
@@ -28,14 +28,15 @@ public class Neat extends ArtificialIntelligence {
         super(body);
         this.network = Game.get().neatThread.getBestNetwork();
         this.THRESHOLD = Game.get().neatThread.getThreshold();
-        this.timer = new Timer(1f);
+        this.timer = new Timer(.1f);
     }
 
     @Override
     public void update() {
         if(timer.isPassed(true)) {
             setOutput(network.evaluate(getInputs()));
-            this.body.applyForceToCenter(dir.scl(SPEED), true);
+            this.dir.scl(SPEED);
+            this.body.applyForceToCenter(dir, true);
             this.dir.setZero();
         }
     }

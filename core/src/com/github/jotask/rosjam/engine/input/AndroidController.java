@@ -1,6 +1,7 @@
 package com.github.jotask.rosjam.engine.input;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.github.jotask.rosjam.engine.input.android.DirectionController;
 import com.github.jotask.rosjam.engine.input.android.ShootController;
@@ -49,4 +50,8 @@ public class AndroidController implements Controller {
     public Vector2 getShootDirection() {
         return shoot.getDirection();
     }
+
+    @Override
+    public boolean pause() { return Gdx.input.isKeyJustPressed(Input.Keys.BACK); }
+
 }

@@ -18,4 +18,6 @@ public interface Controller {
 
     boolean resetLevel();
 
+    boolean pause();
+
 }

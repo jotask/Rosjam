@@ -75,4 +75,8 @@ public class DesktopController implements Controller {
 
         return shoot;
     }
+
+    @Override
+    public boolean pause() { return Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE); }
+
 }

@@ -21,7 +21,6 @@ public final class InitialParameters {
     private InitialParameters(){}
 
     static void save(final DungeonState game){
-        System.out.println("saving");
         Json json = new Json();
         FileHandle fileHandle = Gdx.files.local(file);
         fileHandle.writeString(json.prettyPrint(new Cfg(game)), false);
@@ -49,8 +48,8 @@ public final class InitialParameters {
         // Player
         public int health;
 
-        public Cfg(final DungeonState game) {
-            // TODO create parameters to save
+        Cfg(final DungeonState game) {
+
             this.score = game.score.getScore();
             this.level = game.getLevel().getLevel();
 
@@ -59,8 +58,8 @@ public final class InitialParameters {
 
         }
 
-        public Cfg(){
-            // TODO create default parameters to load
+        Cfg(){
+
             this.seed = MathUtils.random(Long.MAX_VALUE);
             this.level = 0;
             this.score = 627;

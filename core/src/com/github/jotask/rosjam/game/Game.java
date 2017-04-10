@@ -1,7 +1,6 @@
 package com.github.jotask.rosjam.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -44,12 +43,12 @@ public class Game extends CameraState {
 
         Game.instance = this;
 
+        this.hud = new Hud(this);
+
         this.controller = new InputController(this);
 
         this.play  = new DungeonState(this);
         this.play.init();
-
-        this.hud = new Hud(this);
 
         this.pause = new PauseState(this);
         this.gameover = new GameOverState(this);
@@ -158,16 +157,8 @@ public class Game extends CameraState {
     @Override
     public void update() {
 
-        // FIXME delete
-        if(Gdx.input.isKeyJustPressed(Input.Keys.P)){
-            if(currentState != GAMESTATES.PAUSE)
-                changeState(GAMESTATES.PAUSE);
-        }else if(Gdx.input.isKeyJustPressed(Input.Keys.O)){
-            if(currentState != GAMESTATES.PLAY)
-                changeState(GAMESTATES.PLAY);
-        }else if(Gdx.input.isKeyJustPressed(Input.Keys.I)){
-            if(currentState != GAMESTATES.GAMEOVER)
-                changeState(GAMESTATES.GAMEOVER);
+        if(EntityManager.get().getPlayer().getController().pause()){
+            changeState(GAMESTATES.PAUSE);
         }
 
         switch (this.currentState){

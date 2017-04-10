@@ -49,4 +49,6 @@ public class ArtificialIntelligence extends Entity implements Controller {
     @Override
     public final void render(SpriteBatch sb) {}
 
+    @Override
+    public final boolean pause() { return false; }
 }
