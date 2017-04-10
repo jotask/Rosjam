@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.github.jotask.rosjam.Rosjam;
 import com.github.jotask.rosjam.engine.GameStateManager;
 import com.github.jotask.rosjam.engine.camera.Camera;
@@ -56,19 +57,20 @@ public class NeatOptions extends CameraState {
 
     public NeatOptions(Camera camera) {
         super(camera);
-        final float width = 300f;
-        this.stage = new Stage(camera.viewport, Rosjam.get().getSb());
+        FitViewport viewport = new FitViewport(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
+        this.stage = new Stage(viewport, Rosjam.get().getSb());
+        final float width = viewport.getScreenWidth() / 4f;
         final Skin skin = Rosjam.get().getAssets().getSkin();
         {
             Table table = new Table();
             table.align(Align.left);
             {
-//            {
-//                final float pad = 23f;
-//                Label label = new Label("Configuration for the Neat Parameters", skin);
-//                table.add(label);
-//            }
-//            table.row();
+            {
+                final float pad = 23f;
+                Label label = new Label("Configuration for the Neat Parameters", skin);
+                table.add(label);
+            }
+            table.row();
                 {
                     select = new SelectBox<String>(skin);
                     table.add(select).colspan(2).width(width);

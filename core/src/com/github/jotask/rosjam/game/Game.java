@@ -94,6 +94,7 @@ public class Game extends CameraState {
 
     @Override
     public void preRender(SpriteBatch sb) {
+        sb.getColor().a = 1f;
         switch (this.currentState){
             case PLAY:
                 this.play.preRender(sb);

@@ -41,4 +41,6 @@ public class Config {
 
     public String get(final Property property){ return this.properties.getProperty(property.name()); }
 
+    public Properties getProperties() { return properties; }
+
 }

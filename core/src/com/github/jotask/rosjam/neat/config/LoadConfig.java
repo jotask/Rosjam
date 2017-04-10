@@ -1,5 +1,6 @@
 package com.github.jotask.rosjam.neat.config;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.github.jotask.rosjam.neat.jneat.util.JException;
 import com.github.jotask.rosjam.option.Options;
@@ -18,7 +19,7 @@ public class LoadConfig {
 
     public static Config load(){
         Properties properties = new Properties();
-        FileHandle file = new FileHandle(Options.file);
+        FileHandle file = Gdx.files.local(Options.file);
         if(!file.exists()){
             return LoadConfig.loadDefault();
         }
@@ -50,7 +51,9 @@ public class LoadConfig {
 
     private static Config loadConfig(final String f) throws JException, IOException{
 
-        FileHandle file = new FileHandle(f);
+        System.out.println(f);
+
+        FileHandle file = Gdx.files.local(f);
 
         if(!file.exists()){
             throw new JException("File not exist: " + f);

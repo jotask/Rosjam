@@ -9,10 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.github.jotask.rosjam.Rosjam;
 import com.github.jotask.rosjam.engine.GameStateManager;
 import com.github.jotask.rosjam.engine.camera.Camera;
 import com.github.jotask.rosjam.engine.states.CameraState;
+import com.github.jotask.rosjam.neat.config.Config;
+import com.github.jotask.rosjam.neat.config.LoadConfig;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -35,8 +38,9 @@ public class Options extends CameraState{
 
     public Options(Camera camera) {
         super(camera);
-        this.stage = new Stage(camera.viewport, Rosjam.get().getSb());
-        final float width = 300f;
+        FitViewport viewport = new FitViewport(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
+        this.stage = new Stage(viewport, Rosjam.get().getSb());
+        final float width = viewport.getScreenWidth() / 3f;
         final Skin skin = Rosjam.get().getAssets().getSkin();
         final Table table = new Table();
         table.align(Align.left);
@@ -112,7 +116,7 @@ public class Options extends CameraState{
 
     private void save(){
         Properties props = new Properties();
-        FileHandle fileHandle = new FileHandle(this.file);
+        FileHandle fileHandle = Gdx.files.local(this.file);
         if(!fileHandle.exists()){
             try {
                 fileHandle.file().createNewFile();
@@ -135,6 +139,20 @@ public class Options extends CameraState{
         Array<String> files = new Array<String>();
 
         FileHandle dir = Gdx.files.local(OptionsSaveLoad.PATH + "");
+
+        if(dir.list().length == 0){
+            System.out.println("is Empty");
+            Config dfl = LoadConfig.loadDefault();
+            FileHandle fl = Gdx.files.local(OptionsSaveLoad.PATH + "default.properties");
+            try {
+                dfl.getProperties().store(fl.writer(false), "default neat configuration");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }finally {
+                Gdx.files.local(OptionsSaveLoad.PATH + "");
+            }
+        }
+
         for(FileHandle f: dir.list()){
             files.add(f.name());
         }
@@ -147,15 +165,16 @@ public class Options extends CameraState{
 
         this.getNeatConfigFiles();
 
-        FileHandle fileHandle = new FileHandle(this.file);
+        FileHandle fileHandle = Gdx.files.local(this.file);
 
         if(!fileHandle.exists()){
             try {
-                createDefault();
+                createDefault(fileHandle);
             } catch (IOException e) {
                 e.printStackTrace();
+            }finally {
+                load();
             }
-            load();
             return;
         }
 
@@ -173,10 +192,9 @@ public class Options extends CameraState{
 
     }
 
-    private void createDefault() throws IOException {
+    private void createDefault(final FileHandle fileHandle) throws IOException {
         Properties properties = new Properties();
         properties.setProperty(OPTIONS.NEATFILE.name(), OptionsSaveLoad.propertyFile);
-        FileHandle fileHandle = new FileHandle(this.file);
         properties.store(fileHandle.writer(false), "config file for the game");
     }
 

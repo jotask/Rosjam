@@ -7,6 +7,8 @@ import com.github.jotask.rosjam.neat.config.Config;
 import com.github.jotask.rosjam.neat.config.Default;
 
 import java.io.IOException;
+import java.text.NumberFormat;
+import java.text.ParsePosition;
 import java.util.Properties;
 
 import static com.github.jotask.rosjam.neat.config.Config.Property.*;
@@ -21,7 +23,7 @@ public abstract class OptionsSaveLoad {
 
     public static final String PATH = "config/neat/";
 
-    public static final String propertyFile = "config.properties";
+    public static final String propertyFile = "default.properties";
 
     private OptionsSaveLoad(){}
 
@@ -199,8 +201,10 @@ public abstract class OptionsSaveLoad {
     }
 
     private static boolean isNumber(String text){
-        // TODO check if is a number
-        return true;
+        NumberFormat formatter = NumberFormat.getInstance();
+        ParsePosition pos = new ParsePosition(0);
+        formatter.parse(text, pos);
+        return text.length() == pos.getIndex();
     }
 
 }

@@ -3,13 +3,13 @@ package com.github.jotask.rosjam.menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.github.jotask.rosjam.Rosjam;
 import com.github.jotask.rosjam.engine.GameStateManager;
 import com.github.jotask.rosjam.engine.camera.Camera;
@@ -25,14 +25,21 @@ import com.github.jotask.rosjam.util.Ref;
  */
 public class Menu extends CameraState {
 
-    private final Logo logo;
+//    private final Logo logo;
 
     private Stage stage;
 
     public Menu(Camera camera) {
         super(camera);
-        this.logo = new Logo(camera);
-        this.stage = new Stage(this.camera.viewport, Rosjam.get().getSb());
+//        this.logo = new Logo(camera);
+        FitViewport viewport = new FitViewport(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
+        this.stage = new Stage(viewport, Rosjam.get().getSb());
+        {
+            Logo logo = new Logo();
+            logo.setPosition(this.stage.getWidth() *.5f - (logo.getWidth() * .5f), this.stage.getHeight() * .5f + 75f);
+            logo.setOrigin(logo.getWidth() *.5f, logo.getHeight() * .5f);
+            this.stage.addActor(logo);
+        }
         final Skin skin = Rosjam.get().getAssets().getSkin();
         Table table = new Table();
         table.setFillParent(true);
@@ -102,7 +109,6 @@ public class Menu extends CameraState {
     @Override
     public void update() {
         this.stage.act(Gdx.graphics.getDeltaTime());
-        this.logo.update();
     }
 
     @Override
@@ -110,12 +116,6 @@ public class Menu extends CameraState {
         sb.end();
         this.stage.draw();
         sb.begin();
-        this.logo.render(sb);
-    }
-
-    @Override
-    public void debug(ShapeRenderer sr) {
-        this.logo.debug(sr);
     }
 
     @Override
