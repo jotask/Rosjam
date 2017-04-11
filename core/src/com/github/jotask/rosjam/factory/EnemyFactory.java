@@ -64,8 +64,9 @@ public class EnemyFactory {
             e.printStackTrace();
         }
 
-        if(!(object instanceof Enemy))
-            throw new RuntimeException("Error spawning enemy");
+        if(!(object instanceof Enemy)) {
+            throw new RuntimeException("Error spawning enemy:");
+        }
 
         return (Enemy) object;
     }

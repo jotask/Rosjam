@@ -105,7 +105,7 @@ public class Menu extends CameraState {
         Gdx.input.setInputProcessor(this.stage);
 
         this.particleEffect = new ParticleEffect();
-        this.particleEffect.load(Gdx.files.internal("particles/menu.p"),Gdx.files.internal(""));
+        this.particleEffect.load(Gdx.files.internal("particles/menu.p"),Gdx.files.internal("particles/"));
         this.particleEffect.getEmitters().first().setPosition(0,0);
         this.particleEffect.getEmitters().first().getSpawnWidth() .setHigh(0, camera.viewportWidth);
         this.particleEffect.getEmitters().first().getSpawnHeight().setHigh(0, camera.viewportHeight);

@@ -25,7 +25,7 @@ public class Effects implements Disposable{
 
     public Effects() {
         this.explosion = new ParticleEffect();
-        this.explosion.load(Gdx.files.internal("particles/explosion.p"),Gdx.files.internal(""));
+        this.explosion.load(Gdx.files.internal("particles/explosion.p"),Gdx.files.internal("particles/"));
 
         this.active = new LinkedList<ParticleEffect>();
         this.disable = new LinkedList<ParticleEffect>();

@@ -138,4 +138,4 @@ additive: true
 behind: false
 premultipliedAlpha: false
 - Image Path -
-/C:/Users/Jose/Code/IntelliJ IDEA/Rosjam/pre_particle.png
+simple.png

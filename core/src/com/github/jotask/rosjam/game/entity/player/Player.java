@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.github.jotask.rosjam.Rosjam;
+import com.github.jotask.rosjam.engine.assets.SoundAssets;
 import com.github.jotask.rosjam.engine.input.Controller;
 import com.github.jotask.rosjam.factory.EntityFactory;
 import com.github.jotask.rosjam.game.Game;
@@ -52,6 +54,12 @@ public class Player extends ControlEntity {
             Game.get().changeState(Game.GAMESTATES.GAMEOVER);
         }
 
+    }
+
+    @Override
+    public void damage(int dmg) {
+        super.damage(dmg);
+        Rosjam.get().getAssets().getSoundAssets().getSound(SoundAssets.SOUND.HURT).play();
     }
 
     @Override

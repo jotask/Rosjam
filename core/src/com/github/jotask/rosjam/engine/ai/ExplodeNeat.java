@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
+import com.github.jotask.rosjam.Rosjam;
+import com.github.jotask.rosjam.engine.assets.SoundAssets;
 import com.github.jotask.rosjam.game.EntityManager;
 import com.github.jotask.rosjam.game.Game;
 import com.github.jotask.rosjam.game.entity.BodyEntity;
@@ -23,11 +25,11 @@ public class ExplodeNeat extends ArtificialIntelligence {
 
     private final float SPEED = 25f;
 
-    private final float INRANGE = 3f;
+    private final float INRANGE = 2f;
 
     private final int EXPLOSION_DAMAGE = 4;
 
-    private final Network network;
+    private Network network;
 
     private Timer timer;
 
@@ -44,6 +46,11 @@ public class ExplodeNeat extends ArtificialIntelligence {
         super(entity.getBody());
         this.entity = entity;
         this.network = Game.get().neatThread.getBestNetwork();
+        if(this.network == null){
+            do{
+                this.network = Game.get().neatThread.getBestNetwork();
+            }while(this.network == null);
+        }
         this.THRESHOLD = Game.get().neatThread.getThreshold();
         this.timer = new Timer(.1f);
         this.player = EntityManager.get().getPlayer();
@@ -54,6 +61,10 @@ public class ExplodeNeat extends ArtificialIntelligence {
     @Override
     public void update() {
         if(timer.isPassed(true)) {
+            double[] inputs = getInputs();
+            double[] outputs = this.network.evaluate(inputs);
+            setOutput(outputs);
+
             setOutput(network.evaluate(getInputs()));
             this.dir.scl(SPEED);
             this.body.applyForceToCenter(dir, true);
@@ -62,6 +73,7 @@ public class ExplodeNeat extends ArtificialIntelligence {
 
         if(needsExplode()){
             if(!exploded) {
+                Rosjam.get().getAssets().getSoundAssets().getSound(SoundAssets.SOUND.EXPLOSION).play();
                 this.explode();
                 this.exploded = true;
             }
@@ -142,7 +154,6 @@ public class ExplodeNeat extends ArtificialIntelligence {
             if(!this.damaged) {
                 final Player p = (Player) body.getUserData();
                 p.damage(EXPLOSION_DAMAGE);
-                System.out.println("dmg");
                 this.damaged = true;
             }
         }

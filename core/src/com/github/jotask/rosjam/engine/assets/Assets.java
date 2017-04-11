@@ -28,6 +28,9 @@ public class Assets implements Disposable{
     private StateAssets stateAssets;
     private HudAssets hudAssets;
 
+    private SoundAssets soundAssets;
+    private MusicAssets musicAssets;
+
     public Assets() {
 
         new Converter();
@@ -39,10 +42,14 @@ public class Assets implements Disposable{
         this.bulletAssets = new BulletAssets(this);
         this.stateAssets = new StateAssets(this);
         this.hudAssets = new HudAssets(this);
+
+        this.soundAssets = new SoundAssets(this);
+        this.musicAssets = new MusicAssets(this);
+
     }
 
     public void loadEverything(){
-        assetManager.finishLoading();
+        this.assetManager.finishLoading();
 
         this.font = new BitmapFont();
         this.skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
@@ -52,6 +59,9 @@ public class Assets implements Disposable{
         this.bulletAssets.prepare();
         this.stateAssets.prepare();
         this.hudAssets.prepare();
+
+        this.soundAssets.prepare();
+        this.musicAssets.prepare();
 
     }
 
@@ -73,6 +83,10 @@ public class Assets implements Disposable{
 
     public HudAssets getHudAssets() { return hudAssets; }
 
+    public SoundAssets getSoundAssets() { return soundAssets; }
+
+    public MusicAssets getMusicAssets() { return musicAssets; }
+
     @Override
     public void dispose() {
         this.font.dispose();
@@ -84,5 +98,8 @@ public class Assets implements Disposable{
         this.assetManager.dispose();
         this.skin.dispose();
         this.hudAssets.dispose();
+
+        this.soundAssets.dispose();
+        this.musicAssets.dispose();
     }
 }

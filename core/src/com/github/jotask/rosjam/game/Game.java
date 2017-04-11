@@ -14,6 +14,8 @@ import com.github.jotask.rosjam.engine.states.CameraState;
 import com.github.jotask.rosjam.game.hud.Hud;
 import com.github.jotask.rosjam.neat.NeatThread;
 
+import static com.github.jotask.rosjam.engine.assets.MusicAssets.MUSIC.M;
+
 /**
  * Game
  *
@@ -61,6 +63,8 @@ public class Game extends CameraState {
         this.color.set(Color.BLACK);
 
         changeState(GAMESTATES.PLAY);
+
+        Rosjam.get().getAssets().getMusicAssets().getSound(M).play();
 
     }
 
@@ -276,6 +280,7 @@ public class Game extends CameraState {
         }
         changeState(GAMESTATES.PLAY);
         Rosjam.get().getGsm().changeState(GameStateManager.STATE.MENU);
+        Rosjam.get().getAssets().getMusicAssets().getSound(M).stop();
     }
 
 }

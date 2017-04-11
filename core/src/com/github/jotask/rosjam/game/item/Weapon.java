@@ -1,6 +1,8 @@
 package com.github.jotask.rosjam.game.item;
 
 import com.badlogic.gdx.math.Vector2;
+import com.github.jotask.rosjam.Rosjam;
+import com.github.jotask.rosjam.engine.assets.SoundAssets;
 import com.github.jotask.rosjam.factory.EntityFactory;
 import com.github.jotask.rosjam.game.entity.BodyEntity;
 import com.github.jotask.rosjam.util.Timer;
@@ -35,6 +37,7 @@ public class Weapon extends Item{
         }
         Bullet b = getBullet();
         b.shot(direction);
+        Rosjam.get().getAssets().getSoundAssets().getSound(SoundAssets.SOUND.SHOOT).play();
     }
 
 }

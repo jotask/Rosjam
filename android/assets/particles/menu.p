@@ -116,4 +116,4 @@ additive: true
 behind: false
 premultipliedAlpha: true
 - Image Path -
-particle.png
+simple.png
