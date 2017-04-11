@@ -2,6 +2,7 @@ package com.github.jotask.rosjam.engine.assets;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Disposable;
 import com.github.jotask.rosjam.game.entity.enemy.Enemies;
 
 import java.util.HashMap;
@@ -12,7 +13,7 @@ import java.util.HashMap;
  * @author Jose Vives Iznardo
  * @since 08/02/2017
  */
-public class EnemyAssets {
+public class EnemyAssets implements Disposable{
 
     private final String filename = "enemies.png";
     private final Class<?> type = Texture.class;
@@ -48,6 +49,11 @@ public class EnemyAssets {
 
     public TextureRegion getRegion(final Enemies key){
         return this.map.get(key);
+    }
+
+    @Override
+    public void dispose() {
+        this.texture.dispose();
     }
 
 }

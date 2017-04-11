@@ -42,11 +42,11 @@ public class EditorState extends CameraState {
 
     }
 
-    private Skin skin;
-    private Stage stage;
+    private final Skin skin;
+    private final Stage stage;
 
-    public final MenuEditor menuEditor;
-    public final EditorScreen editorScreen;
+    final MenuEditor menuEditor;
+    private final EditorScreen editorScreen;
 
     public EditorState(Camera camera) {
         super(camera);
@@ -78,7 +78,6 @@ public class EditorState extends CameraState {
 
     @Override
     public void dispose() {
-        this.skin.dispose();
         this.stage.dispose();
     }
 

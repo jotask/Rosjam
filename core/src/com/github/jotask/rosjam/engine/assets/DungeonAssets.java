@@ -37,12 +37,12 @@ public class DungeonAssets implements Disposable {
         return this.atlas.findRegion(tile.name);
     }
 
+    public TextureRegion getBackground() { return this.background; }
+
     @Override
     public void dispose() {
         this.atlas.dispose();
         this.manager.dispose();
     }
-
-    public TextureRegion getBackground() { return this.background; }
 
 }

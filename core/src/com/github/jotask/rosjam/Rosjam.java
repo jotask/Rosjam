@@ -75,6 +75,9 @@ public class Rosjam extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		this.gsm.dispose();
+		this.sb.dispose();
+		this.sr.dispose();
+		this.assets.dispose();
 		instance = null;
 	}
 

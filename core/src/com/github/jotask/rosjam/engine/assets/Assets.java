@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Disposable;
 import com.github.jotask.rosjam.util.Converter;
 
 /**
@@ -12,7 +13,7 @@ import com.github.jotask.rosjam.util.Converter;
  * @author Jose Vives Iznardo
  * @since 15/01/2017
  */
-public class Assets{
+public class Assets implements Disposable{
 
     private AssetManager assetManager;
 
@@ -72,4 +73,16 @@ public class Assets{
 
     public HudAssets getHudAssets() { return hudAssets; }
 
+    @Override
+    public void dispose() {
+        this.font.dispose();
+        this.dungeonAssets.dispose();
+        this.playerAssets.dispose();
+        this.bulletAssets.dispose();
+        this.enemyAssets.dispose();
+        this.stateAssets.dispose();
+        this.assetManager.dispose();
+        this.skin.dispose();
+        this.hudAssets.dispose();
+    }
 }

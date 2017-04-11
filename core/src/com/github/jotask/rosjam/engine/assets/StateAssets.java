@@ -2,6 +2,7 @@ package com.github.jotask.rosjam.engine.assets;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Disposable;
 
 import java.util.HashMap;
 
@@ -11,7 +12,7 @@ import java.util.HashMap;
  * @author Jose Vives Iznardo
  * @since 08/02/2017
  */
-public class StateAssets {
+public class StateAssets implements Disposable{
 
     public enum Images {
 
@@ -62,6 +63,11 @@ public class StateAssets {
 
     public TextureRegion getRegion(final Images key){
         return this.map.get(key);
+    }
+
+    @Override
+    public void dispose() {
+        this.texture.dispose();
     }
 
 }

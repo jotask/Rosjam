@@ -57,10 +57,7 @@ public enum Tiles {
 
     ROCK_01("sprite145"),
     ROCK_02("sprite146")
-
     ;
-
-
 
     final String name;
 

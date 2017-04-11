@@ -2,6 +2,7 @@ package com.github.jotask.rosjam.engine.assets;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Disposable;
 
 import java.util.HashMap;
 
@@ -11,7 +12,7 @@ import java.util.HashMap;
  * @author Jose Vives Iznardo
  * @since 26/01/2017
  */
-public class BulletAssets {
+public class BulletAssets implements Disposable{
 
     private final String filename = "bullet.png";
     private final Class<?> type = Texture.class;
@@ -67,4 +68,10 @@ public class BulletAssets {
     public TextureRegion getRegion(final BulletAssets.SPRITE key){
         return this.map.get(key);
     }
+
+    @Override
+    public void dispose() {
+        this.texture.dispose();
+    }
+
 }
