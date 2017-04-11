@@ -17,9 +17,10 @@ import java.util.Properties;
  */
 public class LoadConfig {
 
-    public static Config load(){
+    public static Config load(boolean isSimulation){
         Properties properties = new Properties();
         FileHandle file = Gdx.files.local(Options.file);
+
         if(!file.exists()){
             return LoadConfig.loadDefault();
         }
@@ -31,13 +32,17 @@ public class LoadConfig {
             return LoadConfig.loadDefault();
         }
 
-        String f = properties.getProperty(Options.OPTIONS.NEATFILE.name());
+        final String f;
+        if(isSimulation){
+            f = properties.getProperty(Options.OPTIONS.NEATSIMULATION.name());
+        }else {
+            f = properties.getProperty(Options.OPTIONS.NEATFILE.name());
+        }
 
         final Config cfg;
         try {
             cfg = loadConfig(OptionsSaveLoad.PATH + f);
             if(cfg != null){
-                System.out.println("loaded");
                 return cfg;
             }
         } catch (IOException e) {
@@ -51,12 +56,10 @@ public class LoadConfig {
 
     private static Config loadConfig(final String f) throws JException, IOException{
 
-        System.out.println(f);
-
         FileHandle file = Gdx.files.local(f);
 
         if(!file.exists()){
-            throw new JException("File not exist: " + f);
+            return LoadConfig.loadDefault();
         }
 
         final Properties properties = new Properties();

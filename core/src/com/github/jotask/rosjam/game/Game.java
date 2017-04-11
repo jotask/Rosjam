@@ -2,6 +2,7 @@ package com.github.jotask.rosjam.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.jotask.rosjam.Rosjam;
@@ -56,6 +57,8 @@ public class Game extends CameraState {
         this.neatThread = new NeatThread();
         this.thread = new Thread(this.neatThread);
         this.thread.start();
+
+        this.color.set(Color.BLACK);
 
         changeState(GAMESTATES.PLAY);
 

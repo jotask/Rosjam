@@ -27,8 +27,6 @@ import com.github.jotask.rosjam.util.Ref;
  */
 public class Menu extends CameraState {
 
-    private final Color c = Color.valueOf("#728ab2");
-
     private final Stage stage;
     private final ParticleEffect particleEffect;
 
@@ -113,6 +111,8 @@ public class Menu extends CameraState {
         this.particleEffect.getEmitters().first().getSpawnHeight().setHigh(0, camera.viewportHeight);
         this.particleEffect.start();
 
+        this.color.set(Color.valueOf("#728ab2"));
+
     }
 
     @Override
@@ -123,7 +123,6 @@ public class Menu extends CameraState {
 
     @Override
     public void render(SpriteBatch sb) {
-        Gdx.gl20.glClearColor(this.c.r, this.c.g, this.c.b, this.c.a);
         this.particleEffect.draw(sb);
         sb.end();
         this.stage.draw();

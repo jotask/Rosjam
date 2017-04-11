@@ -1,5 +1,6 @@
 package com.github.jotask.rosjam.engine.states;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.jotask.rosjam.engine.camera.Camera;
@@ -12,6 +13,7 @@ import com.github.jotask.rosjam.engine.camera.Camera;
  */
 public class CameraState implements IState {
 
+    protected final Color color = Color.BLACK;
     protected final Camera camera;
 
     public CameraState(final Camera camera) {
@@ -71,5 +73,7 @@ public class CameraState implements IState {
     public void resize(int width, int height){ this.getCamera().resize(width, height); }
 
     public Camera getCamera() { return camera; }
+
+    public Color getColor() { return color; }
 
 }

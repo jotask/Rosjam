@@ -1,5 +1,7 @@
 package com.github.jotask.rosjam.engine;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -34,6 +36,8 @@ public class GameStateManager extends AbstractState implements Disposable{
 
     @Override
     public void render(SpriteBatch sb){
+        final Color c = this.currentState.getColor();
+        Gdx.gl20.glClearColor(c.r, c.g, c.b, c.a);
         OrthographicCamera camera = currentState.getCamera();
         sb.setProjectionMatrix(camera.combined);
         sb.begin();

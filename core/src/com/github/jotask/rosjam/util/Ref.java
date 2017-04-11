@@ -12,11 +12,11 @@ public class Ref {
 
     public static final boolean APP_DEBUG = false;
 
-    public static boolean DEBUG = true;
+    public static boolean DEBUG = false;
 
     public static final float ANIMATION_SPEED = .25f;
     public static final float ANIMATION_FRAME = .25f;
 
-    public static final GameStateManager.STATE INITIAL_STATE = GameStateManager.STATE.GAME;
+    public static final GameStateManager.STATE INITIAL_STATE = GameStateManager.STATE.SPLASH;
 
 }

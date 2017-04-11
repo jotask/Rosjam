@@ -1,6 +1,7 @@
 package com.github.jotask.rosjam.neat;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -47,7 +48,7 @@ public class NeatState extends CameraState {
         ORIGINAL_DEBUG = Ref.DEBUG;
         Ref.DEBUG = true;
 
-        final Config cfg = LoadConfig.load();
+        final Config cfg = LoadConfig.load(true);
 
         this.neat = new Neat(cfg);
         this.engineGui = new EngineGui(this);
@@ -74,6 +75,7 @@ public class NeatState extends CameraState {
             this.stage.addActor(btn);
         }
         Gdx.input.setInputProcessor(this.stage);
+        this.color.set(Color.WHITE);
     }
 
     @Override
@@ -86,7 +88,6 @@ public class NeatState extends CameraState {
 
     @Override
     public void render(SpriteBatch sb) {
-        gl.glClearColor(1f, 1f, 1f, 1f);
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         this.renderer.render(neat.getWorld(), camera.combined);
         sb.setProjectionMatrix(camera.combined);

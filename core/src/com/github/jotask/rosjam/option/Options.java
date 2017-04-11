@@ -28,7 +28,7 @@ import java.util.Properties;
  */
 public class Options extends CameraState{
 
-    public enum OPTIONS{ NEATFILE }
+    public enum OPTIONS{ NEATFILE, NEATSIMULATION}
 
     public static final String file = "config/config.properties";
 
@@ -61,7 +61,19 @@ public class Options extends CameraState{
                         Rosjam.get().getGsm().changeState(GameStateManager.STATE.NEATOPTIONS);
                     }
                 });
-                table.add(btn).colspan(2).fillX();
+                table.add(btn).colspan(2).padTop(3).fillX();
+            }
+            table.row();
+            {
+                TextButton btn = new TextButton("Test this configuration", skin);
+                btn.addListener(new ClickListener(){
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        save();
+                        Rosjam.get().getGsm().changeState(GameStateManager.STATE.NEAT);
+                    }
+                });
+                table.add(btn).colspan(2).padTop(3).fillX();
             }
             table.row();
             {
@@ -126,6 +138,7 @@ public class Options extends CameraState{
         }
 
         props.setProperty(OPTIONS.NEATFILE.name(), this.neatConfig.getSelected());
+        props.setProperty(OPTIONS.NEATSIMULATION.name(), this.neatConfig.getSelected());
 
         try {
             props.store(fileHandle.writer(false), "config for the game");
@@ -141,7 +154,6 @@ public class Options extends CameraState{
         FileHandle dir = Gdx.files.local(OptionsSaveLoad.PATH + "");
 
         if(dir.list().length == 0){
-            System.out.println("is Empty");
             Config dfl = LoadConfig.loadDefault();
             FileHandle fl = Gdx.files.local(OptionsSaveLoad.PATH + "default.properties");
             try {
@@ -195,6 +207,7 @@ public class Options extends CameraState{
     private void createDefault(final FileHandle fileHandle) throws IOException {
         Properties properties = new Properties();
         properties.setProperty(OPTIONS.NEATFILE.name(), OptionsSaveLoad.propertyFile);
+        properties.setProperty(OPTIONS.NEATSIMULATION.name(), OptionsSaveLoad.propertyFile);
         properties.store(fileHandle.writer(false), "config file for the game");
     }
 

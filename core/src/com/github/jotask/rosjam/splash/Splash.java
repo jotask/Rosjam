@@ -34,6 +34,7 @@ public final class Splash extends CameraState {
         final float y = this.camera.position.y - (this.region.getRegionHeight() * .5f);
         this.position = new Vector2(x, y);
         this.timer = new Timer(TIME);
+        this.color.set(Color.WHITE);
     }
 
     @Override

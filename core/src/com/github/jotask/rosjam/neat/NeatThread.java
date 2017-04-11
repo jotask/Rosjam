@@ -23,7 +23,7 @@ public class NeatThread implements Runnable{
     @Override
     public void run() {
 
-        final Config cfg = LoadConfig.load();
+        final Config cfg = LoadConfig.load(false);
 
         this.neat = new Neat(cfg);
         while(this.isRunning) {

@@ -59,6 +59,7 @@ public class Neat extends ArtificialIntelligence {
     }
 
     private void setOutput(final double[] output) {
+
         if((output[Constants.Outputs.left.ordinal()]) > THRESHOLD) {
             this.dir.add(-1, 0);
         }
