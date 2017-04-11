@@ -16,7 +16,7 @@ public class GoblinMagic extends Enemy {
 
     public GoblinMagic(Body body, Sprite sprite, Room room) {
         super(body, sprite, room);
-        this.setAI(new ExplodeNeat(body));
+        this.setAI(new ExplodeNeat(this));
     }
 
 }

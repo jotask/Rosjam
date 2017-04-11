@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.jotask.rosjam.engine.states.GameState;
 import com.github.jotask.rosjam.factory.EntityFactory;
 import com.github.jotask.rosjam.game.dungeon.level.LevelManager;
+import com.github.jotask.rosjam.game.effects.Effects;
 import com.github.jotask.rosjam.game.entity.player.Player;
 import com.github.jotask.rosjam.game.hud.dungeon.DungeonHud;
 import com.github.jotask.rosjam.game.world.WorldManager;
@@ -31,10 +32,13 @@ public class DungeonState extends GameState {
 
     private final InputProcessor inputProcessor;
 
+    public final Effects effects;
+
     DungeonState(final Game game) {
         super(game);
         this.manager = EntityManager.get();
         this.inputProcessor = Gdx.input.getInputProcessor();
+        this.effects = new Effects();
     }
 
     void init(){
@@ -87,6 +91,7 @@ public class DungeonState extends GameState {
     public void render(SpriteBatch sb) {
         this.level.render(sb);
         this.manager.render(sb);
+        this.effects.render(sb);
     }
 
     @Override
@@ -110,6 +115,7 @@ public class DungeonState extends GameState {
     public void dispose() {
         this.manager.dispose();
         this.worldManager.dispose();
+        this.effects.dispose();
     }
 
     public WorldManager getWorldManager() {

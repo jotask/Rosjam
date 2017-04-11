@@ -2,9 +2,12 @@ package com.github.jotask.rosjam.engine.ai;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.github.jotask.rosjam.game.EntityManager;
 import com.github.jotask.rosjam.game.Game;
+import com.github.jotask.rosjam.game.entity.BodyEntity;
 import com.github.jotask.rosjam.game.entity.player.Player;
 import com.github.jotask.rosjam.neat.jneat.network.Network;
 import com.github.jotask.rosjam.neat.jneat.util.Constants;
@@ -20,6 +23,10 @@ public class ExplodeNeat extends ArtificialIntelligence {
 
     private final float SPEED = 25f;
 
+    private final float INRANGE = 3f;
+
+    private final int EXPLOSION_DAMAGE = 4;
+
     private final Network network;
 
     private Timer timer;
@@ -28,12 +35,20 @@ public class ExplodeNeat extends ArtificialIntelligence {
 
     private final float THRESHOLD;
 
-    public ExplodeNeat(Body body) {
-        super(body);
+    private boolean exploded;
+    private boolean damaged;
+
+    private final BodyEntity entity;
+
+    public ExplodeNeat(final BodyEntity entity) {
+        super(entity.getBody());
+        this.entity = entity;
         this.network = Game.get().neatThread.getBestNetwork();
         this.THRESHOLD = Game.get().neatThread.getThreshold();
         this.timer = new Timer(.1f);
         this.player = EntityManager.get().getPlayer();
+        this.exploded = false;
+        this.damaged = false;
     }
 
     @Override
@@ -44,14 +59,17 @@ public class ExplodeNeat extends ArtificialIntelligence {
             this.body.applyForceToCenter(dir, true);
             this.dir.setZero();
         }
+
         if(needsExplode()){
-            // TODO Explode
-            explode();
-//            particleExplosion(body.getWorldCenter(), 100f);
+            if(!exploded) {
+                this.explode();
+                this.exploded = true;
+            }
         }
+
     }
 
-    private boolean needsExplode(){ return (this.body.getPosition().dst2(player.getBody().getPosition()) <  2f); }
+    private boolean needsExplode(){ return (this.body.getPosition().dst2(player.getBody().getPosition()) <  INRANGE); }
 
     private double[] getInputs() {
         final double[] inputs = new double[Constants.INPUTS];
@@ -79,8 +97,9 @@ public class ExplodeNeat extends ArtificialIntelligence {
         }
     }
 
-    public void explode(){
-        explode(100, 100f, 100f, this.body.getPosition().x, this.body.getPosition().y);
+    private void explode(){
+        explode(100, 100f, 1000f, this.body.getPosition().x, this.body.getPosition().y);
+        Game.get().getPlay().effects.explode(this.body);
     }
 
     private void explode(final int numRays, float blastRadius, final float blastPower, float posX, float posY) {
@@ -106,7 +125,7 @@ public class ExplodeNeat extends ArtificialIntelligence {
 
         }
 
-        // TODO Kill this enemy when explode
+        this.entity.kill();
 
     }
 
@@ -117,45 +136,17 @@ public class ExplodeNeat extends ArtificialIntelligence {
         float invDistance = 1f / distance;
         float impulseMag = Math.min(blastPower * invDistance, blastPower * 0.5f); //Not physically correct
 
-        body.applyForce(blastDir.nor().scl(impulseMag), applyPoint, true);
+        body.applyLinearImpulse(blastDir.nor().scl(impulseMag), applyPoint, true);
 
         if(body.getUserData() instanceof Player){
-            final Player p = (Player) body.getUserData();
-            // TODO apply damage
-//            p.damage(3);
+            if(!this.damaged) {
+                final Player p = (Player) body.getUserData();
+                p.damage(EXPLOSION_DAMAGE);
+                System.out.println("dmg");
+                this.damaged = true;
+            }
         }
-    }
 
-    private void particleExplosion(final Vector2 center, final float blastPower){
-        final World world = body.getWorld();
-        int numRays = 100;
-        for (int i = 0; i < numRays; i++) {
-            float angle = (i / (float) numRays) * 360 * MathUtils.degreesToRadians;
-            Vector2 rayDir = new Vector2( MathUtils.sin(angle), MathUtils.cos(angle) );
-
-            BodyDef bd = new BodyDef();
-            bd.type = BodyDef.BodyType.DynamicBody;
-            bd.fixedRotation = true; // rotation not necessary
-            bd.bullet = true; // prevent tunneling at high speed
-            bd.linearDamping = 10; // drag due to moving through air
-            bd.gravityScale = 0; // ignore gravity
-            bd.position.set(center); // start at blast center
-            bd.linearVelocity.set(rayDir.scl(blastPower));
-
-            Body body = world.createBody(bd);
-
-            CircleShape circleShape = new CircleShape();
-            circleShape.setRadius(0.05f); // very small
-
-            FixtureDef fd = new FixtureDef();
-            fd.shape = circleShape;
-            fd.density = 60 / (float)numRays; // very high - shared across all particles
-            fd.friction = 0; // friction not necessary
-            fd.restitution = 0.99f; // high restitution to reflect off obstacles
-            fd.filter.groupIndex = -1; // particles should not collide with each other
-            body.createFixture(fd);
-
-        }
     }
 
 }
