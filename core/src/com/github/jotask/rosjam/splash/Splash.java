@@ -29,7 +29,7 @@ public final class Splash extends CameraState {
 
     public Splash(Camera camera) {
         super(camera);
-        this.region = Rosjam.get().getAssets().getStateAssets().getRegion(StateAssets.Images.SPLASH);
+        this.region = Rosjam.get().getAssets().getStateAssets().getRegion(StateAssets.Images.AIKO);
         final float x = this.camera.position.x - (this.region.getRegionWidth()  * .5f);
         final float y = this.camera.position.y - (this.region.getRegionHeight() * .5f);
         this.position = new Vector2(x, y);

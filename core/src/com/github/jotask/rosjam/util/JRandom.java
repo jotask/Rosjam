@@ -26,10 +26,8 @@ public final class JRandom {
     }
 
     public Enemies getRandomEnemy(){
-        // FIXME
-        return Enemies.GOBLIN_MELE;
-//        final Enemies[] values = Enemies.values();
-//        return values[random(values.length)];
+        final Enemies[] values = Enemies.values();
+        return values[random(values.length)];
     }
 
 }

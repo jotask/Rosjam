@@ -16,7 +16,7 @@ import com.github.jotask.rosjam.game.entity.player.Player;
  */
 public final class InitialParameters {
 
-    public static final String file = "state.json";
+    public static final String file = "savedata/state.json";
 
     private InitialParameters(){}
 

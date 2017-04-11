@@ -1,7 +1,9 @@
 package com.github.jotask.rosjam.engine.assets;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Disposable;
 
 import java.util.HashMap;
 
@@ -11,7 +13,10 @@ import java.util.HashMap;
  * @author Jose Vives Iznardo
  * @since 27/03/2017
  */
-public class HudAssets {
+public class HudAssets implements Disposable{
+
+    public final Texture touchBackground;
+    public final Texture touchKnob;
 
     private final String filename = "life.png";
     private final Class<?> type = Texture.class;
@@ -41,6 +46,9 @@ public class HudAssets {
         this.assets = assets;
         this.assets.getAssetManager().load(filename, type);
 
+        this.touchBackground = new Texture(Gdx.files.internal("touchBackground.png"));
+        this.touchKnob = new Texture(Gdx.files.internal("touchKnob.png"));
+
         this.map = new HashMap<HudAssets.SPRITE, TextureRegion>();
 
     }
@@ -68,4 +76,12 @@ public class HudAssets {
     public TextureRegion getRegion(final HudAssets.SPRITE key){
         return this.map.get(key);
     }
+
+    @Override
+    public void dispose() {
+        this.touchBackground.dispose();
+        this.touchKnob.dispose();
+        this.texture.dispose();
+    }
+
 }

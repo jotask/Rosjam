@@ -55,8 +55,8 @@ public class PauseState extends GameState {
             });
             pause.add(btn).fillX().row();
         }
-        float x = camera.position.x + (camera.viewportWidth *.5f) - (pause.getWidth() * .5f);
-        float y = camera.position.y + (camera.viewportHeight *.5f) - (pause.getHeight() * .5f);
+        float x = (camera.viewportWidth *.5f);
+        float y = (camera.viewportHeight *.5f);
         this.pause.setPosition(x, y);
         this.pause.pack();
         this.pause.setKeepWithinStage(false);
@@ -70,8 +70,8 @@ public class PauseState extends GameState {
     public void enterState(){
         this.map.update();
         Gdx.input.setInputProcessor(this.stage);
-        float x = camera.position.x + (camera.viewportWidth *.5f) - (pause.getWidth() * .5f);
-        float y = camera.position.y + (camera.viewportHeight *.5f) - (pause.getHeight() * .5f);
+        float x = (stage.getWidth()  * .5f) - (pause.getWidth()  * .5f);
+        float y = (stage.getHeight() * .5f) - (pause.getHeight() * .5f);
         this.pause.setPosition(x, y);
         this.pause.pack();
     }
@@ -87,7 +87,6 @@ public class PauseState extends GameState {
         sb.setProjectionMatrix(camera.combined);
         this.map.render(sb);
         sb.end();
-        sb.setProjectionMatrix(camera.combined);
         stage.draw();
         sb.begin();
     }

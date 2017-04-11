@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.github.jotask.rosjam.Rosjam;
 import com.github.jotask.rosjam.engine.GameStateManager;
 import com.github.jotask.rosjam.engine.camera.Camera;
@@ -54,7 +55,8 @@ public class NeatState extends CameraState {
         this.jotaGui = new JotaGui(this);
         this.networkRenderer = new NetworkRenderer(this);
 
-        this.stage = new Stage();
+        FitViewport viewport = new FitViewport(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
+        this.stage = new Stage(viewport);
         {
             final Skin skin = Rosjam.get().getAssets().getSkin();
             TextButton btn = new TextButton("Back to Menu", skin);
@@ -66,6 +68,9 @@ public class NeatState extends CameraState {
                     }
                 });
             }
+            final float x = (stage.getWidth() * .5f)  - (btn.getWidth()  * .5f);
+            final float y = (stage.getHeight() - btn.getHeight());
+            btn.setPosition(x, y);
             this.stage.addActor(btn);
         }
         Gdx.input.setInputProcessor(this.stage);

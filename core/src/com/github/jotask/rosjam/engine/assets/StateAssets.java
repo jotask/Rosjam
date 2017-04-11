@@ -15,7 +15,8 @@ public class StateAssets {
 
     public enum Images {
 
-        SPLASH(0, 0, 100, 64);
+        AIKO(0, 0, 100, 60),
+        ROSJAM(0, 60, 142, 36);
 
         public final int x, y, width, height;
 

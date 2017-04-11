@@ -2,6 +2,8 @@ package com.github.jotask.rosjam.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -25,13 +27,13 @@ import com.github.jotask.rosjam.util.Ref;
  */
 public class Menu extends CameraState {
 
-//    private final Logo logo;
+    private final Color c = Color.valueOf("#728ab2");
 
-    private Stage stage;
+    private final Stage stage;
+    private final ParticleEffect particleEffect;
 
     public Menu(Camera camera) {
         super(camera);
-//        this.logo = new Logo(camera);
         FitViewport viewport = new FitViewport(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
         this.stage = new Stage(viewport, Rosjam.get().getSb());
         {
@@ -71,7 +73,6 @@ public class Menu extends CameraState {
                 }
             }
 
-
             TextButton options = new TextButton("Options", skin);
             options.addListener(new ClickListener(){
                 @Override
@@ -104,27 +105,43 @@ public class Menu extends CameraState {
         this.stage.addActor(table);
         this.stage.setDebugAll(Ref.DEBUG);
         Gdx.input.setInputProcessor(this.stage);
+
+        this.particleEffect = new ParticleEffect();
+        this.particleEffect.load(Gdx.files.internal("particles/menu.p"),Gdx.files.internal(""));
+        this.particleEffect.getEmitters().first().setPosition(0,0);
+        this.particleEffect.getEmitters().first().getSpawnWidth() .setHigh(0, camera.viewportWidth);
+        this.particleEffect.getEmitters().first().getSpawnHeight().setHigh(0, camera.viewportHeight);
+        this.particleEffect.start();
+
     }
 
     @Override
     public void update() {
         this.stage.act(Gdx.graphics.getDeltaTime());
+        this.particleEffect.update(Gdx.graphics.getDeltaTime());
     }
 
     @Override
     public void render(SpriteBatch sb) {
+        Gdx.gl20.glClearColor(this.c.r, this.c.g, this.c.b, this.c.a);
+        this.particleEffect.draw(sb);
         sb.end();
         this.stage.draw();
         sb.begin();
+        if(this.particleEffect.isComplete()){
+            this.particleEffect.reset();
+        }
     }
 
     @Override
     public void dispose() {
         this.stage.dispose();
+        this.particleEffect.dispose();
     }
 
     @Override
     public void resize(int width, int height) {
         this.stage.getViewport().update(width, height);
     }
+
 }

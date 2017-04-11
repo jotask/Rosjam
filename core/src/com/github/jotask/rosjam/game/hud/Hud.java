@@ -21,8 +21,6 @@ public class Hud{
     private final Game game;
     private final Stage stage;
 
-//    private final Map map;
-
     private final Application.ApplicationType type;
 
     public Hud(final Game game) {

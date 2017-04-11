@@ -51,8 +51,8 @@ public class GameOverState extends GameState {
             });
             pause.add(btn).row();
         }
-        float x = camera.position.x + (camera.viewportWidth *.5f) - (pause.getWidth() * .5f);
-        float y = camera.position.y + (camera.viewportHeight *.5f) - (pause.getHeight() * .5f);
+        float x = (stage.getWidth()  * .5f) - (pause.getWidth()  * .5f);
+        float y = (stage.getHeight() * .5f) - (pause.getHeight() * .5f);
         this.pause.setPosition(x, y);
         this.pause.pack();
         this.pause.setKeepWithinStage(false);
@@ -63,8 +63,8 @@ public class GameOverState extends GameState {
     public void enterState(){
         Gdx.input.setInputProcessor(this.stage);
         this.score.setText(String.valueOf(game.getPlay().score.getScore()));
-        float x = camera.position.x + (camera.viewportWidth *.5f) - (pause.getWidth() * .5f);
-        float y = camera.position.y + (camera.viewportHeight *.5f) - (pause.getHeight() * .5f);
+        float x = (stage.getWidth()  * .5f) - (pause.getWidth()  * .5f);
+        float y = (stage.getHeight() * .5f) - (pause.getHeight() * .5f);
         this.pause.setPosition(x, y);
         this.pause.pack();
     }

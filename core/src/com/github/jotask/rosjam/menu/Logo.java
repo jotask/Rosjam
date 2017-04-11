@@ -21,7 +21,7 @@ public class Logo extends Image {
     private final int seed;
 
     Logo() {
-        super(Rosjam.get().getAssets().getStateAssets().getRegion(StateAssets.Images.SPLASH));
+        super(Rosjam.get().getAssets().getStateAssets().getRegion(StateAssets.Images.ROSJAM));
         this.seed = MathUtils.randomSign();
     }
 
