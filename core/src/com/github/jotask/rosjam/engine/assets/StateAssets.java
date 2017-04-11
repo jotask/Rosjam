@@ -29,7 +29,7 @@ public class StateAssets implements Disposable{
         }
     }
 
-    private final String filename = "aiko.png";
+    private final String filename = "states.png";
     private final Class<?> type = Texture.class;
 
     private Texture texture;
