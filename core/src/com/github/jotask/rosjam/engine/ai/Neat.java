@@ -22,7 +22,7 @@ public class Neat extends ArtificialIntelligence {
 
     private final Timer timer;
 
-    private final SwordController controller;
+    private final SwordController swordController;
 
     private final float THRESHOLD;
 
@@ -34,7 +34,7 @@ public class Neat extends ArtificialIntelligence {
         this.network = Game.get().neatThread.getBestNetwork();
         this.THRESHOLD = Game.get().neatThread.getThreshold();
         this.timer = new Timer(.1f);
-        this.controller = new SwordController(this.goblinMele.sword);
+        this.swordController = new SwordController(this.goblinMele.sword);
     }
 
     @Override
@@ -71,20 +71,19 @@ public class Neat extends ArtificialIntelligence {
         if(output[Constants.Outputs.down.ordinal()] > THRESHOLD) {
             this.dir.add(0, -1);
         }
-        goblinMele.sword.shotDirection.set(0, -1);
-        // TODO add weapons to neat enemies
-//        if(output[Constants.Outputs.w_left.ordinal()] > THRESHOLD) {
-//            this.weaponController.left();
-//        }
-//        if(output[Constants.Outputs.w_right.ordinal()] > THRESHOLD) {
-//            this.weaponController.right();
-//        }
-//        if(output[Constants.Outputs.w_up.ordinal()] > THRESHOLD) {
-//            this.weaponController.up();
-//        }
-//        if(output[Constants.Outputs.w_down.ordinal()] > THRESHOLD) {
-//            this.weaponController.down();
-//        }
+
+        if(output[Constants.Outputs.w_left.ordinal()] > THRESHOLD) {
+            this.swordController.left();
+        }
+        if(output[Constants.Outputs.w_right.ordinal()] > THRESHOLD) {
+            this.swordController.right();
+        }
+        if(output[Constants.Outputs.w_up.ordinal()] > THRESHOLD) {
+            this.swordController.up();
+        }
+        if(output[Constants.Outputs.w_down.ordinal()] > THRESHOLD) {
+            this.swordController.down();
+        }
 
     }
 
