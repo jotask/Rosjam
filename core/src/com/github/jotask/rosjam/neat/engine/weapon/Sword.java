@@ -18,7 +18,7 @@ import com.badlogic.gdx.physics.box2d.World;
  */
 public class Sword extends Weapon {
 
-    public static final Vector2 SIZE = new Vector2(1f, .25f);
+    public static final Vector2 SIZE = new Vector2(.75f, .25f);
 
     final Body body;
 

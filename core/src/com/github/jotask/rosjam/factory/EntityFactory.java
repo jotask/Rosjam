@@ -8,6 +8,7 @@ import com.github.jotask.rosjam.game.entity.BodyEntity;
 import com.github.jotask.rosjam.game.entity.enemy.Enemy;
 import com.github.jotask.rosjam.game.entity.player.Player;
 import com.github.jotask.rosjam.game.item.Bullet;
+import com.github.jotask.rosjam.game.item.Sword;
 import com.github.jotask.rosjam.game.item.Weapon;
 import com.github.jotask.rosjam.game.world.WorldManager;
 import com.github.jotask.rosjam.util.CollisionFilter;
@@ -86,6 +87,35 @@ public class EntityFactory {
 
     public static Weapon getWeapon(BodyEntity owner) {
         return new Weapon(owner);
+    }
+
+    public static Sword getSword(final BodyEntity owner){
+
+        BodyDef bd = new BodyDef();
+        bd.type = BodyDef.BodyType.DynamicBody;
+
+        final Body body = owner.getBody().getWorld().createBody(bd);
+        final Sword weapon = new Sword(body, owner);
+        body.setUserData(weapon);
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(
+                com.github.jotask.rosjam.neat.engine.weapon.Sword.SIZE.x,
+                com.github.jotask.rosjam.neat.engine.weapon.Sword.SIZE.y
+        );
+
+        FixtureDef fd = new FixtureDef();
+        fd.shape = shape;
+        fd.isSensor = true;
+
+        CollisionFilter.setMask(fd, CollisionFilter.EENTITY.ENEMY_FRIEND);
+
+        Fixture fixture = body.createFixture(fd);
+        fixture.setUserData(weapon);
+
+        shape.dispose();
+
+        return weapon;
     }
 
 }

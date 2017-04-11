@@ -14,27 +14,26 @@ import java.util.HashMap;
  */
 public class BulletAssets implements Disposable{
 
-    private final String filename = "bullet.png";
+    private final String filename = "weapons.png";
     private final Class<?> type = Texture.class;
-
-    private final int WIDTH = 16;
-    private final int HEIGHT = 16;
 
     private Texture texture;
     private final Assets assets;
 
     public enum SPRITE{
-        DEFAULT (0, 0);
+        DEFAULT (0, 0, 16, 16),
+        MAZE (16,0,6,16);
 
-        int x, y;
+        public final int x, y, width, height;
 
-        SPRITE(int x, int y){
+        SPRITE(int x, int y, int width, int height) {
             this.x = x;
             this.y = y;
+            this.width = width;
+            this.height = height;
         }
     }
 
-    // TODO implement m owm map to choose random regions with the same key
     private HashMap<BulletAssets.SPRITE, TextureRegion> map;
 
     public BulletAssets(final Assets assets) {
@@ -61,7 +60,7 @@ public class BulletAssets implements Disposable{
     private TextureRegion generateRegion(final BulletAssets.SPRITE tile){
         TextureRegion region = new TextureRegion();
         region.setTexture(this.texture);
-        region.setRegion(tile.x * WIDTH,tile.y * HEIGHT, WIDTH, HEIGHT);
+        region.setRegion(tile.x, tile.y, tile.width, tile.height);
         return region;
     }
 

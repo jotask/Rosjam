@@ -35,7 +35,6 @@ public class StateAssets implements Disposable{
     private Texture texture;
     private final Assets assets;
 
-    // TODO implement m owm map to choose random regions with the same key
     private HashMap<Images, TextureRegion> map;
 
     public StateAssets(final Assets assets) {

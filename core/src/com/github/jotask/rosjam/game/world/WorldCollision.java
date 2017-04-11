@@ -14,6 +14,7 @@ import com.github.jotask.rosjam.game.entity.HealthEntity;
 import com.github.jotask.rosjam.game.entity.enemy.Enemy;
 import com.github.jotask.rosjam.game.entity.player.Player;
 import com.github.jotask.rosjam.game.item.Bullet;
+import com.github.jotask.rosjam.game.item.Sword;
 
 /**
  * WorldCollision
@@ -44,6 +45,19 @@ class WorldCollision implements ContactListener {
             player.damage(1);
             dungeonState.score.addScore(Score.HIT_BY_ENEMY);
 //            enemy.damage(1);
+        }
+
+        if((a instanceof Sword || b instanceof Sword) && (a instanceof Player || b instanceof Player)){
+            final Sword sword;
+            final Player player;
+            if(a instanceof Player){
+                player = (Player) a;
+                sword = (Sword) b;
+            }else{
+                player = (Player) b;
+                sword = (Sword) a;
+            }
+            player.damage(sword.DMG);
         }
 
         if(a instanceof Bullet || b instanceof Bullet) {
