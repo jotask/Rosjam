@@ -132,7 +132,7 @@ public class Jota {
         }
     }
 
-    private void setBest(NeatEnemy fp){
+    private synchronized void setBest(NeatEnemy fp){
         if(this.best != null){
             this.best.isBest = false;
         }
@@ -140,7 +140,7 @@ public class Jota {
         this.best.isBest = true;
     }
 
-    public NeatEnemy getBest() {
+    public synchronized NeatEnemy getBest() {
         return best;
     }
 

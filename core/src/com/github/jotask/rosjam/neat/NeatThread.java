@@ -37,7 +37,8 @@ public class NeatThread implements Runnable{
     }
 
     public synchronized Network getBestNetwork(){
-        return this.neat.getJota().getBest().getNetwork();
+        Network network = this.neat.getJota().getBest().getNetwork();
+        return network;
     }
 
     public synchronized float getThreshold(){ return new Float(neat.getJota().getConfig().get(Config.Property.THRESHOLD)); }
