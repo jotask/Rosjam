@@ -20,9 +20,10 @@ import com.github.jotask.rosjam.game.world.WorldManager;
  */
 public class LevelManager extends Entity{
 
-    public final WorldManager worldManager;
-    public final EntityManager entityManager;
+    final WorldManager worldManager;
     public final DungeonManager dungeonManager;
+
+    final EntityManager entityManager;
 
     private int level;
     private boolean completed = false;
@@ -38,20 +39,20 @@ public class LevelManager extends Entity{
 
     @Override
     public void update() {
-        if(nextRoom != null){
-            nextRoom();
-        }else if(completed){
-            nextLevel();
-            completed = false;
+        if(this.nextRoom != null){
+            this.nextRoom();
+        }else if(this.completed){
+            this.nextLevel();
+            this.completed = false;
         }
     }
 
     @Override
-    public void render(SpriteBatch sb) { dungeonManager.getDungeon().render(sb); }
+    public void render(SpriteBatch sb) { this.dungeonManager.getDungeon().render(sb); }
 
     @Override
     public void debug(ShapeRenderer sr) {
-        dungeonManager.getDungeon().debug(sr);
+        this.dungeonManager.getDungeon().debug(sr);
     }
 
     public void setCompleted(){
@@ -60,28 +61,26 @@ public class LevelManager extends Entity{
 
     public void nextLevel(){
         // Augment level
-        level++;
+        this.level++;
         Game.get().getPlay().score.addScore(Score.FLOOR_CLEARED);
 
         // Delete everything
-        entityManager.reset();
-        worldManager.deleteDungeon();
+        this.entityManager.reset();
+        this.worldManager.deleteDungeon();
 
         // Create Everything
-        dungeonManager.nextLevel();
-        EntityManager.get().getPlayer().goTo(dungeonManager.getDungeon().initialRoom);
+        this.dungeonManager.nextLevel();
+        EntityManager.get().getPlayer().goTo(this.dungeonManager.getDungeon().initialRoom);
 
     }
 
     public void nextRoom(final Door door){
-        // TODO Check if is the door for next level
         if(door.isOpen())
-            nextRoom = door;
+            this.nextRoom = door;
     }
 
     private void nextRoom(){
-        // TODO Check if is the door for next level
-        dungeonManager.enterRoom(nextRoom);
+        this.dungeonManager.enterRoom(nextRoom);
         Camera camera = this.worldManager.getGame().getCamera();
         if(camera instanceof RoomCamera) {
             RoomCamera cam = (RoomCamera) camera;
@@ -89,10 +88,11 @@ public class LevelManager extends Entity{
         }else{
             System.out.println(camera.getClass().toString());
         }
-        nextRoom = null;
+        this.nextRoom = null;
     }
 
     public int getLevel() {
         return level;
     }
+
 }

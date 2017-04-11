@@ -42,7 +42,7 @@ public class PauseState extends GameState {
                     game.changeState(Game.GAMESTATES.PLAY);
                 }
             });
-            pause.add(btn).fillX().row();
+            this.pause.add(btn).fillX().row();
         }
         {
             final TextButton btn = new TextButton("Exit", skin);
@@ -53,14 +53,14 @@ public class PauseState extends GameState {
                     game.exit(true);
                 }
             });
-            pause.add(btn).fillX().row();
+            this.pause.add(btn).fillX().row();
         }
-        float x = (camera.viewportWidth *.5f);
-        float y = (camera.viewportHeight *.5f);
+        final float x = (this.camera.viewportWidth *.5f);
+        final float y = (this.camera.viewportHeight *.5f);
         this.pause.setPosition(x, y);
         this.pause.pack();
         this.pause.setKeepWithinStage(false);
-        this.stage.addActor(pause);
+        this.stage.addActor(this.pause);
 
         this.map = new MapHud(this);
 
@@ -70,8 +70,8 @@ public class PauseState extends GameState {
     public void enterState(){
         this.map.update();
         Gdx.input.setInputProcessor(this.stage);
-        float x = (stage.getWidth()  * .5f) - (pause.getWidth()  * .5f);
-        float y = (stage.getHeight() * .5f) - (pause.getHeight() * .5f);
+        final float x = (this.stage.getWidth()  * .5f) - (this.pause.getWidth()  * .5f);
+        final float y = (this.stage.getHeight() * .5f) - (this.pause.getHeight() * .5f);
         this.pause.setPosition(x, y);
         this.pause.pack();
     }
@@ -84,16 +84,16 @@ public class PauseState extends GameState {
 
     @Override
     public void render(SpriteBatch sb) {
-        sb.setProjectionMatrix(camera.combined);
+        sb.setProjectionMatrix(this.camera.combined);
         this.map.render(sb);
         sb.end();
-        stage.draw();
+        this.stage.draw();
         sb.begin();
     }
 
     @Override
     public void dispose() {
-        stage.dispose();
+        this.stage.dispose();
     }
 
 }

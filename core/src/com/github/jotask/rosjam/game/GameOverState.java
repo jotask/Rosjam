@@ -36,9 +36,10 @@ public class GameOverState extends GameState {
         this.pause = new Window("GameOver", skin);
         {
             final Label lab = new Label("Max score: ", skin);
-            pause.add(lab).row();
+            this.pause.add(lab).row();
+
             score = new Label(String.valueOf(game.getPlay().score.getScore()), skin);
-            pause.add(score).row();
+            this.pause.add(score).row();
         }
         {
             final TextButton btn = new TextButton("Exit", skin);
@@ -49,41 +50,41 @@ public class GameOverState extends GameState {
                     game.exit(false);
                 }
             });
-            pause.add(btn).row();
+            this.pause.add(btn).row();
         }
-        float x = (stage.getWidth()  * .5f) - (pause.getWidth()  * .5f);
-        float y = (stage.getHeight() * .5f) - (pause.getHeight() * .5f);
+        final float x = (this.stage.getWidth()  * .5f) - (this.pause.getWidth()  * .5f);
+        final float y = (this.stage.getHeight() * .5f) - (this.pause.getHeight() * .5f);
         this.pause.setPosition(x, y);
         this.pause.pack();
         this.pause.setKeepWithinStage(false);
-        this.stage.addActor(pause);
+        this.stage.addActor(this.pause);
     }
 
     @Override
     public void enterState(){
         Gdx.input.setInputProcessor(this.stage);
-        this.score.setText(String.valueOf(game.getPlay().score.getScore()));
-        float x = (stage.getWidth()  * .5f) - (pause.getWidth()  * .5f);
-        float y = (stage.getHeight() * .5f) - (pause.getHeight() * .5f);
+        this.score.setText(String.valueOf(this.game.getPlay().score.getScore()));
+        final float x = (this.stage.getWidth()  * .5f) - (this.pause.getWidth()  * .5f);
+        final float y = (this.stage.getHeight() * .5f) - (this.pause.getHeight() * .5f);
         this.pause.setPosition(x, y);
         this.pause.pack();
     }
 
     @Override
     public void update() {
-        stage.act();
+        this.stage.act();
     }
 
     @Override
     public void render(SpriteBatch sb) {
         sb.end();
-        stage.draw();
+        this.stage.draw();
         sb.begin();
     }
 
     @Override
     public void dispose() {
-        stage.dispose();
+        this.stage.dispose();
     }
 
 

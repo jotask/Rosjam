@@ -29,18 +29,18 @@ public class DungeonManager {
 
     private final DungeonFactory dungeonFactory;
 
-    private long initialseed;
+    private long initialSeed;
 
     public DungeonManager(LevelManager levelManager, InitialParameters.Cfg cfg) {
         this.levelManager = levelManager;
         this.dungeonFactory = new DungeonFactory();
         camera = (RoomCamera) Game.get().getCamera();
-        this.initialseed = cfg.seed;
+        this.initialSeed = cfg.seed;
     }
 
     private ConfigDungeon getNextConfig(){
-        this.initialseed++;
-        ConfigDungeon cfg = new ConfigDungeon(this.levelManager.worldManager, initialseed);
+        this.initialSeed++;
+        ConfigDungeon cfg = new ConfigDungeon(this.levelManager.worldManager, initialSeed);
         cfg.level = levelManager.getLevel();
         cfg.maxRooms += cfg.level;
         return cfg;

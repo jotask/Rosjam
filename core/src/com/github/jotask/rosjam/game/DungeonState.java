@@ -109,6 +109,7 @@ public class DungeonState extends GameState {
     @Override
     public void dispose() {
         this.manager.dispose();
+        this.worldManager.dispose();
     }
 
     public WorldManager getWorldManager() {
