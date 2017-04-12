@@ -123,14 +123,12 @@ public class Options extends CameraState{
     }
 
     private void deleteConfiguration() {
-        if(neatConfig.getSelected().equals(OptionsSaveLoad.propertyFile)) {
+        if(neatConfig.getSelected().equals(OptionsSaveLoad.propertyFile))
             return;
-        }
-        FileHandle file = Gdx.files.local(neatConfig.getSelected());
+        FileHandle file = Gdx.files.local(OptionsSaveLoad.PATH + neatConfig.getSelected());
         file.delete();
         this.load();
     }
-
 
     @Override
     public void update() { this.stage.act(Gdx.graphics.getDeltaTime()); }
