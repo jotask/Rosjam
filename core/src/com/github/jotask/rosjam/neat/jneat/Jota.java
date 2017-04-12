@@ -162,6 +162,7 @@ public class Jota {
 
     public void save(){
         // TODO save
+        System.out.println("save");
 //        FileHandle file = new FileHandle(Jota.filename);
 //        OutputStream os = null;
 //        try {
@@ -184,6 +185,7 @@ public class Jota {
 
     public void load(){
         // TODO load
+        System.out.println("load");
     }
 
 }

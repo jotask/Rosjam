@@ -55,7 +55,7 @@ public class Neat extends ArtificialIntelligence {
         inputs[Constants.Inputs.player_x.ordinal()] = p.x;
         inputs[Constants.Inputs.player_y.ordinal()] = p.y;
         inputs[Constants.Inputs.bias.ordinal()] = 1.0d;
-            return inputs;
+        return inputs;
     }
 
     private void setOutput(final double[] output) {

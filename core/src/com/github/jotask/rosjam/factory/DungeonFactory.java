@@ -8,9 +8,11 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Json;
+import com.github.jotask.rosjam.Rosjam;
 import com.github.jotask.rosjam.editor.EditorState;
 import com.github.jotask.rosjam.editor.TileData;
 import com.github.jotask.rosjam.engine.assets.Tiles;
+import com.github.jotask.rosjam.game.Game;
 import com.github.jotask.rosjam.game.Spawner;
 import com.github.jotask.rosjam.game.dungeon.Dungeon;
 import com.github.jotask.rosjam.game.dungeon.config.ConfigDungeon;
@@ -78,7 +80,7 @@ public class DungeonFactory {
 
         specialRooms(ids, cfg, rooms);
 
-        Dungeon dungeon = new Dungeon(rooms);
+        Dungeon dungeon = new Dungeon(cfg, rooms);
         dungeon.initialRoom = initialRoom;
 
         dungeon = new Cleaner().cleanDungeon(dungeon);
@@ -168,7 +170,7 @@ public class DungeonFactory {
     private final void specialRooms(int ids, final ConfigDungeon cfg, final LinkedList<Room> rooms){
         // Get the most far away room
         final LinkedList<Room> fars = new Graph(rooms.getFirst()).getFars();
-        TextureRegion region = cfg.dungeonAssets.getBackground();
+        TextureRegion region = Rosjam.get().getAssets().getDungeonAssets().getBackground();
         Vector2  pos = null;
         RoomDoor door = null;
 
@@ -231,7 +233,7 @@ public class DungeonFactory {
 
     private final Room room(final int id, final ConfigDungeon cfg, final Vector2 position, boolean initial){
 
-        TextureRegion background = cfg.dungeonAssets.getBackground();
+        TextureRegion background = Rosjam.get().getAssets().getDungeonAssets().getBackground();
 
         Room room = new Room(id, position, background);
         BodyFactory.createRoom(room);
@@ -284,11 +286,11 @@ public class DungeonFactory {
 
         Vector2 pos = new Vector2( room.getBounds().x + data.x + .5f, room.getBounds().y + data.y + .5f);
 
-        Body body = BodyFactory.createRock(cfg.worldManager.getWorld(), pos);
+        Body body = BodyFactory.createRock(Game.get().getPlay().getWorldManager().getWorld(), pos);
 
         final LinkedList<TextureRegion> regions = new LinkedList<TextureRegion>();
-        regions.add(cfg.dungeonAssets.get(Tiles.ROCK_01));
-        regions.add(cfg.dungeonAssets.get(Tiles.ROCK_02));
+        regions.add(Rosjam.get().getAssets().getDungeonAssets().get(Tiles.ROCK_01));
+        regions.add(Rosjam.get().getAssets().getDungeonAssets().get(Tiles.ROCK_02));
 
         int index = MathUtils.random(regions.size() - 1);
 

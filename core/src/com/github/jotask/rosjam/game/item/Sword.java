@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
+import com.badlogic.gdx.physics.box2d.World;
 import com.github.jotask.rosjam.Rosjam;
 import com.github.jotask.rosjam.engine.assets.BulletAssets;
 import com.github.jotask.rosjam.game.entity.BodyEntity;
@@ -171,6 +172,12 @@ public class Sword extends Item{
 
         sb.draw(region, x, y, 0, 0, w, h, 1, 1, aaa);
 
+    }
+
+    @Override
+    public void destroyItem() {
+        final World world = this.body.getWorld();
+        world.destroyBody(this.body);
     }
 
 }

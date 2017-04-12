@@ -15,7 +15,7 @@ public class Constants {
     public static final int INPUTS = Inputs.values().length;
     public static final int OUTPUTS = Outputs.values().length;
 
-    public static final boolean SAVE = false;
+    public static final boolean SAVE = true;
     public static final boolean LOAD = true;
 
 }

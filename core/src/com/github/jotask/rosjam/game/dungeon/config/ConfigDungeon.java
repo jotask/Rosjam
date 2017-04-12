@@ -1,8 +1,7 @@
 package com.github.jotask.rosjam.game.dungeon.config;
 
-import com.github.jotask.rosjam.Rosjam;
-import com.github.jotask.rosjam.engine.assets.DungeonAssets;
-import com.github.jotask.rosjam.game.world.WorldManager;
+import com.badlogic.gdx.math.MathUtils;
+import com.github.jotask.rosjam.game.InitialParameters;
 import com.github.jotask.rosjam.util.JRandom;
 
 /**
@@ -13,23 +12,33 @@ import com.github.jotask.rosjam.util.JRandom;
  */
 public class ConfigDungeon {
 
-    public long seed;
-
-    public final DungeonAssets dungeonAssets;
+    public final long seed;
 
     public final JRandom random;
 
-    public final WorldManager worldManager;
+    public final int level;
 
-    public int level = 0;
+    public final int maxRooms;
 
-    public int maxRooms = 7;
-
-    public ConfigDungeon(WorldManager worldManager, long seed) {
-        this.seed = seed;
-        this.worldManager = worldManager;
+    public ConfigDungeon() {
+        this.seed = MathUtils.random(Long.MAX_VALUE);
         this.random = new JRandom(this.seed);
-        this.dungeonAssets = Rosjam.get().getAssets().getDungeonAssets();
+        this.level = 1;
+        this.maxRooms = 7;
     }
 
+    public ConfigDungeon(final ConfigDungeon cfg){
+        this.seed = cfg.seed;
+        this.random = cfg.random;
+        this.level = cfg.level + 1;
+        this.maxRooms = cfg.maxRooms + 1;
+
+    }
+
+    public ConfigDungeon(InitialParameters.Cfg cfg) {
+        this.seed = cfg.seed;
+        this.random = new JRandom(this.seed);
+        this.level = cfg.level;
+        this.maxRooms = cfg.maxRooms;
+    }
 }

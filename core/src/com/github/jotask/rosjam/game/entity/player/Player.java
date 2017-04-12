@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.github.jotask.rosjam.Rosjam;
 import com.github.jotask.rosjam.engine.assets.SoundAssets;
+import com.github.jotask.rosjam.engine.graphics.Sprite;
 import com.github.jotask.rosjam.engine.input.Controller;
 import com.github.jotask.rosjam.factory.EntityFactory;
 import com.github.jotask.rosjam.game.Game;
@@ -13,7 +14,7 @@ import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
 import com.github.jotask.rosjam.game.entity.ControlEntity;
 import com.github.jotask.rosjam.game.item.Weapon;
-import com.github.jotask.rosjam.engine.graphics.Sprite;
+import com.github.jotask.rosjam.util.Ref;
 
 /**
  * Player
@@ -58,8 +59,9 @@ public class Player extends ControlEntity {
 
     @Override
     public void damage(int dmg) {
-        super.damage(dmg);
         Rosjam.get().getAssets().getSoundAssets().getSound(SoundAssets.SOUND.HURT).play();
+        if(!Ref.GOD_MODE)
+            super.damage(dmg);
     }
 
     @Override

@@ -14,7 +14,9 @@ import com.github.jotask.rosjam.neat.jneat.util.Constants;
  */
 public abstract class Files {
 
-    static final String FILE = "population";
+    static final String PATH = "neat/";
+
+    static final String FILE = PATH + "population";
     static final String EXTENSION = ".json";
 
     private Files(){}
@@ -26,11 +28,13 @@ public abstract class Files {
         final FileHandle fileHandle = Gdx.files.local(FILE + EXTENSION);
         fileHandle.writeString(text, false);
 
-        final FileHandle test1 = Gdx.files.local(FILE + "_strings" + EXTENSION);
-        test1.writeString(text, false);
+    }
 
-        final FileHandle test2 = Gdx.files.local(FILE + "_bytes" + EXTENSION);
-        test2.writeBytes(text.getBytes(), false);
+    public static void delete(){
+        FileHandle fileHandle = Gdx.files.local(FILE + EXTENSION);
+        if(fileHandle.exists()){
+            fileHandle.delete();
+        }
     }
 
     public static Population load(){

@@ -52,25 +52,18 @@ public class DungeonState extends GameState {
 
         this.manager.createPlayer(player);
 
-        this.level = new LevelManager(this.worldManager, cfg);
+        this.level = new LevelManager(this.worldManager);
 
-        score = new Score(cfg);
+        this.score = new Score(cfg);
 
-        this.level.nextLevel();
+        this.level.loadLevel(cfg);
 
         this.hud = new DungeonHud(this);
 
     }
 
-    private void reset(){
-        this.level.nextLevel();
-    }
-
     @Override
     public void update() {
-        if(manager.getPlayer().getController().resetLevel()){
-            reset();
-        }
 
         this.level.update();
         this.worldManager.update();

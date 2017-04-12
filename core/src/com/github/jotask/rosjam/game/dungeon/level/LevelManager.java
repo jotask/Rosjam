@@ -30,11 +30,11 @@ public class LevelManager extends Entity{
 
     private Door nextRoom;
 
-    public LevelManager(WorldManager worldManager, final InitialParameters.Cfg cfg) {
+    public LevelManager(WorldManager worldManager) {
         this.worldManager = worldManager;
-        this.level = cfg.level;
         this.entityManager = EntityManager.get();
-        this.dungeonManager = new DungeonManager(this, cfg);
+        this.dungeonManager = new DungeonManager();
+
     }
 
     @Override
@@ -59,7 +59,15 @@ public class LevelManager extends Entity{
         this.completed = true;
     }
 
-    public void nextLevel(){
+    public void loadLevel(InitialParameters.Cfg cfg) {
+        this.level = cfg.level;
+        if(this.level == 0)
+            this.level++;
+        this.dungeonManager.loadLevel(cfg);
+        EntityManager.get().getPlayer().goTo(this.dungeonManager.getDungeon().initialRoom);
+    }
+
+    private void nextLevel(){
         // Increase level
         this.level++;
         Game.get().getPlay().score.addScore(Score.FLOOR_CLEARED);

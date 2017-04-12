@@ -3,6 +3,7 @@ package com.github.jotask.rosjam.game.dungeon;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.github.jotask.rosjam.game.dungeon.config.ConfigDungeon;
 import com.github.jotask.rosjam.game.entity.Entity;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
 
@@ -16,11 +17,14 @@ import java.util.LinkedList;
  */
 public class Dungeon extends Entity {
 
+    public final ConfigDungeon cfg;
+
     private LinkedList<Room> rooms;
 
     public Room initialRoom;
 
-    public Dungeon(LinkedList<Room> rooms) {
+    public Dungeon(final ConfigDungeon cfg, final LinkedList<Room> rooms) {
+        this.cfg = cfg;
         this.rooms = rooms;
     }
 

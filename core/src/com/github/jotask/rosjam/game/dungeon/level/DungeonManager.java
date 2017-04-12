@@ -22,32 +22,32 @@ public class DungeonManager {
 
     private Dungeon dungeon;
 
-    private Room previousRoom;
     private Room currentRoom;
 
-    private final LevelManager levelManager;
 
     private final DungeonFactory dungeonFactory;
 
-    private long initialSeed;
-
-    public DungeonManager(LevelManager levelManager, InitialParameters.Cfg cfg) {
-        this.levelManager = levelManager;
+    public DungeonManager() {
         this.dungeonFactory = new DungeonFactory();
         camera = (RoomCamera) Game.get().getCamera();
-        this.initialSeed = cfg.seed;
     }
 
-    private ConfigDungeon getNextConfig(){
-        this.initialSeed++;
-        ConfigDungeon cfg = new ConfigDungeon(this.levelManager.worldManager, initialSeed);
-        cfg.level = levelManager.getLevel();
-        cfg.maxRooms += cfg.level;
-        return cfg;
+    void loadLevel(InitialParameters.Cfg cfg){
+        final ConfigDungeon cd;
+        if(cfg.level == 0) {
+            cd = new ConfigDungeon();
+        }else{
+            cd = new ConfigDungeon(cfg);
+        }
+        dungeon = dungeonFactory.generateDungeon(cd);
+        currentRoom = dungeon.initialRoom;
+        currentRoom.enter();
+        camera.moveTo(currentRoom);
     }
 
-    public void nextLevel(){
-        dungeon = dungeonFactory.generateDungeon(getNextConfig());
+    void nextLevel(){
+        final ConfigDungeon cfg = new ConfigDungeon(this.dungeon.cfg);
+        dungeon = dungeonFactory.generateDungeon(cfg);
         currentRoom = dungeon.initialRoom;
         currentRoom.enter();
         camera.moveTo(currentRoom);
@@ -55,10 +55,9 @@ public class DungeonManager {
 
     public Dungeon getDungeon() { return dungeon; }
 
-    public void enterRoom(final Door door){
+    void enterRoom(final Door door){
 
         currentRoom.exit();
-        previousRoom = currentRoom;
 
         currentRoom = door.connected.self;
 

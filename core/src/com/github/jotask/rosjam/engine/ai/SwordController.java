@@ -12,7 +12,7 @@ public class SwordController {
 
     private final Sword weapon;
 
-    public SwordController(final Sword weapon) { this.weapon = weapon; }
+    SwordController(final Sword weapon) { this.weapon = weapon; }
 
     public void left(){ weapon.shotDirection.set(-1, 0); }
 

@@ -22,8 +22,8 @@ public class GoblinMele extends Enemy {
 
     public GoblinMele(Body body, Sprite sprite, Room room) {
         super(body, sprite, room);
-        this.setAI(new Neat(this));
         this.sword = EntityFactory.getSword(this);
+        this.setAI(new Neat(this));
     }
 
     @Override
@@ -42,6 +42,12 @@ public class GoblinMele extends Enemy {
     public void debug(ShapeRenderer sr) {
         super.debug(sr);
         this.sword.debug(sr);
+    }
+
+    @Override
+    public void die() {
+        super.die();
+        this.sword.destroyItem();
     }
 
 }

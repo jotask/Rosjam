@@ -35,6 +35,7 @@ public final class InitialParameters {
         }else{
             cfg = new Cfg();
         }
+        System.out.println(cfg.level);
         return cfg;
     }
 
@@ -43,6 +44,8 @@ public final class InitialParameters {
         // TODO set default seed
         public long seed;
         public int level;
+        public int maxRooms;
+
         public long score;
 
         // Player
@@ -50,8 +53,11 @@ public final class InitialParameters {
 
         Cfg(final DungeonState game) {
 
-            this.score = game.score.getScore();
+            this.seed = game.getLevel().dungeonManager.getDungeon().cfg.seed;
             this.level = game.getLevel().getLevel();
+            this.maxRooms = game.getLevel().dungeonManager.getDungeon().cfg.maxRooms;
+
+            this.score = game.score.getScore();
 
             final Player player = EntityManager.get().getPlayer();
             this.health = player.currentHealth;
@@ -62,6 +68,8 @@ public final class InitialParameters {
 
             this.seed = MathUtils.random(Long.MAX_VALUE);
             this.level = 0;
+            this.maxRooms = 7;
+
             this.score = 627;
 
             this.health = HealthEntity.MAX_HEALTH;
@@ -72,6 +80,8 @@ public final class InitialParameters {
         public void write(Json json) {
             json.writeValue("seed", this.seed);
             json.writeValue("level", this.level);
+            json.writeValue("maxRooms", this.maxRooms);
+
             json.writeValue("score", this.score);
 
             // Players
@@ -83,6 +93,8 @@ public final class InitialParameters {
         public void read(Json json, JsonValue jsonData) {
             this.seed  = jsonData.getLong("seed", MathUtils.random(Long.MAX_VALUE));
             this.level = jsonData.getInt("level");
+            this.maxRooms = jsonData.getInt("maxRooms");
+
             this.score = jsonData.getLong("score");
 
             // Player

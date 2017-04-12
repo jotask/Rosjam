@@ -13,10 +13,8 @@ import java.util.Random;
 public final class JRandom {
 
     private final Random random;
-    private final long seed;
 
     public JRandom(long seed) {
-        this.seed = seed;
         this.random = new Random();
         this.random.setSeed(seed);
     }
@@ -26,9 +24,8 @@ public final class JRandom {
     }
 
     public Enemies getRandomEnemy(){
-        return Enemies.GOBLIN_MAGIC;
+        final Enemies[] values = Enemies.values();
+        return values[random(values.length)];
     }
-
-    public long getSeed() { return seed; }
 
 }

@@ -17,6 +17,7 @@ import com.github.jotask.rosjam.engine.GameStateManager;
 import com.github.jotask.rosjam.engine.camera.Camera;
 import com.github.jotask.rosjam.engine.states.CameraState;
 import com.github.jotask.rosjam.game.InitialParameters;
+import com.github.jotask.rosjam.neat.util.Files;
 import com.github.jotask.rosjam.util.Ref;
 
 /**
@@ -54,6 +55,7 @@ public class Menu extends CameraState {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         file.delete();
+                        Files.delete();
                         Rosjam.get().getGsm().changeState(GameStateManager.STATE.GAME);
                     }
                 });
