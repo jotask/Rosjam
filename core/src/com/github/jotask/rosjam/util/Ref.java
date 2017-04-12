@@ -19,6 +19,6 @@ public class Ref {
     public static final float ANIMATION_SPEED = .25f;
     public static final float ANIMATION_FRAME = .25f;
 
-    public static final GameStateManager.STATE INITIAL_STATE = GameStateManager.STATE.OPTIONS;
+    public static final GameStateManager.STATE INITIAL_STATE = GameStateManager.STATE.MENU;
 
 }

@@ -2,7 +2,6 @@ package com.github.jotask.rosjam.neat.config;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.github.jotask.rosjam.neat.jneat.util.JException;
 import com.github.jotask.rosjam.option.Options;
 import com.github.jotask.rosjam.option.OptionsSaveLoad;
 
@@ -18,54 +17,75 @@ import java.util.Properties;
 public class LoadConfig {
 
     public static Config load(boolean isSimulation){
-        Properties properties = new Properties();
-        FileHandle file = Gdx.files.local(Options.file);
 
-        if(!file.exists()){
+        final Properties globalProperties = new Properties();
+        final FileHandle globalOptionFile = Gdx.files.local(Options.FILE);
+
+        if(!globalOptionFile.exists()){
             return LoadConfig.loadDefault();
         }
 
         try {
-            properties.load(file.read());
+            globalProperties.load(globalOptionFile.read());
         } catch (IOException e) {
             e.printStackTrace();
             return LoadConfig.loadDefault();
         }
 
         final String f;
+
         if(isSimulation){
-            f = properties.getProperty(Options.OPTIONS.NEATSIMULATION.name());
+            f = globalProperties.getProperty(Options.OPTIONS.NEATSIMULATION.name());
         }else {
-            f = properties.getProperty(Options.OPTIONS.NEATFILE.name());
+            f = globalProperties.getProperty(Options.OPTIONS.NEATFILE.name());
         }
 
-        final Config cfg;
-        try {
-            cfg = loadConfig(OptionsSaveLoad.PATH + f);
-            if(cfg != null){
-                return cfg;
+        final String last = globalProperties.getProperty(Options.OPTIONS.LAST_NEAT.name());
+
+        if(!last.equals(f)){
+
+            FileHandle neat = Gdx.files.local("neat/population.json");
+
+            if(neat.exists())
+                neat.delete();
+
+
+            globalProperties.setProperty(Options.OPTIONS.LAST_NEAT.name(), f);
+            try {
+                globalProperties.store(globalOptionFile.writer(false), "global properties");
+            } catch (IOException e) {
+                e.printStackTrace();
+                Options.createDefault();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return LoadConfig.loadDefault();
         }
 
-        return LoadConfig.loadDefault();
+        return loadConfig(f);
 
     }
 
-    private static Config loadConfig(final String f) throws JException, IOException{
+    private static Config loadConfig(final String f){
 
-        FileHandle file = Gdx.files.local(f);
+        FileHandle file = Gdx.files.local(OptionsSaveLoad.PATH + f);
 
         if(!file.exists()){
             return LoadConfig.loadDefault();
         }
 
         final Properties properties = new Properties();
-        properties.load(file.read());
 
-        return new Config(properties);
+        try {
+            properties.load(file.read());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        final Config cfg = new Config(properties);
+
+        if(cfg == null){
+            return loadDefault();
+        }else{
+            return cfg;
+        }
 
     }
 

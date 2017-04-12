@@ -157,5 +157,4 @@ public class Jota {
 
     public Config getConfig() { return config; }
 
-
 }

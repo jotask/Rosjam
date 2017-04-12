@@ -21,7 +21,7 @@ class SaveDialog extends Dialog {
         super("Save", Rosjam.get().getAssets().getSkin());
         this.options = opt;
 
-        this.text("Override or create a new config file");
+        this.text("Override or create a new config FILE");
         this.row();
 
         if(!opt.select.getSelected().equals(OptionsSaveLoad.propertyFile)) {
@@ -66,7 +66,7 @@ class SaveDialog extends Dialog {
             super("", Rosjam.get().getAssets().getSkin());
             this.opt = opt;
 
-            this.text("Enter the name for the new file:");
+            this.text("Enter the name for the new FILE:");
             file = new TextField("", Rosjam.get().getAssets().getSkin());
             this.add(file);
             this.row();

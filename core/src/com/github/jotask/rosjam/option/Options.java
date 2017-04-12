@@ -29,9 +29,9 @@ import java.util.Properties;
  */
 public class Options extends CameraState{
 
-    public enum OPTIONS{ NEATFILE, NEATSIMULATION}
+    public enum OPTIONS{ NEATFILE, NEATSIMULATION, LAST_NEAT}
 
-    public static final String file = "config/config.properties";
+    public static final String FILE = "config/config.properties";
 
     final Stage stage;
 
@@ -145,13 +145,12 @@ public class Options extends CameraState{
 
     private void save(){
         Properties props = new Properties();
-        FileHandle fileHandle = Gdx.files.local(file);
-        if(!fileHandle.exists()){
-            try {
-                fileHandle.file().createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        FileHandle fileHandle = Gdx.files.local(FILE);
+
+        try {
+            props.load(fileHandle.read());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         props.setProperty(OPTIONS.NEATFILE.name(), this.neatConfig.getSelected());
@@ -194,16 +193,11 @@ public class Options extends CameraState{
 
         this.getNeatConfigFiles();
 
-        FileHandle fileHandle = Gdx.files.local(file);
+        FileHandle fileHandle = Gdx.files.local(FILE);
 
         if(!fileHandle.exists()){
-            try {
-                createDefault(fileHandle);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }finally {
-                load();
-            }
+            Options.createDefault();
+            load();
             return;
         }
 
@@ -221,11 +215,17 @@ public class Options extends CameraState{
 
     }
 
-    private void createDefault(final FileHandle fileHandle) throws IOException {
+    public static void createDefault() {
+        final FileHandle fileHandle = Gdx.files.local(FILE);
         Properties properties = new Properties();
         properties.setProperty(OPTIONS.NEATFILE.name(), OptionsSaveLoad.propertyFile);
         properties.setProperty(OPTIONS.NEATSIMULATION.name(), OptionsSaveLoad.propertyFile);
-        properties.store(fileHandle.writer(false), "config file for the game");
+        properties.setProperty(OPTIONS.LAST_NEAT.name(), OptionsSaveLoad.propertyFile);
+        try {
+            properties.store(fileHandle.writer(false), "config FILE for the game");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

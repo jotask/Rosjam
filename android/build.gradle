@@ -77,7 +77,7 @@ task run(type: Exec) {
 // sets up the Android Eclipse project, using the old Ant based build.
 eclipse {
     // need to specify Java source sets explicitly, SpringSource Gradle Eclipse plugin
-    // ignores any nodes added in classpath.file.withXml
+    // ignores any nodes added in classpath.FILE.withXml
     sourceSets {
         main {
             java.srcDirs "src", 'gen'
