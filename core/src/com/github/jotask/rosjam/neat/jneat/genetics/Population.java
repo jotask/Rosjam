@@ -232,7 +232,7 @@ public class Population implements Json.Serializable{
     public void read(Json json, JsonValue data) {
         this.generation = data.getInt("generation");
         this.maxFitness = data.getDouble("maxFitness");
-        this.innovation = data.getInt("innovation");
+        innovation = data.getInt("innovation");
         for (JsonValue v : data.get("Species")) {
             Specie s = json.readValue(Specie.class, v);
             species.add(s);

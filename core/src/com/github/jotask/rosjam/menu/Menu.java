@@ -33,7 +33,7 @@ public class Menu extends CameraState {
 
     public Menu(Camera camera) {
         super(camera);
-        FitViewport viewport = new FitViewport(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
+        FitViewport viewport = new FitViewport(camera.viewportWidth / 2f, camera.viewportHeight / 2f);
         this.stage = new Stage(viewport, Rosjam.get().getSb());
         {
             Logo logo = new Logo();
@@ -142,7 +142,9 @@ public class Menu extends CameraState {
 
     @Override
     public void resize(int width, int height) {
+        this.camera.resize(width, height);
         this.stage.getViewport().update(width, height);
+        this.stage.getViewport().apply();
     }
 
 }

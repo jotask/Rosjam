@@ -56,8 +56,6 @@ public class Jota {
 
         this.fitness = new BasicFitness();
 
-        load();
-
         this.initializeGame();
 
     }
@@ -153,39 +151,11 @@ public class Jota {
     }
 
     public void dispose(){
-        save();
         this.manager.dispose();
         Jota.instance = null;
     }
 
     public Config getConfig() { return config; }
 
-    public void save(){
-        // TODO save
-        System.out.println("save");
-//        FileHandle file = new FileHandle(Jota.filename);
-//        OutputStream os = null;
-//        try {
-//            os = new FileOutputStream(file.file());
-//            Properties properties = new Properties();
-//            properties.store(os);
-//
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }finally {
-//            if(os != null){
-//                try {
-//                    os.close();
-//                } catch (IOException e) {
-//                    // We can do nothing
-//                }
-//            }
-//        }
-    }
-
-    public void load(){
-        // TODO load
-        System.out.println("load");
-    }
 
 }

@@ -16,6 +16,7 @@ import com.github.jotask.rosjam.engine.camera.Camera;
 import com.github.jotask.rosjam.engine.states.CameraState;
 import com.github.jotask.rosjam.neat.config.Config;
 import com.github.jotask.rosjam.neat.config.LoadConfig;
+import com.github.jotask.rosjam.util.Ref;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -38,9 +39,8 @@ public class Options extends CameraState{
 
     public Options(Camera camera) {
         super(camera);
-        FitViewport viewport = new FitViewport(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
+        FitViewport viewport = new FitViewport(camera.viewportWidth / 2f, camera.viewportHeight / 2f);
         this.stage = new Stage(viewport, Rosjam.get().getSb());
-        final float width = viewport.getScreenWidth() / 3f;
         final Skin skin = Rosjam.get().getAssets().getSkin();
         final Table table = new Table();
         table.align(Align.left);
@@ -50,7 +50,18 @@ public class Options extends CameraState{
                 table.add(label);
 
                 this.neatConfig = new SelectBox<String>(skin);
-                table.add(this.neatConfig).width(width);
+                table.add(this.neatConfig).fill();
+            }
+            table.row().width(viewport.getWorldWidth() - 10f);
+            {
+                TextButton btn = new TextButton("Delete this config", skin);
+                btn.addListener(new ClickListener(){
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        deleteConfiguration();
+                    }
+                });
+                table.add(btn).colspan(2).padTop(3).fillX();
             }
             table.row();
             {
@@ -86,7 +97,7 @@ public class Options extends CameraState{
                             instance.save();
                         }
                     });
-                    table.add(btn).align(Align.center).padTop(20f).padBottom(50f);
+                    table.add(btn).fill().pad(10f);
                 }
                 {
                     final TextButton btn = new TextButton("Exit", skin);
@@ -96,7 +107,7 @@ public class Options extends CameraState{
                             Rosjam.get().getGsm().changeState(GameStateManager.STATE.MENU);
                         }
                     });
-                    table.add(btn);
+                    table.add(btn).fill().pad(10f);
                 }
             }
         }
@@ -106,6 +117,17 @@ public class Options extends CameraState{
 
         Gdx.input.setInputProcessor(this.stage);
 
+        this.stage.setDebugAll(Ref.DEBUG);
+
+        this.load();
+    }
+
+    private void deleteConfiguration() {
+        if(neatConfig.getSelected().equals(OptionsSaveLoad.propertyFile)) {
+            return;
+        }
+        FileHandle file = Gdx.files.local(neatConfig.getSelected());
+        file.delete();
         this.load();
     }
 
@@ -121,14 +143,11 @@ public class Options extends CameraState{
     }
 
     @Override
-    public void dispose() {
-        super.dispose();
-        this.stage.dispose();
-    }
+    public void dispose() { this.stage.dispose(); }
 
     private void save(){
         Properties props = new Properties();
-        FileHandle fileHandle = Gdx.files.local(this.file);
+        FileHandle fileHandle = Gdx.files.local(file);
         if(!fileHandle.exists()){
             try {
                 fileHandle.file().createNewFile();
@@ -177,7 +196,7 @@ public class Options extends CameraState{
 
         this.getNeatConfigFiles();
 
-        FileHandle fileHandle = Gdx.files.local(this.file);
+        FileHandle fileHandle = Gdx.files.local(file);
 
         if(!fileHandle.exists()){
             try {
@@ -211,6 +230,11 @@ public class Options extends CameraState{
         properties.store(fileHandle.writer(false), "config file for the game");
     }
 
-
+    @Override
+    public void resize(int width, int height) {
+        this.camera.resize(width, height);
+        this.stage.getViewport().update(width, height);
+        this.stage.getViewport().apply();
+    }
 
 }

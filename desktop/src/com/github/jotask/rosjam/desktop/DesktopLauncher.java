@@ -14,8 +14,11 @@ public class DesktopLauncher {
 		cfg.foregroundFPS = 30;
 
 		cfg.title = "Rosjam";
-		cfg.width = 1280;
-		cfg.height = 720;
+
+		final int scl = 1;
+
+		cfg.width = 1280 / scl;
+		cfg.height = 720 / scl;
 
 		cfg.addIcon("icon.png", Files.FileType.Internal);
 

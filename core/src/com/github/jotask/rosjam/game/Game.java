@@ -227,12 +227,15 @@ public class Game extends CameraState {
             System.err.println("Unable to close loop");
             e.printStackTrace();
         }
-        this.instance = null;
+        instance = null;
     }
 
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
+        this.play.resize(width, height);
+        this.pause.resize(width, height);
+        this.gameover.resize(width, height);
         this.hud.resize(width, height);
     }
 

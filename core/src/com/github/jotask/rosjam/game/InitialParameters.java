@@ -35,7 +35,6 @@ public final class InitialParameters {
         }else{
             cfg = new Cfg();
         }
-        System.out.println(cfg.level);
         return cfg;
     }
 

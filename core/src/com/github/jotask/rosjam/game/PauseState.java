@@ -96,4 +96,11 @@ public class PauseState extends GameState {
         this.stage.dispose();
     }
 
+    @Override
+    public void resize(int width, int height) {
+        this.stage.getViewport().update(width, height);
+        this.stage.getViewport().apply();
+        this.camera.resize(width, height);
+        // TODO resize map
+    }
 }

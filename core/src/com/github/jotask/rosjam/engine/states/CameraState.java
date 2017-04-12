@@ -11,7 +11,7 @@ import com.github.jotask.rosjam.engine.camera.Camera;
  * @author Jose Vives Iznardo
  * @since 16/01/2017
  */
-public class CameraState implements IState {
+public abstract class CameraState implements IState {
 
     protected final Color color = Color.BLACK;
     protected final Camera camera;

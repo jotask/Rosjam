@@ -115,6 +115,7 @@ public class EditorState extends CameraState {
     public void resize(int width, int height) {
         super.resize(width, height);
         stage.getViewport().update(width, height);
+        stage.getViewport().apply();
     }
 
     public Skin getSkin() { return skin; }

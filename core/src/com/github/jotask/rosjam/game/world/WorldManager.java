@@ -71,4 +71,7 @@ public class WorldManager extends GameState {
         this.world.destroyBody(body);
     }
 
+    @Override
+    public void resize(int width, int height) { }
+
 }

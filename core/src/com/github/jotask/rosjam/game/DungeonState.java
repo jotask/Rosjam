@@ -121,4 +121,8 @@ public class DungeonState extends GameState {
     @Override
     public void enterState() { Gdx.input.setInputProcessor(this.inputProcessor); }
 
+    @Override
+    public void resize(int width, int height) {
+        // TODO resize
+    }
 }

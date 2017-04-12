@@ -54,4 +54,6 @@ public abstract class GameState implements IState {
 
     public Game getGame() { return game; }
 
+    public abstract void resize(final int width, final int height);
+
 }

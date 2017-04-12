@@ -24,7 +24,7 @@ class SaveDialog extends Dialog {
         this.text("Override or create a new config file");
         this.row();
 
-        if(opt.select.getSelected() != OptionsSaveLoad.propertyFile) {
+        if(!opt.select.getSelected().equals(OptionsSaveLoad.propertyFile)) {
             this.button("Override", OPTION.OVERRIDE);
         }
         this.button("New", OPTION.NEW);

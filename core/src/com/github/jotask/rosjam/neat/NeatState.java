@@ -134,4 +134,10 @@ public class NeatState extends CameraState {
         this.getNeat().dispose();
         Ref.DEBUG = ORIGINAL_DEBUG;
     }
+
+    @Override
+    public void resize(int width, int height) {
+        this.stage.getViewport().update(width, height);
+        this.stage.getViewport().apply();
+    }
 }
