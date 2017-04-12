@@ -63,7 +63,6 @@ public class DungeonState extends GameState {
     }
 
     private void reset(){
-        // FIXME improve when the world is going to be deleted
         this.level.nextLevel();
     }
 

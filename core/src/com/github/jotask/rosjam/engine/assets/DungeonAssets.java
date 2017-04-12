@@ -15,16 +15,12 @@ import com.badlogic.gdx.utils.Disposable;
  */
 public class DungeonAssets implements Disposable {
 
-//    https://www.leshylabs.com/apps/sstool/
-
-    private final Assets assets;
-
+    // https://www.leshylabs.com/apps/sstool/
     private TextureAtlas atlas;
     private TextureRegion background;
     private AssetManager manager;
 
-    DungeonAssets(final Assets assets) {
-        this.assets = assets;
+    DungeonAssets() {
         this.atlas = new TextureAtlas(Gdx.files.internal("convert/sprites.atlas"));
         this.manager = new AssetManager();
         this.manager.load("convert/bg.png", Texture.class);

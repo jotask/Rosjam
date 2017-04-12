@@ -60,7 +60,7 @@ public class LevelManager extends Entity{
     }
 
     public void nextLevel(){
-        // Augment level
+        // Increase level
         this.level++;
         Game.get().getPlay().score.addScore(Score.FLOOR_CLEARED);
 

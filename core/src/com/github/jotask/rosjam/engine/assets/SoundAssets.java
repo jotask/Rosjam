@@ -29,11 +29,9 @@ public class SoundAssets implements Disposable{
         }
     }
 
-    private final Assets assets;
     private final HashMap<SOUND, Sound> map;
 
-    SoundAssets(final Assets assets) {
-        this.assets = assets;
+    SoundAssets() {
         this.map = new HashMap<SOUND, Sound>();
     }
 

@@ -25,11 +25,9 @@ public class MusicAssets implements Disposable{
         }
     }
 
-    private final Assets assets;
     private final HashMap<MUSIC, Music> map;
 
-    public MusicAssets(final Assets assets) {
-        this.assets = assets;
+    public MusicAssets() {
         this.map = new HashMap<MUSIC, Music>();
     }
 

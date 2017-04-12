@@ -53,8 +53,6 @@ public class NeatOptions extends CameraState {
 
     final SelectBox<String> select;
 
-    // FIXME when is not files create a default file
-
     public NeatOptions(Camera camera) {
         super(camera);
         FitViewport viewport = new FitViewport(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);

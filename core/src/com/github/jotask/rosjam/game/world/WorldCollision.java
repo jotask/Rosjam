@@ -107,7 +107,6 @@ class WorldCollision implements ContactListener {
                 door = (Door)y;
             }
 
-            // TODO
             if(door.self.isCompleted() && !door.isEntered) {
                 dungeonState.getLevel().nextRoom(door);
                 door.connected.isEntered = true;
@@ -131,7 +130,6 @@ class WorldCollision implements ContactListener {
                 door = (Door)y;
             }
 
-            // TODO
             if( door.self.isCompleted()) {
                 door.setOpen(true);
                 door.isEntered = false;

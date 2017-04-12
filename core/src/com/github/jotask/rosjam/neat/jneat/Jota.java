@@ -119,7 +119,7 @@ public class Jota {
 
     private void nextGeneration(){
         // FIXME
-//        this.gui.getFitness().addFitness(this.population.getGeneration(), this.best.getGenome().fitness);
+        // this.gui.getFitness().addFitness(this.population.getGeneration(), this.best.getGenome().fitness);
         this.manager.clear();
         this.fitness.reset();
         this.population.newGeneration();

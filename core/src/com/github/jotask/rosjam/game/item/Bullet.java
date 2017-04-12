@@ -30,7 +30,6 @@ public class Bullet extends BodyEntity{
     }
 
     public void shot(Vector2 direction){
-        // TODO ADD DIRECTION
         Vector2 d = new Vector2();
 
         if(direction.x < -.5f){

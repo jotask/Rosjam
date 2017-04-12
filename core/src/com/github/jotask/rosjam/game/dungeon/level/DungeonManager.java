@@ -51,8 +51,6 @@ public class DungeonManager {
         currentRoom = dungeon.initialRoom;
         currentRoom.enter();
         camera.moveTo(currentRoom);
-        // TODO update map
-//        this.levelManager.worldManager.getGame().getHud().getMap().setDungeon(dungeon);
     }
 
     public Dungeon getDungeon() { return dungeon; }

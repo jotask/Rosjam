@@ -36,15 +36,15 @@ public class Assets implements Disposable{
         new Converter();
 
         this.assetManager = new AssetManager();
-        this.dungeonAssets = new DungeonAssets(this);
+        this.dungeonAssets = new DungeonAssets();
         this.playerAssets = new PlayerAssets(this);
         this.enemyAssets = new EnemyAssets(this);
         this.bulletAssets = new BulletAssets(this);
         this.stateAssets = new StateAssets(this);
         this.hudAssets = new HudAssets(this);
 
-        this.soundAssets = new SoundAssets(this);
-        this.musicAssets = new MusicAssets(this);
+        this.soundAssets = new SoundAssets();
+        this.musicAssets = new MusicAssets();
 
     }
 

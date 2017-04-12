@@ -15,8 +15,6 @@ import com.github.jotask.rosjam.game.hud.Hud;
  */
 public class AndroidController implements Controller {
 
-    // TODO Create and improve skin
-
     private DirectionController direction;
     private ShootController shoot;
 

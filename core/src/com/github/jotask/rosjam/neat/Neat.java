@@ -66,4 +66,5 @@ public class Neat{
 	public Player getPlayer() { return player; }
 
 	public synchronized Jota getJota() { return jota; }
+
 }

@@ -39,8 +39,7 @@ public class HudAssets implements Disposable{
         }
     }
 
-    // TODO implement m owm map to choose random regions with the same key
-    private HashMap<HudAssets.SPRITE, TextureRegion> map;
+    private HashMap<SPRITE, TextureRegion> map;
 
     public HudAssets(final Assets assets) {
         this.assets = assets;
@@ -49,31 +48,31 @@ public class HudAssets implements Disposable{
         this.touchBackground = new Texture(Gdx.files.internal("touchBackground.png"));
         this.touchKnob = new Texture(Gdx.files.internal("touchKnob.png"));
 
-        this.map = new HashMap<HudAssets.SPRITE, TextureRegion>();
+        this.map = new HashMap<SPRITE, TextureRegion>();
 
     }
 
     public void prepare(){
         texture = (Texture) this.assets.getAssetManager().get(this.filename, this.type);
 
-        for(HudAssets.SPRITE t: HudAssets.SPRITE.values()){
+        for(SPRITE t: SPRITE.values()){
             addTile(t);
         }
 
     }
 
-    private void addTile(final HudAssets.SPRITE tile){
+    private void addTile(final SPRITE tile){
         this.map.put(tile, generateRegion(tile));
     }
 
-    private TextureRegion generateRegion(final HudAssets.SPRITE tile){
+    private TextureRegion generateRegion(final SPRITE tile){
         TextureRegion region = new TextureRegion();
         region.setTexture(this.texture);
         region.setRegion(tile.x,tile.y, tile.w, tile.h);
         return region;
     }
 
-    public TextureRegion getRegion(final HudAssets.SPRITE key){
+    public TextureRegion getRegion(final SPRITE key){
         return this.map.get(key);
     }
 

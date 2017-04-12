@@ -142,7 +142,6 @@ public class DungeonFactory {
             }
         }
 
-        // FIXME
         if(areConnected){
             return null;
         }

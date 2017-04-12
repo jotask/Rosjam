@@ -25,7 +25,7 @@ public class AStar extends ArtificialIntelligence {
     public static final int WIDTH = 21;
     public static final int HEIGHT = 11;
 
-    public final boolean diagonal = false;
+    private final boolean diagonal = false;
 
     private Node[][] nodes;
 
@@ -57,9 +57,6 @@ public class AStar extends ArtificialIntelligence {
                 final float x = bounds.x + (i * w);
                 final float y = bounds.y + (j * h);
                 nodes[i][j] = new Node(i, j, x, y, w, h);
-//                if(i == 0 || j == 0 || i == WIDTH - 1 || j == HEIGHT - 1){
-//                    this.nodes[i][j].state = Node.STATE.OBSTACLE;
-//                }
             }
         }
 
@@ -73,20 +70,6 @@ public class AStar extends ArtificialIntelligence {
                 }
             }
         }
-
-//        final int seed = MathUtils.random(0, Integer.MAX_VALUE - 1);
-//        final float threshold = .5f;
-//        for(int i = 0; i < WIDTH; i++){
-//            for(int j = 0; j < HEIGHT; j++){
-//                double v = Noise.valueNoise3D(i, j,0, seed);
-//                if(v > threshold){
-//                    Node n = nodes[i][j];
-//                    if(n.state == Node.STATE.EMPY) {
-//                        nodes[i][j].state = Node.STATE.OBSTACLE;
-//                    }
-//                }
-//            }
-//        }
 
         this.start = nodes[1][1];
         this.start.state = Node.STATE.START;
@@ -138,7 +121,6 @@ public class AStar extends ArtificialIntelligence {
     }
 
     private Node getNode(final Vector2 from) {
-        // FIXME add support to rooms
         final Rectangle bounds = this.room.getBounds();
         float x = Math.abs(from.x - bounds.x);
         float y = Math.abs(from.y - bounds.y);
@@ -156,7 +138,7 @@ public class AStar extends ArtificialIntelligence {
         }
     }
 
-    public void restart(){
+    private void restart(){
 
         for(int i = 0; i < WIDTH; i++){
             for(int j = 0; j < HEIGHT; j++) {
@@ -182,9 +164,6 @@ public class AStar extends ArtificialIntelligence {
         while(!open.isEmpty()){
 
             current = getLowestF(open);
-
-//            if(current != start && current != end)
-//                current.state = Node.STATE.CHECKED;
 
             if(current == end){
                 break;
@@ -250,7 +229,7 @@ public class AStar extends ArtificialIntelligence {
     }
 
     private LinkedList<Node> getNeighbors(final Node n){
-        // TODO calculate diagonal Neighbors
+
         final LinkedList<Node> neighbors = new LinkedList<Node>();
         final int i = n.i;
         final int j = n.j;
@@ -296,9 +275,6 @@ public class AStar extends ArtificialIntelligence {
         }
     }
 
-    private int heuristic(Node a, Node b){
-        int d = Math.abs(a.i - b.i) + Math.abs(a.j - b.j);
-        return d;
-    }
+    private int heuristic(Node a, Node b){ return Math.abs(a.i - b.i) + Math.abs(a.j - b.j); }
 
 }
