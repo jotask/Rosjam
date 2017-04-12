@@ -13,7 +13,7 @@ import com.github.jotask.rosjam.game.dungeon.door.Door;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
 import com.github.jotask.rosjam.game.entity.ControlEntity;
 import com.github.jotask.rosjam.game.item.Weapon;
-import com.github.jotask.rosjam.util.Sprite;
+import com.github.jotask.rosjam.engine.graphics.Sprite;
 
 /**
  * Player

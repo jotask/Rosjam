@@ -9,9 +9,9 @@ import com.github.jotask.rosjam.engine.assets.DungeonAssets;
 import com.github.jotask.rosjam.engine.assets.PlayerAssets;
 import com.github.jotask.rosjam.engine.assets.Tiles;
 import com.github.jotask.rosjam.game.dungeon.door.Door;
-import com.github.jotask.rosjam.util.DoorSprite;
+import com.github.jotask.rosjam.engine.graphics.DoorSprite;
 import com.github.jotask.rosjam.util.Ref;
-import com.github.jotask.rosjam.util.Sprite;
+import com.github.jotask.rosjam.engine.graphics.Sprite;
 
 /**
  * AnimationFactory

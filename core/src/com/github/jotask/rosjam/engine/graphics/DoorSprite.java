@@ -1,4 +1,4 @@
-package com.github.jotask.rosjam.util;
+package com.github.jotask.rosjam.engine.graphics;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;

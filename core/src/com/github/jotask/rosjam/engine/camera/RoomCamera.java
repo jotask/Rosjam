@@ -14,9 +14,6 @@ public class RoomCamera extends Camera{
         super(w, h);
     }
 
-    @Override
-    public void _update() { }
-
     public void moveTo(final Room room){
         this.position.set(room.getCenter(), Z);
         this.update();

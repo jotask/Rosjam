@@ -9,7 +9,6 @@ import com.badlogic.gdx.utils.Disposable;
 import com.github.jotask.rosjam.engine.states.AbstractState;
 import com.github.jotask.rosjam.engine.states.CameraState;
 import com.github.jotask.rosjam.factory.Factory;
-import com.github.jotask.rosjam.util.Ref;
 
 /**
  * GameStateManager
@@ -23,62 +22,57 @@ public class GameStateManager extends AbstractState implements Disposable{
 
     private CameraState currentState;
 
-    public GameStateManager() {
-        this.changeState(Ref.INITIAL_STATE);
-    }
+    public GameStateManager() { }
 
     @Override
     public void update() {
-        currentState.preUpdate();
-        currentState.update();
-        currentState.postUpdate();
+        this.currentState.preUpdate();
+        this.currentState.update();
+        this.currentState.postUpdate();
     }
 
     @Override
     public void render(SpriteBatch sb){
         final Color c = this.currentState.getColor();
         Gdx.gl20.glClearColor(c.r, c.g, c.b, c.a);
-        OrthographicCamera camera = currentState.getCamera();
+        OrthographicCamera camera = this.currentState.getCamera();
         sb.setProjectionMatrix(camera.combined);
         sb.begin();
-        currentState.preRender(sb);
+        this.currentState.preRender(sb);
         sb.end();
         sb.begin();
-        currentState.render(sb);
+        this.currentState.render(sb);
         sb.end();
         sb.begin();
-        currentState.postRender(sb);
+        this.currentState.postRender(sb);
         sb.end();
     }
 
     @Override
     public void debug(ShapeRenderer sr){
-        OrthographicCamera camera = currentState.getCamera();
+        OrthographicCamera camera = this.currentState.getCamera();
         sr.setProjectionMatrix(camera.combined);
         sr.begin();
-        currentState.preDebug(sr);
+        this.currentState.preDebug(sr);
         sr.end();
         sr.begin();
-        currentState.debug(sr);
+        this.currentState.debug(sr);
         sr.end();
         sr.begin();
-        currentState.postDebug(sr);
+        this.currentState.postDebug(sr);
         sr.end();
     }
 
     @Override
     public void dispose(){
-        currentState.dispose();
+        if(this.currentState != null)
+            this.currentState.dispose();
     }
 
     public void changeState(STATE state){
-        if(currentState != null)
-            currentState.dispose();
-
-        // TODO implement loading screen
-
-        currentState = Factory.getState(state);
-
+        if(this.currentState != null)
+            this.currentState.dispose();
+        this.currentState = Factory.getState(state);
     }
 
     public void resize(int width, int height) { this.currentState.resize(width, height); }

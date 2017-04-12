@@ -2,10 +2,8 @@ package com.github.jotask.rosjam.engine.camera;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.github.jotask.rosjam.game.entity.player.Player;
 
 /**
  * Camera
@@ -15,11 +13,9 @@ import com.github.jotask.rosjam.game.entity.player.Player;
  */
 public class Camera extends OrthographicCamera {
 
-    public static final int Z = 10;
+    static final int Z = 10;
 
-    private static Camera instance;
-
-    public Viewport viewport;
+    private final Viewport viewport;
 
     public Camera(){
         this(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -28,18 +24,9 @@ public class Camera extends OrthographicCamera {
     public Camera(final float w, final float h) {
         super(w, h);
         this.position.set(0, 0, Z);
-        this.update();
-
-//        float w = 21f;
-//        float h = 11f;
-
-//        float w = Gdx.graphics.getWidth() / 5f;
-//        float h = Gdx.graphics.getHeight() / 5f;
 
         this.viewport = new FitViewport(w, h, this);
         this.viewport.apply();
-
-        instance = this;
 
     }
 
@@ -48,14 +35,6 @@ public class Camera extends OrthographicCamera {
         viewport.apply();
     }
 
-    public void _update(){}
-
-    public static void follow(Player player){
-        float smooth = .5f;
-        Camera.instance.position.lerp(new Vector3(player.getBody().getPosition(), Z), smooth);
-        Camera.instance.update();
-    }
-
-    // TODO Dispose camera
+    public Viewport getViewport(){ return this.viewport; }
 
 }

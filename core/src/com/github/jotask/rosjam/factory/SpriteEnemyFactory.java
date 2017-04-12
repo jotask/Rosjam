@@ -4,10 +4,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.github.jotask.rosjam.Rosjam;
-import com.github.jotask.rosjam.engine.assets.EnemyAssets;
 import com.github.jotask.rosjam.game.entity.enemy.Enemies;
 import com.github.jotask.rosjam.util.Ref;
-import com.github.jotask.rosjam.util.Sprite;
+import com.github.jotask.rosjam.engine.graphics.Sprite;
 
 /**
  * SpriteEnemyFactory

@@ -12,7 +12,7 @@ import com.github.jotask.rosjam.game.item.Sword;
 import com.github.jotask.rosjam.game.item.Weapon;
 import com.github.jotask.rosjam.game.world.WorldManager;
 import com.github.jotask.rosjam.util.CollisionFilter;
-import com.github.jotask.rosjam.util.Sprite;
+import com.github.jotask.rosjam.engine.graphics.Sprite;
 
 /**
  * EntityBuilder

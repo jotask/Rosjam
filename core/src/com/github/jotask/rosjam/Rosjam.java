@@ -45,6 +45,7 @@ public class Rosjam extends ApplicationAdapter {
 		this.sr.setAutoShapeType(true);
 
 		this.gsm = new GameStateManager();
+		this.gsm.changeState(Ref.INITIAL_STATE);
 
 		this.debug = new Debug();
 

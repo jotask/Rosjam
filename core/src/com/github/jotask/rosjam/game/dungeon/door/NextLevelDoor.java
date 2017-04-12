@@ -2,8 +2,7 @@ package com.github.jotask.rosjam.game.dungeon.door;
 
 import com.badlogic.gdx.math.Vector2;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
-import com.github.jotask.rosjam.util.DoorSprite;
-import com.github.jotask.rosjam.util.Sprite;
+import com.github.jotask.rosjam.engine.graphics.DoorSprite;
 
 /**
  * NextLevelDoor

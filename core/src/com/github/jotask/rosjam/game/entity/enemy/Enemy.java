@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.github.jotask.rosjam.engine.ai.ArtificialIntelligence;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
 import com.github.jotask.rosjam.game.entity.HealthEntity;
-import com.github.jotask.rosjam.util.Sprite;
+import com.github.jotask.rosjam.engine.graphics.Sprite;
 
 /**
  * Enemy

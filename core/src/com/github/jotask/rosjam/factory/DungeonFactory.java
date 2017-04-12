@@ -21,7 +21,7 @@ import com.github.jotask.rosjam.game.dungeon.room.BossRoom;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
 import com.github.jotask.rosjam.game.entity.enemy.Enemies;
 import com.github.jotask.rosjam.game.entity.obstacle.Rock;
-import com.github.jotask.rosjam.util.DoorSprite;
+import com.github.jotask.rosjam.engine.graphics.DoorSprite;
 
 import java.util.LinkedList;
 

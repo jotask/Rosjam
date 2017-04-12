@@ -8,7 +8,7 @@ package com.github.jotask.rosjam.util;
  */
 public class Timer {
 
-    private final long time;
+    private long time;
     private long next;
 
     public Timer(float seg){

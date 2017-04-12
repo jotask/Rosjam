@@ -27,9 +27,8 @@ public final class JRandom {
 
     public Enemies getRandomEnemy(){
         return Enemies.GOBLIN_MAGIC;
-        // FIXME remove debug
-//        final Enemies[] values = Enemies.values();
-//        return values[random(values.length)];
     }
+
+    public long getSeed() { return seed; }
 
 }

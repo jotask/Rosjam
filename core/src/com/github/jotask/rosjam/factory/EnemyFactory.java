@@ -8,7 +8,7 @@ import com.github.jotask.rosjam.game.Spawner;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
 import com.github.jotask.rosjam.game.entity.enemy.Enemies;
 import com.github.jotask.rosjam.game.entity.enemy.Enemy;
-import com.github.jotask.rosjam.util.Sprite;
+import com.github.jotask.rosjam.engine.graphics.Sprite;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

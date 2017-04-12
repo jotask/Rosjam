@@ -96,7 +96,6 @@ public class Game extends CameraState {
                 this.gameover.postUpdate();
                 break;
         }
-        this.getCamera()._update();
     }
 
     @Override

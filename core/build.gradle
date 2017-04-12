@@ -5,7 +5,21 @@ sourceCompatibility = 1.6
 
 sourceSets.main.java.srcDirs = [ "src/" ]
 
+sourceSets.test.java.srcDirs = ["test/"]
 
 eclipse.project {
     name = appName + "-core"
+}
+dependencies {
+
+    // These are new!
+    testCompile "junit:junit:4.12"
+    testCompile "org.mockito:mockito-core:2.2.7"
+
+    testCompile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+    testCompile "com.badlogicgames.gdx:gdx:$gdxVersion"
+    testCompile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+    testCompile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+    testCompile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+
 }
