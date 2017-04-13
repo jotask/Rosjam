@@ -42,7 +42,7 @@ public class LoadConfig {
 
         final String last = globalProperties.getProperty(Options.OPTIONS.LAST_NEAT.name());
 
-        if(!last.equals(f)){
+        if(last != null && !last.equals(f)){
 
             FileHandle neat = Gdx.files.local("neat/population.json");
 
