@@ -19,8 +19,6 @@ import com.github.jotask.rosjam.neat.util.Timer;
  */
 public class Jota {
 
-    public static final String filename = "jota.properties";
-
     private static Jota instance;
     public static Jota get(){
         if(Jota.instance == null){
@@ -33,7 +31,7 @@ public class Jota {
 
     public final Config config;
 
-    private NeatEnemy best;
+    private volatile NeatEnemy best;
 
     private final Timer timer;
     private Population population;
@@ -69,7 +67,6 @@ public class Jota {
     }
 
     private void initializeGame() {
-        best = null;
         this.manager.clear();
         for (final Specie specie : this.population.getSpecies()) {
             for(final Genome genome: specie.getGenomes()) {
@@ -80,6 +77,8 @@ public class Jota {
 
         if(Constants.SAVE)
             Files.save(this.population);
+
+        this.setBest(this.manager.getActive().getFirst());
 
     }
 
@@ -105,7 +104,7 @@ public class Jota {
                 b = e;
         }
 
-        if(this.best != b){
+        if(this.getBest() != b){
             this.setBest(b);
         }
 
@@ -116,8 +115,6 @@ public class Jota {
     }
 
     private void nextGeneration(){
-        // FIXME
-        // this.gui.getFitness().addFitness(this.population.getGeneration(), this.best.getGenome().fitness);
         this.manager.clear();
         this.fitness.reset();
         this.population.newGeneration();
@@ -131,16 +128,12 @@ public class Jota {
     }
 
     private synchronized void setBest(NeatEnemy fp){
-        if(this.best != null){
-            this.best.isBest = false;
-        }
+        if(this.best != null) this.best.isBest = false;
         this.best = fp;
         this.best.isBest = true;
     }
 
-    public synchronized NeatEnemy getBest() {
-        return best;
-    }
+    public synchronized NeatEnemy getBest() { return best; }
 
     public int getPopulationSize() { return this.population.getSpecies().size(); }
 

@@ -32,13 +32,13 @@ public class EnemyFactory {
     }
 
     /**
-     * http://stackoverflow.com/questions/6094575/creating-an-instance-using-the-class-name-and-calling-constructor
+     *
      *
      * @param room
      * @param type
      * @return
      */
-    public static Enemy get(final Room room, final Enemies type){
+    private static Enemy get(final Room room, final Enemies type){
 
         final World world = Game.get().getPlay().getWorldManager().getWorld();
         final Body body = BodyFactory.createEnemy(world, .4f);
@@ -58,9 +58,7 @@ public class EnemyFactory {
             case BAT:
                 return new Bat(body, sprite, room);
             default:
-                // FIXME
-                throw new RuntimeException("Unknoe enemy");
-//                return new Bat(body, sprite, room);
+                return new Bat(body, sprite, room);
         }
 
     }

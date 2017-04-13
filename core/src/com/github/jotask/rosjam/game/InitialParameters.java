@@ -40,7 +40,6 @@ public final class InitialParameters {
 
     public static class Cfg implements Json.Serializable{
 
-        // TODO set default seed
         public long seed;
         public int level;
         public int maxRooms;

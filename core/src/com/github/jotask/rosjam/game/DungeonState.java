@@ -123,6 +123,7 @@ public class DungeonState extends GameState {
 
     @Override
     public void resize(int width, int height) {
-        // TODO resize
+        this.hud.resize(width, height);
     }
+
 }

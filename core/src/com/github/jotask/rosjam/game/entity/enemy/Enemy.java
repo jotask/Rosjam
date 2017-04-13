@@ -53,8 +53,6 @@ public abstract class Enemy extends HealthEntity {
         this.intelligence.debug(sr);
     }
 
-    public void despawn(){
-        // TODO despawn enemies
-    }
+    public void despawn(){ }
 
 }

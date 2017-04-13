@@ -71,8 +71,6 @@ public class Sword extends Item{
         final Shape s = this.body.getFixtureList().first().getShape();
         if(s instanceof PolygonShape){
             ((PolygonShape) s).setAsBox(0f, 0f);
-        }else{
-            System.err.println("Unknown");
         }
     }
 
@@ -137,7 +135,6 @@ public class Sword extends Item{
 
         switch (getDir(a)){
             case LEFT:
-                System.out.println( a + " l");
                 w = SIZE.y * 2f;
                 h = SIZE.x * 2f;
                 x = p.x - w * 2f;
@@ -145,7 +142,6 @@ public class Sword extends Item{
                 aaa = -90;
                 break;
             case RIGHT:
-                System.out.println(a + " r");
                 w = SIZE.y * 2f;
                 h = SIZE.x * 2f;
                 x = p.x + w * 2f;

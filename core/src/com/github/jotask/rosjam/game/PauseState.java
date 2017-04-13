@@ -84,7 +84,6 @@ public class PauseState extends GameState {
 
     @Override
     public void render(SpriteBatch sb) {
-        sb.setProjectionMatrix(this.camera.combined);
         this.map.render(sb);
         sb.end();
         this.stage.draw();
@@ -101,6 +100,5 @@ public class PauseState extends GameState {
         this.stage.getViewport().update(width, height);
         this.stage.getViewport().apply();
         this.camera.resize(width, height);
-        // TODO resize map
     }
 }

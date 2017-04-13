@@ -1,5 +1,7 @@
 package com.github.jotask.rosjam.game.hud.dungeon;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -21,7 +23,7 @@ import java.util.LinkedList;
  */
 public class MapHud {
 
-    // FIXME camera problems
+    private final float SCALE = 2f;
 
     private TextureRegion texture;
 
@@ -31,10 +33,15 @@ public class MapHud {
 
     private Dungeon dungeon;
 
-    public MapHud(final PauseState pauseState) {
-        final Camera c = pauseState.camera;
+    final Camera camera;
 
-        this.center = new Vector2(c.position.x + c.viewportWidth * .5f, c.position.y + c.viewportHeight * .5f);
+    public MapHud(final PauseState pauseState) {
+        this.camera = new Camera(Gdx.graphics.getWidth() / SCALE, Gdx.graphics.getHeight() / SCALE);
+
+        this.center = new Vector2(
+                this.camera.position.x + this.camera.viewportWidth * .5f,
+                this.camera.position.y + this.camera.viewportHeight * .5f
+        );
         this.center.setZero();
 
         this.texture = Rosjam.get().getAssets().getDungeonAssets().getBackground();
@@ -55,6 +62,8 @@ public class MapHud {
 
     public void render(final SpriteBatch sb){
 
+        sb.setProjectionMatrix(this.camera.combined);
+
         for(final Room r: this.dungeon.getRooms()){
             room(sb, r);
         }
@@ -65,9 +74,13 @@ public class MapHud {
 
         final float offset = 1f;
 
-//        if(!room.isEntered()) {
-//            return;
-//        }
+        if(!room.isEntered())
+            return;
+
+        final Color c = sb.getColor();
+
+        if(room.isInside())
+            sb.setColor(Color.DARK_GRAY);
 
         final float s = 2f;
 
@@ -77,6 +90,8 @@ public class MapHud {
         float h = Room.HEIGHT - offset;
 
         sb.draw(this.texture, x * s, y * s, w * s, h * s);
+
+        sb.setColor(c);
 
     }
 

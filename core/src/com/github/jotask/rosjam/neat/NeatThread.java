@@ -12,31 +12,30 @@ import com.github.jotask.rosjam.neat.jneat.network.Network;
  */
 public class NeatThread implements Runnable{
 
-    private Neat neat;
+    private final Neat neat;
 
     private boolean isRunning;
 
     public NeatThread() {
         this.isRunning = true;
+
+        final Config cfg = LoadConfig.load(false);
+        this.neat = new Neat(cfg);
     }
 
     @Override
     public void run() {
 
-        final Config cfg = LoadConfig.load(false);
-
-        this.neat = new Neat(cfg);
         while(this.isRunning) {
             this.neat.update();
         }
         this.neat.dispose();
     }
 
-    public void stop(){
-        this.isRunning = false;
-    }
+    public void stop(){ this.isRunning = false; }
 
     public synchronized Network getBestNetwork(){
+        while(this.neat.getJota() == null);
         while(this.neat.getJota().getBest() == null);
         return this.neat.getJota().getBest().getNetwork();
     }

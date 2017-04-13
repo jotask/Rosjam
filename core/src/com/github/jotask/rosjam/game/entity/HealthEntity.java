@@ -15,10 +15,6 @@ public abstract class HealthEntity extends BodyEntity {
 
     protected HealthEntity(Body body) {
         super(body);
-
-        // FIXME
-        this.currentHealth = MAX_HEALTH / 2;
-
     }
 
     @Override

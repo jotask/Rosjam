@@ -41,6 +41,9 @@ public class NeatState extends CameraState {
 
     private final Stage stage;
 
+    private int last_generation;
+    private double last_fitness;
+
     public NeatState(Camera camera) {
         super(camera);
 
@@ -80,9 +83,14 @@ public class NeatState extends CameraState {
     @Override
     public void update() {
         this.stage.act(Gdx.graphics.getDeltaTime());
+        final int gen = this.neat.getJota().getPop().getGeneration();
+        if(gen != this.last_generation){
+            this.jotaGui.getFitness().addFitness(this.last_generation, this.last_fitness);
+            this.last_generation = this.neat.getJota().getPop().getGeneration();
+        }
         this.neat.update();
+        this.last_fitness = this.neat.getJota().getBest().getGenome().fitness;
         this.networkRenderer.createNetwork(this.neat.getJota().getBest());
-        // TODO update fitness gui
     }
 
     @Override
@@ -103,7 +111,6 @@ public class NeatState extends CameraState {
         sb.setProjectionMatrix(this.engineGui.getCamera().combined);
         this.jotaGui.render(sb);
         this.engineGui.render(sb);
-
     }
 
     @Override

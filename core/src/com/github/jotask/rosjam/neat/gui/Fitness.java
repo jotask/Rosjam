@@ -88,7 +88,7 @@ public class Fitness implements Renderer {
         sr.line(r.x, r.y, r.x + r.width, r.y);
         sr.line(r.x, r.y, r.x, r.y + r.height);
 
-        sr.setColor(Color.BLACK);
+        sr.setColor(Color.DARK_GRAY);
 
         final int size = (lists.size() > SHOW)? SHOW: lists.size();
 
@@ -110,6 +110,7 @@ public class Fitness implements Renderer {
             x += INCR;
 
         }
+
     }
 
     private static class Entry{
