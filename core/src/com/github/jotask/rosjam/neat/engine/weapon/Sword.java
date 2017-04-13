@@ -26,16 +26,15 @@ public class Sword extends Weapon {
 
     public Sword(final Body body) {
         this.body = body;
-        this.color = Color.CYAN;
-        this.color.a = .5f;
+        this.color = new Color(0, 1, 1, .5f);
     }
 
     @Override
     public void update(final Body other) {
         this.body.setTransform(other.getPosition(), this.body.getAngle());
-        isAttacking = attack();
+        this.isAttacking = attack();
         this.body.setAwake(isAttacking);
-        if(isAttacking) {
+        if(this.isAttacking) {
             this.enableSword();
         }else{
             this.disableSword();
@@ -43,14 +42,14 @@ public class Sword extends Weapon {
         this.shotDirection.setZero();
     }
 
-    public void enableSword(){
+    private void enableSword(){
         final Shape s = this.body.getFixtureList().first().getShape();
         if(s instanceof PolygonShape){
             ((PolygonShape) s).setAsBox(SIZE.x, SIZE.y);
         }
     }
 
-    public void disableSword(){
+    private void disableSword(){
         final Shape s = this.body.getFixtureList().first().getShape();
         if(s instanceof PolygonShape){
             ((PolygonShape) s).setAsBox(0f, 0f);

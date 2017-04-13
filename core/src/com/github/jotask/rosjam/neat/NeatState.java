@@ -23,8 +23,6 @@ import com.github.jotask.rosjam.neat.gui.JotaGui;
 import com.github.jotask.rosjam.neat.gui.NetworkRenderer;
 import com.github.jotask.rosjam.util.Ref;
 
-import static com.badlogic.gdx.Gdx.gl;
-
 /**
  * NeatState
  *
@@ -45,6 +43,7 @@ public class NeatState extends CameraState {
 
     public NeatState(Camera camera) {
         super(camera);
+
         ORIGINAL_DEBUG = Ref.DEBUG;
         Ref.DEBUG = true;
 
@@ -88,12 +87,12 @@ public class NeatState extends CameraState {
 
     @Override
     public void render(SpriteBatch sb) {
-        gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
         this.renderer.render(neat.getWorld(), camera.combined);
         sb.setProjectionMatrix(camera.combined);
-        neat.entityManager.render(sb);
-        neat.getPlayer().render(sb);
-        gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        this.neat.entityManager.render(sb);
+        this.neat.getPlayer().render(sb);
+        Gdx.gl20.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
     }
 
     @Override
@@ -118,10 +117,10 @@ public class NeatState extends CameraState {
     @Override
     public void postDebug(ShapeRenderer sr) {
         sr.setProjectionMatrix(this.engineGui.getCamera().combined);
-        gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl20.glEnable(GL20.GL_BLEND);
         this.jotaGui.debug(sr);
         this.networkRenderer.debug(sr);
-        gl.glDisable(GL20.GL_BLEND);
+        Gdx.gl20.glDisable(GL20.GL_BLEND);
     }
 
     public EngineGui getEngineGui() { return engineGui; }
@@ -140,4 +139,5 @@ public class NeatState extends CameraState {
         this.stage.getViewport().update(width, height);
         this.stage.getViewport().apply();
     }
+
 }

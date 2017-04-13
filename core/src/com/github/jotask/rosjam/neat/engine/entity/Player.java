@@ -19,7 +19,7 @@ public class Player extends Entity{
 
     public final Vector2 velocity;
 
-    public final float SPEED = 10;
+    private final float SPEED = 10;
 
     public Player(final Body body) {
         super(body);
@@ -40,7 +40,7 @@ public class Player extends Entity{
     @Override
     public void debug(ShapeRenderer sr) {
         sr.set(ShapeRenderer.ShapeType.Filled);
-        sr.setColor(Color.BLACK);
+        sr.setColor(Color.YELLOW);
         sr.circle(getBody().getPosition().x, getBody().getPosition().y, .5f, 20);
     }
 

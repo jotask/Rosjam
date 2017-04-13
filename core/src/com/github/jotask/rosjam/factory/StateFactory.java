@@ -49,8 +49,8 @@ public class StateFactory {
     }
 
     private static final NeatState getNeatState(){
-        float w = Gdx.graphics.getWidth() / 10f;
-        float h = Gdx.graphics.getHeight() / 10f;
+        float w = Gdx.graphics.getWidth()  / 20f;
+        float h = Gdx.graphics.getHeight() / 20f;
         final Camera camera = new Camera(w, h);
         NeatState ns = new NeatState(camera);
         return ns;

@@ -35,7 +35,7 @@ public class NeatEnemy extends Enemy {
 
     private final float THRESHOLD;
 
-    public boolean isBest;
+    boolean isBest;
 
     public NeatEnemy(Body body, final float THRESHOLD) {
         super(body);
@@ -79,7 +79,7 @@ public class NeatEnemy extends Enemy {
 
     public Genome getGenome() { return genome; }
 
-    public boolean isDisabled() { return disabled; }
+    boolean isDisabled() { return disabled; }
 
     private void setPosition(final Vector2 p){
         this.getBody().setTransform(p, this.getBody().getAngle());
@@ -155,7 +155,7 @@ public class NeatEnemy extends Enemy {
 
     }
 
-    public void evaluateNetwork() {
+    void evaluateNetwork() {
         final double[] input = this.getInputs();
         final double[] output = this.network.evaluate(input);
         this.setOutput(output);

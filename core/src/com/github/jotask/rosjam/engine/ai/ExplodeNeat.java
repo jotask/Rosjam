@@ -45,12 +45,9 @@ public class ExplodeNeat extends ArtificialIntelligence {
     public ExplodeNeat(final BodyEntity entity) {
         super(entity.getBody());
         this.entity = entity;
-        this.network = Game.get().neatThread.getBestNetwork();
-        if(this.network == null){
-            do{
-                this.network = Game.get().neatThread.getBestNetwork();
-            }while(this.network == null);
-        }
+        do{
+            this.network = Game.get().neatThread.getBestNetwork();
+        }while(this.network == null);
         this.THRESHOLD = Game.get().neatThread.getThreshold();
         this.timer = new Timer(.1f);
         this.player = EntityManager.get().getPlayer();
@@ -64,8 +61,6 @@ public class ExplodeNeat extends ArtificialIntelligence {
             double[] inputs = getInputs();
             double[] outputs = this.network.evaluate(inputs);
             setOutput(outputs);
-
-            setOutput(network.evaluate(getInputs()));
             this.dir.scl(SPEED);
             this.body.applyForceToCenter(dir, true);
             this.dir.setZero();

@@ -24,6 +24,7 @@ public class EntityManager{
     }
 
     public static boolean add(final Entity entity){
+
         if(instance == null)
             get();
 
@@ -46,7 +47,6 @@ public class EntityManager{
     public void update() {
 
         final LinkedList<Entity> newPopulation = new LinkedList<Entity>(entities);
-        int f = 0;
 
         for(Entity e: entities){
 
@@ -82,8 +82,6 @@ public class EntityManager{
     public void dispose(){
         EntityManager.instance = null;
     }
-
-    public LinkedList<Entity> getEntities() { return entities; }
 
     public int getEnemies() { return enemies; }
 

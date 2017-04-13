@@ -28,35 +28,33 @@ public class NetworkRenderer implements Renderer {
 
     private final Rectangle rectangle;
 
-    private Network network;
+    private final Color c = new Color(1, 1, 1, 1);
 
-    final Color c = Color.WHITE;
+    private Network network;
 
     final Map<Integer, Cell> graph;
 
     public NetworkRenderer(final NeatState neatState) {
+
+        this.c.a = .25f;
+
         this.neatState = neatState;
         final OrthographicCamera cam = neatState.getEngineGui().getCamera();
-        float w = cam.viewportWidth * .5f;
-        float h = Cell.SIZE * Constants.INPUTS;
-//        float x = cam.position.x - (w * .5f);
-        float x = cam.position.x - 25;
-        float y = cam.position.y - (h *.5f);
 
-//        w = cam.viewportWidth * .5f;
-//        h = cam.viewportHeight * .5f;
-//
-//        x = cam.position.x - ( w * .5f);
-//        y = cam.position.y  - (h * .5f);
+        final float offset = 10f;
 
-        y -= 100f;
-        x += 20f;
+        final float w = (cam.viewportWidth * .5f) - (offset * 2);
+
+        final int inp = Math.round(Constants.INPUTS * Cell.SIZE);
+        final int max = Math.round(Constants.OUTPUTS * Cell.SIZE);
+        final float h = Math.max(inp, max);
+
+        final float x = (cam.position.x + offset);
+        final float y = (cam.position.y - (cam.viewportHeight * .5f)) + offset;
 
         this.rectangle = new Rectangle(x, y, w, h);
 
         graph = new HashMap<Integer, Cell>();
-
-        this.c.a = .5f;
 
     }
 
@@ -105,7 +103,6 @@ public class NetworkRenderer implements Renderer {
 
             } else {
 
-//                x = rectangle.x + (rectangle.width * .5f);
                 x = (minX + maxX) * .5f;
                 y = rectangle.y + (rectangle.height * .5f);
                 graph.put(i, new Cell(x, y, neuron, 1f, Cell.SIZE * .5f));
@@ -174,6 +171,9 @@ public class NetworkRenderer implements Renderer {
                     continue;
                 }
 
+                final float s1 = c1.size * .5f;
+                final float s2 = c2.size * .5f;
+
                 final Color color;
                 if (Neuron.sigmoid(gene.getWeight()) > 0.0) {
                     color = Color.GREEN;
@@ -181,11 +181,10 @@ public class NetworkRenderer implements Renderer {
                     color = Color.RED;
                 }
                 sr.setColor(color);
-                final float s1 = c1.size * .5f;
-                final float s2 = c2.size * .5f;
                 sr.line(c1.x + s1, c1.y + s1, c2.x + s2, c2.y + s2);
             }
         }
+
     }
 
 }

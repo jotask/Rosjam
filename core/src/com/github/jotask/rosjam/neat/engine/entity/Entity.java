@@ -16,7 +16,7 @@ public abstract class Entity {
 
     private final Body body;
 
-    protected boolean die;
+    private boolean die;
 
     public Entity(Body body) {
         this.body = body;
@@ -39,7 +39,7 @@ public abstract class Entity {
 
     }
 
-    protected void clearForces(){
+    void clearForces(){
         this.getBody().setLinearVelocity(0,0);
         this.getBody().setAngularVelocity(0);
     }

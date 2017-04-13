@@ -32,7 +32,7 @@ public class Information implements Renderer {
         String tmp;
         T t;
 
-        public Inform(LinkedList<Inform> info, final BitmapFont font, float x, float y, String text) {
+        Inform(LinkedList<Inform> info, final BitmapFont font, float x, float y, String text) {
             info.add(this);
             this.font = font;
             this.x = x;
@@ -57,12 +57,12 @@ public class Information implements Renderer {
 
     private final Neat neat;
 
-    public Information(final NeatState neatState) {
+    Information(final NeatState neatState) {
         this.info = new LinkedList<Inform>();
 
         this.neat = neatState.getNeat();
 
-        OrthographicCamera c = neatState.getEngineGui().getCamera();
+        final OrthographicCamera c = neatState.getEngineGui().getCamera();
 
         float x = c.position.x + (c.viewportWidth * .5f);
         float y = c.position.y + (c.viewportHeight * .5f);

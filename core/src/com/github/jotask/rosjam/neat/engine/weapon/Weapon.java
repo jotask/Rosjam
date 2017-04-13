@@ -22,7 +22,7 @@ public abstract class Weapon {
         this.shotDirection = new Vector2();
     }
 
-    protected boolean isAttacking;
+    boolean isAttacking;
 
     public abstract boolean attack();
 
@@ -30,7 +30,7 @@ public abstract class Weapon {
 
     public abstract void render(final ShapeRenderer sr);
 
-    public boolean isAttacking() { return isAttacking; }
+    boolean isAttacking() { return isAttacking; }
 
     public void equip(final Enemy enemy){
         if(this.owner != null){

@@ -41,14 +41,15 @@ public class Cell implements Renderer {
 
         if(Util.isInput(this.neuron.getId())) {
             if(this.neuron.getId() == Constants.Inputs.bias.ordinal()) {
-                bg = Color.CLEAR;
+                bg = new Color(0xbfbfbfff);
             }else {
-                bg = Color.LIME;
+                bg = new Color(0x32cd32ff);
             }
         }else if(Util.isOutput(this.neuron.getId())){
-            bg = Color.BROWN;
+            bg = new Color(0x8b4513ff);
         }else{
-            bg = Color.BLACK;
+            bg = new Color(0, 0, 0, 1);
+            offset *= .5f;
         }
     }
 
@@ -57,11 +58,11 @@ public class Cell implements Renderer {
 
     @Override
     public void debug(final ShapeRenderer sr) {
-        Color color;
+        final Color color;
         if (this.neuron.getValue() > 0.0) {
-            color = Color.GREEN;
+            color = new Color(0x00ff00ff);
         } else {
-            color = Color.RED;
+            color = new Color(0xff0000ff);
         }
 
         color.a = alpha;

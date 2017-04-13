@@ -35,9 +35,7 @@ public class Enemy extends Entity{
     public void update() {
         this.getBody().applyForceToCenter(this.velocity.scl(SPEED), true);
         this.velocity.setZero();
-
         this.weapon.update(this.getBody());
-
     }
 
     @Override

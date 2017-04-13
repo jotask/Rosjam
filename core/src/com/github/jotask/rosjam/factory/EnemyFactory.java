@@ -2,16 +2,14 @@ package com.github.jotask.rosjam.factory;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.github.jotask.rosjam.engine.graphics.Sprite;
 import com.github.jotask.rosjam.game.EntityManager;
 import com.github.jotask.rosjam.game.Game;
 import com.github.jotask.rosjam.game.Spawner;
 import com.github.jotask.rosjam.game.dungeon.room.Room;
 import com.github.jotask.rosjam.game.entity.enemy.Enemies;
 import com.github.jotask.rosjam.game.entity.enemy.Enemy;
-import com.github.jotask.rosjam.engine.graphics.Sprite;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
+import com.github.jotask.rosjam.game.entity.enemy.enemies.*;
 
 /**
  * EnemyFactory
@@ -46,29 +44,25 @@ public class EnemyFactory {
         final Body body = BodyFactory.createEnemy(world, .4f);
         final Sprite sprite = SpriteEnemyFactory.get(type, body);
 
-        Class<?> c = null;
-        try {
-            c = Class.forName(type.aClass.getName());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        Constructor<?> cons = c.getConstructors()[0];
-        Object object = null;
-        try {
-             object = cons.newInstance(body, sprite, room);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-
-        if(!(object instanceof Enemy)) {
-            throw new RuntimeException("Error spawning enemy:");
+        switch (type){
+            case RAT:
+                return new Rat(body, sprite, room);
+            case SNAKE:
+                return new Snake(body, sprite, room);
+            case SKELETON:
+                return new Skeleton(body, sprite, room);
+            case GOBLIN_MAGIC:
+                return new GoblinMagic(body, sprite, room);
+            case GOBLIN_MELE:
+                return new GoblinMele(body, sprite, room);
+            case BAT:
+                return new Bat(body, sprite, room);
+            default:
+                // FIXME
+                throw new RuntimeException("Unknoe enemy");
+//                return new Bat(body, sprite, room);
         }
 
-        return (Enemy) object;
     }
 
 }

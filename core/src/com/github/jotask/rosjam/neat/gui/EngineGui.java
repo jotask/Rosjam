@@ -16,8 +16,8 @@ import com.github.jotask.rosjam.neat.util.Util;
  */
 public class EngineGui {
 
-    public static final float SPACE = 15f;
-    public static final float OFFSET = 10f;
+    static final float SPACE = 15f;
+    static final float OFFSET = 10f;
 
     private final NeatState neat;
 
@@ -28,7 +28,7 @@ public class EngineGui {
     public EngineGui(NeatState neat) {
         this.neat = neat;
         this.font = Rosjam.get().getAssets().getFont();
-        this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        this.camera = new OrthographicCamera(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
     }
 
     public void render(SpriteBatch sb){
@@ -40,19 +40,6 @@ public class EngineGui {
         font.draw(sb, "FPS: " + Gdx.graphics.getFramesPerSecond(), x, y - SPACE * i++);
         font.draw(sb, "JavaHeap: " + Util.bytesToMb(Gdx.app.getJavaHeap()), x, y - SPACE * i++);
         font.draw(sb, "NativeHeap: " + Util.bytesToMb(Gdx.app.getNativeHeap()), x, y - SPACE * i++);
-//        font.draw(sb, "Enemies: " + neat.getNeat().getAlive() + " / " + Constants.POPULATION, x, y - SPACE * i++);
-//        font.draw(sb, "Generation: " + neat.getNeat().getGeneration(), x, y - SPACE * i++) ;
-//        font.draw(sb, "Fitness: " + neat.getNeat().getMaxFitness(), x, y - SPACE * i++) ;
-//        font.draw(sb, "Species: " + neat.getNeat().pool.species.size(), x, y - SPACE * i) ;
-
-//        {
-//            final float xx = (camera.viewportWidth / 2f) - 50;
-//            font.draw(sb, "DOWN", xx - 3f, 70);
-//            font.draw(sb, "UP", xx + 20, 30);
-//            font.draw(sb, "RIGHT", xx, -20);
-//            font.draw(sb, "LEFT", xx + 7f, -60);
-//        }
-
     }
 
     public OrthographicCamera getCamera() { return camera; }

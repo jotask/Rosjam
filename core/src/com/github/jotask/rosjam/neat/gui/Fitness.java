@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.github.jotask.rosjam.neat.jneat.util.Constants;
 import com.github.jotask.rosjam.neat.util.Util;
 
 import java.util.LinkedList;
@@ -27,7 +28,9 @@ public class Fitness implements Renderer {
 
     final float INCR;
 
-    public Fitness(final JotaGui gui) {
+    private final Color bg = new Color(0, 0, 0.5f, .25f);
+
+    Fitness(final JotaGui gui) {
         this.lists = new LinkedList<Entry>();
 
         this.maxFitness = 0.0;
@@ -38,7 +41,10 @@ public class Fitness implements Renderer {
         final float offset = 10f;
 
         float w = (cam.viewportWidth * .5f) - (offset * 2);
-        float h = 100f;
+
+        final int inp = Math.round(Constants.INPUTS * Cell.SIZE);
+        final int max = Math.round(Constants.OUTPUTS * Cell.SIZE);
+        final float h = Math.max(inp, max);
 
         float x = (cam.position.x - ( cam.viewportWidth * .5f )) + offset;
         float y = cam.position.y - (cam.viewportHeight * .5f) + offset;
@@ -67,17 +73,14 @@ public class Fitness implements Renderer {
     }
 
     @Override
-    public void render(SpriteBatch sb) {
-
-    }
+    public void render(SpriteBatch sb) { }
 
     @Override
     public void debug(ShapeRenderer sr) {
 
         // Draw background
         sr.set(ShapeRenderer.ShapeType.Filled);
-        sr.setColor(Color.NAVY);
-        sr.getColor().a = .5f;
+        sr.setColor(this.bg);
         sr.rect(r.x, r.y, r.width, r.height);
 
         sr.set(ShapeRenderer.ShapeType.Line);
@@ -110,7 +113,7 @@ public class Fitness implements Renderer {
     }
 
     private static class Entry{
-        public final int generation;
+        final int generation;
         public final double fitness;
         private Entry(int generation, double fitness) {
             this.generation = generation;

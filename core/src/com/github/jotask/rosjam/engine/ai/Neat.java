@@ -18,7 +18,7 @@ public class Neat extends ArtificialIntelligence {
 
     private final float SPEED = 25f;
 
-    private final Network network;
+    private Network network;
 
     private final Timer timer;
 
@@ -31,7 +31,9 @@ public class Neat extends ArtificialIntelligence {
     public Neat(final GoblinMele goblinMele) {
         super(goblinMele.getBody());
         this.goblinMele = goblinMele;
-        this.network = Game.get().neatThread.getBestNetwork();
+        do{
+            this.network = Game.get().neatThread.getBestNetwork();
+        }while(this.network == null);
         this.THRESHOLD = Game.get().neatThread.getThreshold();
         this.timer = new Timer(.1f);
         this.swordController = new SwordController(this.goblinMele.sword);
@@ -40,7 +42,9 @@ public class Neat extends ArtificialIntelligence {
     @Override
     public void update() {
         if(timer.isPassed(true)) {
-            setOutput(network.evaluate(getInputs()));
+            final double[] inputs = getInputs();
+            final double[] outputs = this.network.evaluate(inputs);
+            setOutput(outputs);
             this.dir.scl(SPEED);
             this.body.applyForceToCenter(dir, true);
             this.dir.setZero();

@@ -47,4 +47,5 @@ public class JotaGui implements Renderer {
     public Fitness getFitness() { return fitness; }
 
     public OrthographicCamera getCamera() { return camera; }
+
 }
