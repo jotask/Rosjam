@@ -18,7 +18,7 @@ public class AndroidController implements Controller {
     private DirectionController direction;
     private ShootController shoot;
 
-    public AndroidController(final Hud stage) {
+    AndroidController(final Hud stage) {
         this.direction = new DirectionController(stage);
         this.shoot = new ShootController(stage);
     }
@@ -32,21 +32,8 @@ public class AndroidController implements Controller {
     }
 
     @Override
-    public boolean resetLevel() {
-
-        if(!Gdx.input.justTouched())
-            return false;
-
-        int activeTouch = 0;
-        for (int i = 0; i < 20; i++) {
-            if (Gdx.input.isTouched(i)) activeTouch++;
-        }
-        return (activeTouch == 3);
-    }
-
-    @Override
     public Vector2 getShootDirection() {
-        return shoot.getDirection();
+        return shoot.getDirection().nor();
     }
 
     @Override

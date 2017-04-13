@@ -63,6 +63,6 @@ public class ShootController {
     }
 
     public boolean isShooting() {
-        return touchpad.isTouched();
+        return (touchpad.isTouched() && !this.getDirection().isZero(.1f));
     }
 }

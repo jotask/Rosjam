@@ -44,11 +44,6 @@ public class DesktopController implements Controller {
     }
 
     @Override
-    public boolean resetLevel() {
-        return Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
-    }
-
-    @Override
     public boolean isShooting() {
         return  (Gdx.input.isKeyPressed(SHOT_UP.key) ||
                 Gdx.input.isKeyPressed(SHOT_LEFT.key) ||

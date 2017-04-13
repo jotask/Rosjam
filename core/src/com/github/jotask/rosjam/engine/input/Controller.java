@@ -16,8 +16,6 @@ public interface Controller{
 
     Vector2 getShootDirection();
 
-    boolean resetLevel();
-
     boolean pause();
 
 }
