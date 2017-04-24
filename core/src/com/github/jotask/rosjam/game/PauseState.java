@@ -101,4 +101,5 @@ public class PauseState extends GameState {
         this.stage.getViewport().apply();
         this.camera.resize(width, height);
     }
+
 }

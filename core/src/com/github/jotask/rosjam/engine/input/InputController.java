@@ -3,6 +3,7 @@ package com.github.jotask.rosjam.engine.input;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.github.jotask.rosjam.engine.input.controllers.GamePad;
 import com.github.jotask.rosjam.game.Game;
 import com.github.jotask.rosjam.game.entity.Entity;
 
@@ -25,7 +26,12 @@ public class InputController extends Entity {
                 this.controller = new AndroidController(game.getHud());
                 break;
             case Desktop:
-                this.controller = new DesktopController();
+                final GamePad gamePad = new GamePad();
+                if(gamePad.isSupported()){
+                    this.controller = gamePad.getController();
+                }else {
+                    this.controller = new DesktopController();
+                }
                 break;
             default:
                 throw new RuntimeException("System not supported");

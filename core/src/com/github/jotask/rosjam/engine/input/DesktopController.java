@@ -14,8 +14,8 @@ import static com.github.jotask.rosjam.engine.input.DesktopInput.*;
  */
 public class DesktopController implements Controller {
 
-    Vector2 direction;
-    Vector2 shoot;
+    final Vector2 direction;
+    final Vector2 shoot;
 
     public DesktopController() {
         this.direction = new Vector2();
