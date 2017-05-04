@@ -26,6 +26,9 @@ import com.github.jotask.rosjam.util.Ref;
 /**
  * NeatState
  *
+ * This state runs the neat algorithm as a state
+ * also it renders on screen information provided by the algorithm
+ *
  * @author Jose Vives Iznardo
  * @since 28/03/2017
  */
