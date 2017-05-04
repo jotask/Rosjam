@@ -57,6 +57,7 @@ public class StateFactory {
     }
 
     private static final Game getGameState(){
+        // FIXME
         RoomCamera camera = new RoomCamera(21f, 11f);
         Game gs = new Game(camera);
         return gs;
@@ -97,4 +98,5 @@ public class StateFactory {
         Splash splash = new Splash(camera);
         return splash;
     }
+
 }
