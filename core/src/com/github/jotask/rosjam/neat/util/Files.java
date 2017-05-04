@@ -3,6 +3,7 @@ package com.github.jotask.rosjam.neat.util;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.SerializationException;
 import com.github.jotask.rosjam.neat.jneat.genetics.Population;
 import com.github.jotask.rosjam.neat.jneat.util.Constants;
 
@@ -49,7 +50,19 @@ public abstract class Files {
             population.initialize();
             return population;
         }else{
-            return new Json().fromJson(Population.class, fileHandle);
+
+            try {
+                final Json json = new Json();
+                return json.fromJson(Population.class, fileHandle);
+            }catch (SerializationException e){
+                // Delete invalid file and create empty population
+                fileHandle.delete();
+            }finally {
+                Population population = new Population();
+                population.initialize();
+                return population;
+            }
+
         }
     }
 

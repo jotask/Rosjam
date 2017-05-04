@@ -84,12 +84,12 @@ public class NeatState extends CameraState {
     public void update() {
         this.stage.act(Gdx.graphics.getDeltaTime());
         final int gen = this.neat.getJota().getPop().getGeneration();
-        if(gen != this.last_generation){
+        if(gen > this.last_generation){
             this.jotaGui.getFitness().addFitness(this.last_generation, this.last_fitness);
-            this.last_generation = this.neat.getJota().getPop().getGeneration();
+            this.last_generation = gen;
         }
-        this.neat.update();
         this.last_fitness = this.neat.getJota().getBest().getGenome().fitness;
+        this.neat.update();
         this.networkRenderer.createNetwork(this.neat.getJota().getBest());
     }
 
