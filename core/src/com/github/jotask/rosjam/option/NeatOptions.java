@@ -275,7 +275,7 @@ public class NeatOptions extends CameraState {
 
             final Label value = new Label("0.0", skin);
 
-            thresold = new Slider(0, 1f, 0.001f, false, skin);
+            thresold = new Slider(-1f, 1f, 0.001f, false, skin);
             thresold.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {

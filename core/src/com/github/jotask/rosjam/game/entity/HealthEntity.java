@@ -10,11 +10,16 @@ import com.badlogic.gdx.physics.box2d.Body;
  */
 public abstract class HealthEntity extends BodyEntity {
 
-    public static final int MAX_HEALTH = 10;
+    private final int MAX_HEALTH;
     public int currentHealth;
 
-    protected HealthEntity(Body body) {
+    protected HealthEntity(final Body body) {
+        this(body, 10);
+    }
+
+    protected HealthEntity(final Body body, final int MAXHEALTH) {
         super(body);
+        this.MAX_HEALTH = MAXHEALTH;
     }
 
     @Override
@@ -26,6 +31,8 @@ public abstract class HealthEntity extends BodyEntity {
         this.currentHealth  -= dmg;
         if(this.currentHealth <= 1){
             this.needsToDie = true;
+        }else if(this.currentHealth > MAX_HEALTH){
+            this.currentHealth = MAX_HEALTH;
         }
     }
 

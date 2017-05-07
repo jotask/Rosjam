@@ -5,7 +5,6 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
-import com.github.jotask.rosjam.game.entity.HealthEntity;
 import com.github.jotask.rosjam.game.entity.player.Player;
 
 /**
@@ -17,6 +16,8 @@ import com.github.jotask.rosjam.game.entity.player.Player;
 public final class InitialParameters {
 
     public static final String file = "savedata/state.json";
+
+    public static final int PLAYER_HEALTH_INITIAL = 20;
 
     private InitialParameters(){}
 
@@ -70,7 +71,7 @@ public final class InitialParameters {
 
             this.score = 627;
 
-            this.health = HealthEntity.MAX_HEALTH;
+            this.health = PLAYER_HEALTH_INITIAL;
 
         }
 

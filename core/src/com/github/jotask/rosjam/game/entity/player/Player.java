@@ -30,8 +30,8 @@ public class Player extends ControlEntity {
 
     private Vector2 moveTo;
 
-    public Player(Body body, Controller controller, final Sprite sprite) {
-        super(body, controller);
+    public Player(Body body, Controller controller, final Sprite sprite, int HEALTH) {
+        super(body, controller, HEALTH);
         this.sprite = sprite;
 
         this.weapon = EntityFactory.getWeapon(this);

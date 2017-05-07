@@ -20,9 +20,9 @@ public class Network {
     public Network(final LinkedList<Synapse> genes) {
 
         this.neurons = new HashMap<Integer, Neuron>();
-        for(int i = 0; i < Constants.INPUTS; i++){
-            neurons.put(i, new Neuron(i));
-        }
+        for(int i = 0; i < Constants.INPUTS; i++)
+            this.neurons.put(i, new Neuron(i));
+
         for(int i = 0; i < Constants.OUTPUTS; i++){
             final int id = Constants.INPUTS + i;
             this.neurons.put(id, new Neuron(id));
@@ -59,10 +59,6 @@ public class Network {
 
         for(final Map.Entry<Integer, Neuron> entry: neurons.entrySet()){
 
-//            if(entry.getKey() < Constants.INPUTS + Constants.OUTPUTS){
-//                continue;
-//            }
-
             final Neuron neuron = entry.getValue();
 
             double sum = 0.0;
@@ -75,21 +71,6 @@ public class Network {
                 }
             }
         }
-
-//        for(final Map.Entry<Integer, Neuron> entry: neurons.entrySet()){
-//            if(entry.getKey() < Constants.INPUTS || entry.getKey() >= Constants.INPUTS + Constants.OUTPUTS){
-//                continue;
-//            }
-//            final Neuron neuron = entry.getValue();
-//            double sum = 0.0;
-//            for(final Synapse incoming: neuron.getInputs()){
-//                final Neuron other = this.neurons.get(incoming.getInput());
-//                sum += incoming.getWeight() * other.getValue();
-//            }
-//            if(!neuron.getInputs().isEmpty()){
-//                neuron.setValue(Neuron.sigmoid(sum));
-//            }
-//        }
 
         final double[] output = new double[Constants.OUTPUTS];
         for(int i = 0; i < Constants.OUTPUTS; i++){

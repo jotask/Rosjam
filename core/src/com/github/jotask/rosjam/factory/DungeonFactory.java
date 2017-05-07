@@ -168,6 +168,7 @@ public class DungeonFactory {
     }
 
     private final void specialRooms(int ids, final ConfigDungeon cfg, final LinkedList<Room> rooms){
+
         // Get the most far away room
         final LinkedList<Room> fars = new Graph(rooms.getFirst()).getFars();
         TextureRegion region = Rosjam.get().getAssets().getDungeonAssets().getBackground();

@@ -16,8 +16,8 @@ public abstract class ControlEntity extends HealthEntity{
 
     private final Controller controller;
 
-    protected ControlEntity(Body body, final Controller controller) {
-        super(body);
+    protected ControlEntity(Body body, final Controller controller, int health) {
+        super(body, health);
         this.controller = controller;
     }
 

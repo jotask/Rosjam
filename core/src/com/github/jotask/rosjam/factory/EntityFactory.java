@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.github.jotask.rosjam.game.EntityManager;
 import com.github.jotask.rosjam.game.Game;
+import com.github.jotask.rosjam.game.InitialParameters;
 import com.github.jotask.rosjam.game.entity.BodyEntity;
 import com.github.jotask.rosjam.game.entity.enemy.Enemy;
 import com.github.jotask.rosjam.game.entity.player.Player;
@@ -40,7 +41,7 @@ public class EntityFactory {
 
         final Sprite sprite = SpriteFactory.getPlayer(body);
 
-        Player player = new Player(body, worldManager.getGame().getController(), sprite);
+        Player player = new Player(body, worldManager.getGame().getController(), sprite, InitialParameters.PLAYER_HEALTH_INITIAL);
         player.getBody().setUserData(player);
         return player;
 

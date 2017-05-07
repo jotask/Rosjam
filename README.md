@@ -15,17 +15,50 @@ The algorithm used to control each enemies are the following:
 
 This is my dissertation project for Aberystwyth University. This code has been developed in four months using a agile methodology.
 
+### How to play
+#### Desktop
+They are two options to use as a controller on desktop versions.
+
+##### Mouse and Keyboard
+The following keys are used:
+
+* ESCAPE: Pause the game
+
+WASD:
+* W: Move the player up
+* A: Move the player left
+* S: Move the player down
+* D: Move the player right
+
+Arrow keys:
+* UP: Shot a bullet upwards
+* DOWN: Shot a bullet downwards
+* LEFT: Shot a bullet to the left
+* RIGHT: Shot a bullet to the right
+
+##### GamePad
+To control the game with a supported game (Only a xBox controller) insert the game pad before the game is started. Once the gamepad is installed, run the game. Notice that the game pad is only used for the actual gameplay, it can't be use for the any part of the game. Use the mouse as a input to navigate throw different states in game.
+
+
+
+#### Android
+Uses the virtual joysticks in screen to control the player and the to shot in a direction. They are two virtual joysticks:
+ * Left Joystick: Control the player
+ * Right Joystick: Shoot and control the shooting direction.
+
 ### Get the official release
-The runnable version can be obtained on the official website.
+The official release version can be obtained on the official website.
 
 https://jotask.github.io/Rosjam/
 
 ### Running the game
-Say what the step will be
+To run the game on desktop double click the release version. Or run the following command:
 
 ```
 java -jar <jar-file-name>.jar
 ```
+
+To run the android version download the APK official release and installed on any android device.
 
 ## Getting Started
 

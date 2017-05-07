@@ -72,6 +72,8 @@ public class LevelManager extends Entity{
         this.level++;
         Game.get().getPlay().score.addScore(Score.FLOOR_CLEARED);
 
+        EntityManager.get().getPlayer().damage(-2);
+
         // Delete everything
         this.entityManager.reset();
         this.worldManager.deleteDungeon();

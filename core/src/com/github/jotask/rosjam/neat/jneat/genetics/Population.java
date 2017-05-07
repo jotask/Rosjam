@@ -85,7 +85,7 @@ public class Population implements Json.Serializable{
     }
 
     public void newGeneration() {
-        // Cull the bottom half od each species
+        // Cull the bottom half of each species
         cullSpecies(false);
         rankGlobally();
         removeStaleSpecies();
@@ -111,7 +111,7 @@ public class Population implements Json.Serializable{
         }
 
         for(final Genome g: children){
-            this.addToSpecies(g);;
+            this.addToSpecies(g);
         }
 
         while(this.species.size() < POPULATION * .5f) {
