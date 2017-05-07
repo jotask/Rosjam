@@ -59,6 +59,8 @@ java -jar <jar-file-name>.jar
 ```
 
 To run the android version download the APK official release and installed on any android device.
+The .apk file can be used to install on devices directly such as via an email attachment or download. This requires the devices to have the 'Allow Unknown Sources' option enabled in settings. Some carriers unfortunately disable this setting.
+
 
 ## Getting Started
 
